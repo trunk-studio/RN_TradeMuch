@@ -20,7 +20,7 @@ export async function requestSearchPost(keyword, distance, location) {
     paramArray.push(`distance=${distance}`);
   }
   const param = paramArray.join('&');
-  const searchApi = `http://localhost:1337/rest/post/search/${keyword}?${param}`;
+  const searchApi = `/rest/post/search/${keyword}?${param}`;
   const postList = await fetch(searchApi).then(response => response.json());
   return (dispatch) => {
     dispatch(receivedSearchPost(postList));

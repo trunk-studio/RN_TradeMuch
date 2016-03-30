@@ -39,13 +39,13 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = NHSample;
+			remoteInfo = TradeMuch;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.jsbundle; path = iOS/main.jsbundle; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* NHSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NHSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* TradeMuch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradeMuch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = iOS/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = iOS/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		C87A08241B683A3800075643 /* plutoBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plutoBack.png; sourceTree = "<group>"; };
-		C88173AE1B6FBB4E001330B7 /* NHSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NHSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMuchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88173B11B6FBB4E001330B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTFBSDKShareTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,8 +125,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* NHSample.app */,
-				C88173AE1B6FBB4E001330B7 /* NHSampleTests.xctest */,
+				13B07F961A680F5B00A75B9A /* TradeMuch.app */,
+				C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,9 +184,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* NHSample */ = {
+		13B07F861A680F5B00A75B9A /* TradeMuch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "NHSample" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TradeMuch" */;
 			buildPhases = (
 				F3A64A0C7F2119F10584D929 /* Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -199,14 +199,14 @@
 			);
 			dependencies = (
 			);
-			name = NHSample;
+			name = TradeMuch;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* NHSample.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* TradeMuch.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C88173AD1B6FBB4E001330B7 /* NHSampleTests */ = {
+		C88173AD1B6FBB4E001330B7 /* TradeMuchTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C88173C21B6FBB4E001330B7 /* Build configuration list for PBXNativeTarget "NHSampleTests" */;
+			buildConfigurationList = C88173C21B6FBB4E001330B7 /* Build configuration list for PBXNativeTarget "TradeMuchTests" */;
 			buildPhases = (
 				C88173AA1B6FBB4E001330B7 /* Sources */,
 				C88173AB1B6FBB4E001330B7 /* Frameworks */,
@@ -217,9 +217,9 @@
 			dependencies = (
 				C88173B51B6FBB4E001330B7 /* PBXTargetDependency */,
 			);
-			name = NHSampleTests;
-			productName = NHSampleTests;
-			productReference = C88173AE1B6FBB4E001330B7 /* NHSampleTests.xctest */;
+			name = TradeMuchTests;
+			productName = TradeMuchTests;
+			productReference = C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -260,8 +260,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* NHSample */,
-				C88173AD1B6FBB4E001330B7 /* NHSampleTests */,
+				13B07F861A680F5B00A75B9A /* TradeMuch */,
+				C88173AD1B6FBB4E001330B7 /* TradeMuchTests */,
 			);
 		};
 /* End PBXProject section */
@@ -375,7 +375,7 @@
 /* Begin PBXTargetDependency section */
 		C88173B51B6FBB4E001330B7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* NHSample */;
+			target = 13B07F861A680F5B00A75B9A /* TradeMuch */;
 			targetProxy = C88173B41B6FBB4E001330B7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -400,7 +400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = iOS/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = org.TrunkStudio.TradeMuch.com;
-				PRODUCT_NAME = NHSample;
+				PRODUCT_NAME = TradeMuch;
 			};
 			name = Debug;
 		};
@@ -411,7 +411,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = iOS/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = org.TrunkStudio.TradeMuch.com;
-				PRODUCT_NAME = NHSample;
+				PRODUCT_NAME = TradeMuch;
 			};
 			name = Release;
 		};
@@ -506,10 +506,10 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/Pods/Headers/Public/**",
 				);
-				INFOPLIST_FILE = NHSampleTests/Info.plist;
+				INFOPLIST_FILE = TradeMuchTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NHSample.app/NHSample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TradeMuch.app/TradeMuch";
 			};
 			name = Debug;
 		};
@@ -525,17 +525,17 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/Pods/Headers/Public/**",
 				);
-				INFOPLIST_FILE = NHSampleTests/Info.plist;
+				INFOPLIST_FILE = TradeMuchTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NHSample.app/NHSample";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TradeMuch.app/TradeMuch";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "NHSample" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "TradeMuch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -553,7 +553,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C88173C21B6FBB4E001330B7 /* Build configuration list for PBXNativeTarget "NHSampleTests" */ = {
+		C88173C21B6FBB4E001330B7 /* Build configuration list for PBXNativeTarget "TradeMuchTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C88173B61B6FBB4E001330B7 /* Debug */,

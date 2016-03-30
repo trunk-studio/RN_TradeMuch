@@ -3,9 +3,12 @@
 ### install package
 ```
 npm install -g npm # if your npm version < 3
+npm install -g rnpm
 npm install
 sudo gem install cocoapods
 pod install
+rnpm link react-native-search-bar
+rnpm link react-native-linear-gradient
 ```
 ### edit config.js in config folder
 
@@ -26,3 +29,8 @@ http://localhost:8081/
 ### 尚未信任開發人員
 
 [解決方法](http://mdsc3c.blogspot.tw/2015/10/ios-9app.html)
+#TroubleShooting
+
+Cannot set property userAgent of #<workernavigator> which has only a getter
+
+> sol: disable debug in chrome

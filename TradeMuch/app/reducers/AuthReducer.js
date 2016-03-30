@@ -1,13 +1,35 @@
 import {
   RECEIVED_USER_INFO,
+  UPDATE_LOGIN_STATUS,
+  UPDATE_USER_INFO,
 } from '../actions/AuthActions';
 
-export function auth(state = {}, action) {
+const authDefault = {
+  isLogin: false,
+  userInfo: {
+    isFirstLogin: null,
+  },
+};
+
+export function auth(state = authDefault, action) {
   switch (action.type) {
     case RECEIVED_USER_INFO:
       return {
         ...state,
         userInfo: action.data,
+      };
+    case UPDATE_USER_INFO:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          ...action.data,
+        },
+      };
+    case UPDATE_LOGIN_STATUS:
+      return {
+        ...state,
+        isLogin: action.data,
       };
     default:
       return state;
