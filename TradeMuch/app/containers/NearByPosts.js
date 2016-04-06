@@ -8,12 +8,12 @@ import { requestSearchPost } from '../actions/SearchPostActions';
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
-    marginTop: 20,
+    marginTop: 65,
     backgroundColor: '#fff',
   },
 });
 
-function PostList(props) {
+function NearByPosts(props) {
   const { postList } = props;
 
   function onChangeText(value) {
@@ -33,7 +33,7 @@ function PostList(props) {
   );
 }
 
-PostList.propTypes = {
+NearByPosts.propTypes = {
   postList: React.PropTypes.array,
   requestSearchPost: React.PropTypes.func,
   onListItemPress: React.PropTypes.func,
@@ -49,4 +49,4 @@ const _injectPropsFormActions = {
   requestSearchPost,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostList);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(NearByPosts);

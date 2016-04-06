@@ -5,10 +5,10 @@ import {
 export function router(state = {}, action) {
   switch (action.type) {
     case Actions.BEFORE_ROUTE:
-      console.log("BEFORE_ROUTE:", action);
+      // console.log("BEFORE_ROUTE:", action);
       return state;
     case Actions.AFTER_ROUTE:
-      console.log("AFTER_ROUTE:", action);
+      // console.log("AFTER_ROUTE:", action);
       return state;
     case Actions.AFTER_POP:
       //console.log("AFTER_POP:", action);

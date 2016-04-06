@@ -4,3 +4,4 @@ Pods/
 node_modules/
 npm-debug.log
 xcuserdata
+build/

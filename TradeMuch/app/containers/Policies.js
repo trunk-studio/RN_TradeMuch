@@ -1,6 +1,7 @@
 
 import React, {
   StyleSheet,
+  PropTypes,
   View,
   Component,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import React, {
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Dimensions from 'Dimensions';
+import { requestAgreePolicies } from '../actions/AuthActions';
 const windowSize = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -55,17 +57,29 @@ const styles = StyleSheet.create({
 });
 
 export default class Policies extends Component {
+  static propTypes = {
+    requestAgreePolicies: PropTypes.func,
+  };
   constructor(props) {
     super(props);
     this.agree = this.agree.bind(this);
     this.cancel = this.cancel.bind(this);
   }
+  componentWillUpdate(nextProps) {
+    // const { isLogin, isAgreePolicies } = nextProps;
+    // if (isLogin && isAgreePolicies) {
+      // Actions.editProfile();
+    // }
+  }
+
   cancel() {
     Actions.login();
   }
+
   agree() {
-    Actions.postList();
+    this.props.requestAgreePolicies();
   }
+
 
   render() {
     return (
@@ -87,12 +101,15 @@ export default class Policies extends Component {
   }
 }
 
-function _injectPropsFromStore() {
+function _injectPropsFromStore(state) {
   return {
+    isLogin: state.auth.isLogin,
+    isAgreePolicies: state.auth.userInfo.isAgreePolicies,
   };
 }
 
 const _injectPropsFormActions = {
+  requestAgreePolicies,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Policies);

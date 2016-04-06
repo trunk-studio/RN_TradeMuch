@@ -41,12 +41,15 @@ const styles = StyleSheet.create({
 });
 
 export default function PostListItem(props) {
+  function onItemPress() {
+    props.onItemPress(props.id);
+  }
   return (
     <View>
-      <TouchableOpacity underlayColor={"#f3f3f3"}>
+      <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
         <View>
           <View style={styles.commentContent}>
-              <Image source={{ uri: props.uri }} style={styles.avatar} />
+              <Image source={{ uri: props.img }} style={styles.avatar} />
             <View style={styles.commentBody}>
               <Text style={styles.userName}>
                 {props.title}
@@ -64,13 +67,16 @@ export default function PostListItem(props) {
 }
 
 PostListItem.propTypes = {
+  id: React.PropTypes.number,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
-  uri: React.PropTypes.string,
+  img: React.PropTypes.string,
+  onItemPress: React.PropTypes.func,
 };
 
 PostListItem.defaultProps = {
   title: '',
   description: '',
-  uri: 'https://unsplash.it/200/300/?random',
+  img: 'https://unsplash.it/200/300/?random',
+  onItemPress: () => {},
 };

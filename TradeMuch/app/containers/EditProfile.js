@@ -91,10 +91,10 @@ export default class EditProfile extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { isFirstLogin } = nextProps;
-    if (!isFirstLogin) {
-      Actions.editProfile();
-    }
+    // const { isFirstLogin } = nextProps;
+    // if (!isFirstLogin) {
+    //   Actions.postList();
+    // }
   }
 
   updateEmail() {
@@ -140,10 +140,6 @@ EditProfile.propTypes = {
   userInfo: React.PropTypes.object,
   requestUpdateUserInfo: React.PropTypes.func,
   requestInputEmail: React.PropTypes.func,
-};
-
-EditProfile.defaultProps = {
-  userInfo: {},
 };
 
 function _injectPropsFromStore(state) {

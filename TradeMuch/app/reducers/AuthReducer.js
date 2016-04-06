@@ -8,6 +8,7 @@ const authDefault = {
   isLogin: false,
   userInfo: {
     isFirstLogin: null,
+    isAgreePolicies: null,
   },
 };
 

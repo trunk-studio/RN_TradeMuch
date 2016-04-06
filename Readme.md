@@ -13,7 +13,10 @@ rnpm link react-native-linear-gradient
 ### edit config.js in config folder
 
 
-# Run Project
+# Run Project （dev）
+
+
+npm run dev
 
 open `Counter.xcworkspace` in Xcode and run
 

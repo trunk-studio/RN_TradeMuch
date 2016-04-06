@@ -13,6 +13,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08C5F01CA00E6000961C8F /* libBVLinearGradient.a */; };
+		8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */; };
 		8BB48A8B1C9ABA00006D5BA2 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BB48A8A1C9AB9B6006D5BA2 /* libRNSearchBar.a */; };
 		C87A08251B683A3800075643 /* plutoBack.png in Resources */ = {isa = PBXBuildFile; fileRef = C87A08241B683A3800075643 /* plutoBack.png */; };
 		C88173CE1B6FBBEB001330B7 /* RCTFBSDKShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */; };
@@ -26,6 +27,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = BVLinearGradient;
+		};
+		8B856BA21CAE55B000FE2959 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTGeolocation;
 		};
 		8BB48A891C9AB9B6006D5BA2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -56,6 +64,7 @@
 		7DD7F15DFCA46BA0E76CD8B2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		89E94AEB84EF573737C2F165 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		C87A08241B683A3800075643 /* plutoBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plutoBack.png; sourceTree = "<group>"; };
 		C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMuchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +80,7 @@
 				D8CF3DE97E6B614A8797B5DA /* libPods.a in Frameworks */,
 				8BB48A8B1C9ABA00006D5BA2 /* libRNSearchBar.a in Frameworks */,
 				8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */,
+				8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,9 +149,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		8B856B9E1CAE55B000FE2959 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8BB48A841C9AB8C9006D5BA2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */,
 				8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */,
 				8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */,
 			);
@@ -254,6 +273,10 @@
 					ProjectRef = 8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */;
 				},
 				{
+					ProductGroup = 8B856B9E1CAE55B000FE2959 /* Products */;
+					ProjectRef = 8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */;
+				},
+				{
 					ProductGroup = 8BB48A861C9AB9B6006D5BA2 /* Products */;
 					ProjectRef = 8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */;
 				},
@@ -272,6 +295,13 @@
 			fileType = archive.ar;
 			path = libBVLinearGradient.a;
 			remoteRef = 8B08C5EF1CA00E6000961C8F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTGeolocation.a;
+			remoteRef = 8B856BA21CAE55B000FE2959 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		8BB48A8A1C9AB9B6006D5BA2 /* libRNSearchBar.a */ = {

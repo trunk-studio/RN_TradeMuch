@@ -1,9 +1,9 @@
-
+import { fetchWithAuth } from '../utils/authFetch.js';
 export const REQUEST_SEARCH_POST = 'REQUEST_SEARCH_POST';
 export const RECEIVED_SEARCH_POST = 'RECEIVED_SEARCH_POST';
 
 
-function receivedSearchPost(postList) {
+export function receivedSearchPost(postList) {
   return {
     type: RECEIVED_SEARCH_POST,
     data: postList.items,
@@ -21,7 +21,7 @@ export async function requestSearchPost(keyword, distance, location) {
   }
   const param = paramArray.join('&');
   const searchApi = `/rest/post/search/${keyword}?${param}`;
-  const postList = await fetch(searchApi).then(response => response.json());
+  const postList = await fetchWithAuth(searchApi);
   return (dispatch) => {
     dispatch(receivedSearchPost(postList));
   };

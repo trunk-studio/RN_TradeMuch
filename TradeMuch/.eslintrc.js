@@ -7,4 +7,9 @@ module.exports = {
     "rules": {
       "strict": 0
     },
+    "globals": {
+      "describe": false,
+      "it": false,
+      "before": false,
+    }
 };
