@@ -1,13 +1,18 @@
 import React, {
   NativeModules,
-  ScrollView,
+  Dimensions,
   View,
   Component,
   ListView,
   Alert,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
+import {
+  LIST_ITEM_COLOR1,
+  LIST_ITEM_COLOR2,
+  SEARCHBAR_COLOR,
+  WHITE_COLOR,
+ } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
@@ -25,14 +30,13 @@ import {
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
 
+const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: '#fff',
-  },
-  ButtomButton: {
-
+    backgroundColor: WHITE_COLOR,
+    paddingBottom: windowSize.height * 0.11,
   },
 });
 
@@ -149,6 +153,8 @@ export default class PostList extends Component {
           onSearchButtonPress={this.handleSearchButtonPress}
           onCancelButtonPress={this.handleSearchCancelPress}
           showsCancelButton={this.state.showsCancelButton}
+          barTintColor={SEARCHBAR_COLOR}
+          searchBarStyle="default"
         />
         <ListView
           keyboardDismissMode="on-drag"

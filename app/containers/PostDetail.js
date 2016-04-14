@@ -6,6 +6,7 @@ import React, {
   Component,
   Linking,
   PixelRatio,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import config from '../config/index';
@@ -18,7 +19,8 @@ import {
 import { Actions } from 'react-native-router-flux';
 
 const windowSize = Dimensions.get('window');
-const PIXEL_RATIO = PixelRatio.get();
+// const PIXEL_RATIO = PixelRatio.get();
+const PIXEL_RATIO = 3;
 
 const styles = React.StyleSheet.create({
   imageContainer: {
@@ -50,19 +52,34 @@ const styles = React.StyleSheet.create({
   },
   title: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 11 * PIXEL_RATIO,
+    fontSize: 25,
     textAlign: 'left',
+    width: 175,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   descriptionContainer: {
     justifyContent: 'flex-end',
-    height: 150 * PIXEL_RATIO,
+    height: 135 * PIXEL_RATIO,
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 9 * PIXEL_RATIO,
+    fontSize: 23,
     marginBottom: 5 * PIXEL_RATIO,
     textAlign: 'left',
     height: 30 * PIXEL_RATIO,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   buttonContainer: {
     width: windowSize.width,
@@ -78,9 +95,9 @@ const styles = React.StyleSheet.create({
   },
   button: {
     flex: 1,
-    margin: 5 * PIXEL_RATIO,
-    height: 15 * PIXEL_RATIO,
-    width: 100 * PIXEL_RATIO,
+    margin: 10,
+    height: 50,
+    // width: 100 * PIXEL_RATIO,
     borderRadius: 3 * PIXEL_RATIO,
     borderWidth: 0.5 * PIXEL_RATIO,
     backgroundColor: 'rgba(74, 74, 74, 0.3)',
@@ -90,13 +107,13 @@ const styles = React.StyleSheet.create({
   },
   buttonText: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 5 * PIXEL_RATIO,
+    fontSize: 18,
   },
   footContainer: {
     flex: 1,
   },
   footBackColor: {
-    height: windowSize.height,
+    height: windowSize.height / 3,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
@@ -136,11 +153,15 @@ export default class PostDetail extends Component {
   }
 
   getItNowButtonHandle = () => {
-    Actions.messenger({
-      title: this.postItem.title,
-      postId: this.props.id,
-      sendMessageInitial: '我想要！',
-    });
+    if (this.props.isLogin) {
+      Actions.messenger({
+        title: this.postItem.title,
+        postId: this.props.id,
+        sendMessageInitial: `嗨！我想要${this.postItem.title}`,
+      });
+    } else {
+      this.pleaseLogin();
+    }
   }
 
   deleteFavoriteItemButtonHandle = () => {
@@ -158,10 +179,26 @@ export default class PostDetail extends Component {
   }
 
   openChatRoomButtonHandle = () => {
-    Actions.messenger({
-      title: this.postItem.title,
-      postId: this.props.id,
-    });
+    if (this.props.isLogin) {
+      Actions.messenger({
+        title: this.postItem.title,
+        postId: this.props.id,
+      });
+    } else {
+      this.pleaseLogin();
+    }
+  }
+
+  pleaseLogin = () => {
+    Alert.alert(
+      '需要登入喔',
+      '登入後體驗更多 TradeMuch 細節', [{
+        text: '取消',
+      }, {
+        text: '登入',
+        onPress: () => Actions.login(),
+      }]
+    );
   }
 
   openMapButtonHandle = () => {
@@ -224,6 +261,12 @@ export default class PostDetail extends Component {
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.description}>{description}</Text>
+          </View>
+        </View>
         <View style={styles.buttonChatContainer}>
           <TouchableOpacity
             style={styles.openChatRoomButton}
@@ -231,12 +274,6 @@ export default class PostDetail extends Component {
           >
             <Text style={styles.openChatRoomText} >對話</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{title}</Text>
-          <View style={styles.descriptionContainer}>
-            <Text style={styles.description}>{description}</Text>
-          </View>
         </View>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
@@ -263,6 +300,7 @@ export default class PostDetail extends Component {
 PostDetail.propTypes = {
   id: React.PropTypes.number,
   postList: React.PropTypes.array,
+  isLogin: React.PropTypes.bool,
   requestAddItemToFavList: React.PropTypes.func,
   requestDeleteItemToFavList: React.PropTypes.func,
 };
@@ -275,6 +313,7 @@ PostDetail.defaultProps = {
 function _injectPropsFromStore(state) {
   return {
     postList: state.search.postList,
+    isLogin: state.auth.isLogin,
   };
 }
 

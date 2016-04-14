@@ -17,11 +17,11 @@
 		4130FBD745514CFCBCC5A4F7 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */; };
 		51898EAC8A9E4F79ABD06331 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73505FE73B2F4879A54B9EB4 /* Octicons.ttf */; };
 		565653FC1CB4D7F500436083 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 565653F91CB4D7EC00436083 /* libRCTLinking.a */; };
+		569A9F8E1CBF4AC600F47FFA /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 569A9F8D1CBF4AC600F47FFA /* main.jsbundle */; };
 		7DD16E341A0E42C8BB666D4A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2271A41F1F4340AEB0EF98B4 /* EvilIcons.ttf */; };
 		8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08C5F01CA00E6000961C8F /* libBVLinearGradient.a */; };
 		8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */; };
 		8BB48A8B1C9ABA00006D5BA2 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BB48A8A1C9AB9B6006D5BA2 /* libRNSearchBar.a */; };
-		8BC4C9B11CB7D8E200F2A6AD /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 8BC4C9B01CB7D8E200F2A6AD /* main.jsbundle */; };
 		C87A08251B683A3800075643 /* plutoBack.png in Resources */ = {isa = PBXBuildFile; fileRef = C87A08241B683A3800075643 /* plutoBack.png */; };
 		C88173CE1B6FBBEB001330B7 /* RCTFBSDKShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */; };
 		D5B9DC827F1D454281293ABA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A61B272EAD74DEFB26FFA16 /* Entypo.ttf */; };
@@ -89,6 +89,7 @@
 		294D3745670740567B660B09 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2A61B272EAD74DEFB26FFA16 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		565653F21CB4D7EC00436083 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		569A9F8D1CBF4AC600F47FFA /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		73505FE73B2F4879A54B9EB4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		7DD7F15DFCA46BA0E76CD8B2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -97,7 +98,6 @@
 		8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
-		8BC4C9B01CB7D8E200F2A6AD /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		8F4C4D06AA3D42238E90B110 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		C87A08241B683A3800075643 /* plutoBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plutoBack.png; sourceTree = "<group>"; };
 		C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMuchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,7 +134,7 @@
 		13B07FAE1A68108700A75B9A /* TradeMuch */ = {
 			isa = PBXGroup;
 			children = (
-				8BC4C9B01CB7D8E200F2A6AD /* main.jsbundle */,
+				569A9F8D1CBF4AC600F47FFA /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -417,7 +417,7 @@
 				C87A08251B683A3800075643 /* plutoBack.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				8BC4C9B11CB7D8E200F2A6AD /* main.jsbundle in Resources */,
+				569A9F8E1CBF4AC600F47FFA /* main.jsbundle in Resources */,
 				D5B9DC827F1D454281293ABA /* Entypo.ttf in Resources */,
 				7DD16E341A0E42C8BB666D4A /* EvilIcons.ttf in Resources */,
 				EEB1A596C59946B3BBC6DDBA /* FontAwesome.ttf in Resources */,

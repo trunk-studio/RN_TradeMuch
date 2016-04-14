@@ -28,6 +28,10 @@ import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 import Messenger from './containers/Messenger';
+import {
+  NAVBAR_BACKGROUND_COLOR,
+  WHITE_COLOR,
+} from './style/color';
 
 const styles = StyleSheet.create({
   navBar: {
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgb(60, 180, 190)',
+    backgroundColor: NAVBAR_BACKGROUND_COLOR,
   },
   navTitle: {
     color: 'white',
@@ -52,6 +56,7 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     paddingRight: 10 * PixelRatio.get(),
+    marginTop: -1,
   },
 });
 
@@ -94,8 +99,8 @@ export default class AppRoutes extends Component {
       >
         <Icon
           name="list-ul"
-          size={24}
-          color={'rgb(255, 255, 255)'}
+          size={20}
+          color={WHITE_COLOR}
           style={styles.menuIcon}
         />
       </TouchableOpacity>
@@ -126,7 +131,7 @@ export default class AppRoutes extends Component {
         <Icon
           name="angle-left"
           size={24}
-          color={'rgb(255, 255, 255)'}
+          color={WHITE_COLOR}
           style={styles.menuIcon}
         />
         <Text style={styles.navTitle}>返回</Text>

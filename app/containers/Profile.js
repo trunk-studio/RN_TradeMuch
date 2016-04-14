@@ -6,6 +6,7 @@ import React, {
   Image,
   Text,
   PixelRatio,
+  Dimensions,
   TextInput,
   Alert,
 } from 'react-native';
@@ -17,38 +18,50 @@ import {
 // import Dimensions from 'Dimensions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ActionButton from '../components/ActionButton';
+import {
+  TRADEMUCH_MAIN_COLOR_1,
+  PROFILE_BACKGROUND_COLOR,
+  WHITE_COLOR,
+  PROFILE_INFO_BLOCK_BACKGROUND_EDITABLE_COLOR,
+  PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR
 
-// const windowSize = Dimensions.get('window');
-const PIXEL_RATIO = PixelRatio.get();
+} from '../style/color';
+
+const windowSize = Dimensions.get('window');
+// const PIXEL_RATIO = PixelRatio.get();
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(246, 246, 246)',
+    backgroundColor: PROFILE_BACKGROUND_COLOR,
+    paddingBottom: windowSize.height * 0.11,
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   avatar: {
     borderRadius: 60,
-    marginTop: 100,
     width: 120,
     height: 120,
   },
   username: {
     fontSize: 18,
     marginTop: 15,
-    color: 'rgb(69, 135, 119)',
+    color: TRADEMUCH_MAIN_COLOR_1,
     fontWeight: 'bold',
   },
-  header: {
-    height: 300,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+  space: {
+    flex: 0.2,
+    marginTop: -20,
   },
   body: {
-    width: 145 * PIXEL_RATIO,
-    // height: 66 * PIXEL_RATIO, // hide for now, cuz' now has only one row.
+    flex: 0.8,
+    alignItems: 'center',
+  },
+  bodyHeader: {
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    paddingBottom: 30,
+  },
+  bodyInner: {
+    width: 280,
     padding: 20,
     borderRadius: 20,
     alignItems: 'center',
@@ -59,10 +72,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: 5,
     justifyContent: 'center',
+    alignItems: 'flex-end',
   },
   rowText: {
-    fontSize: 18,
-    color: 'rgb(69, 135, 119)',
+    fontSize: 14,
+    color: TRADEMUCH_MAIN_COLOR_1,
     fontWeight: 'bold',
   },
   inputContainer: {
@@ -72,17 +86,16 @@ const styles = StyleSheet.create({
   text: {
     // fontSize: 20,
     paddingBottom: 10,
-    color: '#fff',
+    color: WHITE_COLOR,
   },
   input: {
-    color: 'rgb(69, 135, 119)',
+    color: TRADEMUCH_MAIN_COLOR_1,
     textAlign: 'left',
     fontSize: 15,
     height: 20,
-    width: 120,
   },
   buttonText: {
-    color: 'rgba(255, 255, 255, 1)',
+    color: WHITE_COLOR,
   },
 });
 
@@ -139,21 +152,24 @@ export default class Profile extends Component {
     return '修改';
   }
 
-  inputBorderStyle = () => {
+  inputStyle = () => {
     if (this.state.isConfirm === true) {
       return {
         borderStyle: 'dashed',
         backgroundColor: 'white',
+        width: 180,
       };
     }
-    return '';
+    return {
+      width: 120,
+    };
   }
 
   bodyColor = () => {
     if (this.state.isConfirm === true) {
-      return 'rgb(252, 238, 187)';
+      return PROFILE_INFO_BLOCK_BACKGROUND_EDITABLE_COLOR;
     }
-    return 'rgb(227, 227, 227)';
+    return PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR;
   }
 
   handleActionButtonPress = () => {
@@ -169,22 +185,26 @@ export default class Profile extends Component {
     const { userInfo } = this.props;
     return (
       <View style={styles.container} >
-        <View style={styles.header}>
-          <Image style={styles.avatar} source={{ uri: userInfo.avatar }} />
-          <Text style={styles.username}>{userInfo.userName}</Text>
-        </View>
-        <View style={[styles.body, { backgroundColor: this.bodyColor() }]} >
-          <View style={styles.row} >
-            <Text style={styles.rowText}>Email： </Text>
-            <TextInput
-              editable={this.inputEditable()}
-              style={[styles.input, this.inputBorderStyle()]}
-              placeholder="點擊輸入Email"
-              placeholderTextColor="rgb(69, 135, 119)"
-              value={this.state.email}
-              onChangeText= { this.inputEmailHandle }
-              returnKeyType={'done'}
-            />
+        <View style={styles.space} />
+        <View style={styles.body}>
+          <View style={styles.bodyHeader}>
+            <Image style={styles.avatar} source={{ uri: userInfo.avatar }} />
+            <Text style={styles.username}>{userInfo.userName}</Text>
+          </View>
+          <View style={[styles.bodyInner, { backgroundColor: this.bodyColor() }]} >
+            <View style={styles.row} >
+              <Text style={styles.rowText}>Email： </Text>
+              <TextInput
+                editable={this.inputEditable()}
+                style={[styles.input, this.inputStyle()]}
+                placeholder="尚未輸入Email"
+                placeholderTextColor={TRADEMUCH_MAIN_COLOR_1}
+                value={this.state.email}
+                onChangeText= { this.inputEmailHandle }
+                returnKeyType={'done'}
+                maxLength={25}
+              />
+            </View>
           </View>
         </View>
         <KeyboardSpacer />

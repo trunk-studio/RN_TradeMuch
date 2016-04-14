@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   blockTitle: {
     flex: 1,
     marginLeft: 10 * PIXEL_RATIO,
-    width: 60 * PIXEL_RATIO,
+    width: 70 * PIXEL_RATIO,
     alignItems: 'flex-start',
     justifyContent: 'center',
   },

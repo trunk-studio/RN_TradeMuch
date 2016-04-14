@@ -12,8 +12,8 @@ const windowSize = Dimensions.get('window');
 const PIXEL_RATIO = PixelRatio.get();
 const styles = StyleSheet.create({
   icon: {
-    width: 16 * PIXEL_RATIO,
-    height: 16 * PIXEL_RATIO,
+    width: 12 * PIXEL_RATIO,
+    height: 12 * PIXEL_RATIO,
   },
   blockIcon: {
     alignItems: 'flex-end',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 0,
-    height: 38 * PIXEL_RATIO,
+    height: windowSize.height * 0.11,
     width: windowSize.width,
     flexDirection: 'column',
     alignItems: 'center',
