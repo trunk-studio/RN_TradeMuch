@@ -155,7 +155,7 @@ const styles = React.StyleSheet.create({
     flex: 0.21,
   },
   footBackColor: {
-    height: windowSize.height / 3,
+    height: windowSize.height,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,

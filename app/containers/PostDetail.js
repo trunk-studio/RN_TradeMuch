@@ -87,7 +87,7 @@ const styles = React.StyleSheet.create({
   },
   buttonContainer: {
     width: windowSize.width,
-    bottom: 10 * PIXEL_RATIO,
+    bottom: 5 * PIXEL_RATIO,
     position: 'absolute',
     flex: 1,
     flexDirection: 'row',
@@ -99,7 +99,8 @@ const styles = React.StyleSheet.create({
   },
   button: {
     flex: 1,
-    margin: 10,
+    margin: 5,
+    padding: 5,
     height: 50,
     // width: 100 * PIXEL_RATIO,
     borderRadius: 3 * PIXEL_RATIO,
