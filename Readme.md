@@ -20,10 +20,15 @@ npm run dev
 
 open `Counter.xcworkspace` in Xcode and run
 
+##Production Mode
+
+1. edit /config/index.js  envMode = 'production'
+2. run project
+
 
 # 實體 iPhone 開發
 
-### bundel.js
+### bundle.js
 
 Counter/AppDelegate.m
 http://localhost:8081/
@@ -37,3 +42,9 @@ http://localhost:8081/
 Cannot set property userAgent of #<workernavigator> which has only a getter
 
 > sol: disable debug in chrome
+
+pod install failed: undefined method 'to_ary'
+
+> sol: rvm install 2.2.3 --default  
+> sudo gem install cocoapods  
+> pod install
