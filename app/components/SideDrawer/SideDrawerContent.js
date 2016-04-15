@@ -35,16 +35,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    width: windowSize.width,
     flex: 0.29,
   },
   textUserName: {
+    marginTop: 3 * PIXEL_RATIO,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     color: '#fff',
     fontWeight: '700',
-    fontSize: 7 * PIXEL_RATIO,
+    fontSize: 9 * PIXEL_RATIO,
   },
   textNotification: {
     color: '#fff',
@@ -89,12 +89,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   contentWrapper: {
-    backgroundColor: GRAY,
     flex: 1,
+    backgroundColor: GRAY,
     flexDirection: 'column',
+    alignSelf: 'stretch',
   },
   contentBody: {
     flex: 0.71,
+    alignSelf: 'stretch',
   },
   contentBlock: {
     // backgroundColor: '#333333',
@@ -144,13 +146,13 @@ export default class SideDrawerContent extends Component {
           <Text style={styles.textUserName}>{userInfo.userName}</Text>
         </View>
         <ScrollView style={styles.contentBody}>
-          <MenuItem id="postList" title="附近的好康物品" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="postList" title="我撿的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="postList" title="我追蹤的資源" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="messenger" title="我的留言板" img="http://qa.trademuch.co.uk/img/chat%EF%BC%BF60x60.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="postList" title="我的倉庫" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="postList" title="尋寶去" img="http://qa.trademuch.co.uk/img/map.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="login" title={loginBtnTitle} img="http://qa.trademuch.co.uk/img/login.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="附近的好康物品" img="http://i.imgur.com/OKrJ2m3.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="我撿的資源" img="http://i.imgur.com/gwzwb5F.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="我追蹤的資源" img="http://i.imgur.com/v8iXJJP.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="messenger" title="我的留言板" img="http://i.imgur.com/NBbuVv3.png  " notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="我的倉庫" img="http://i.imgur.com/YHOYSAa.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="postList" title="尋寶去" img="http://i.imgur.com/dGhdv4x.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="login" title={loginBtnTitle} img="http://i.imgur.com/UDw6ykK.png" notification="" onItemPress={this.onItemPress} />
         </ScrollView>
       </View>
 		);

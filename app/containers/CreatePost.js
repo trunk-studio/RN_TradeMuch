@@ -71,6 +71,13 @@ const styles = React.StyleSheet.create({
     textAlign: 'left',
     height: 30,
     width: windowSize.width - 50,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   imageContainer: {
     flex: 1,
@@ -108,6 +115,13 @@ const styles = React.StyleSheet.create({
     textAlign: 'left',
     height: 30,
     width: windowSize.width - 40,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   price: {
     color: 'rgba(255, 255, 255, 1)',
@@ -141,7 +155,7 @@ const styles = React.StyleSheet.create({
     flex: 0.21,
   },
   footBackColor: {
-    height: windowSize.height,
+    height: windowSize.height / 3,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
@@ -201,10 +215,12 @@ export default class PostDetail extends Component {
 
   postCreateButtonHandle() {
     if (this.props.title && this.props.imgSrc[0].src) {
+      this.props.requestInputTitle(this.state.title);
+      this.props.requestInputDescription(this.state.description);
       this.props.requestCreate({
         detail: {
-          title: this.props.title,
-          description: this.props.description,
+          title: this.state.title,
+          description: this.state.description,
           startDate: new Date(),
         },
         location: this.props.location,

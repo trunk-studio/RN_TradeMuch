@@ -104,9 +104,9 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container} >
-        <Image source={{ uri: 'http://qa.trademuch.co.uk/img/splash.png' }} style={styles.backImg} />
+        <Image source={require('./images/fbLogin.png')} style={styles.backImg} />
         <View style={styles.header}>
-          <Image style={styles.logo} source={{ uri: 'http://qa.trademuch.co.uk/img/splashLogo.png' }} />
+          <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
         <View style={styles.loginButtonContainer} >
           <Text style={styles.text}>使用 Facebook 登入</Text>
