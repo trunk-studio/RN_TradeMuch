@@ -41,11 +41,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: NAVBAR_BACKGROUND_COLOR,
   },
+  transparentNavBar: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
+  },
   navTitle: {
     color: 'white',
   },
   routerScene: {
     paddingTop: Navigator.NavigationBar.Styles.General.NavBarHeight,
+  },
+  transparentScene: {
+    paddingTop: 0,
   },
   leftButtonContainer: {
     paddingLeft: 15,
@@ -145,6 +155,13 @@ export default class AppRoutes extends Component {
 
 
   render() {
+    console.log('---- current route ---', this.props.beforeRoute);
+    const isLoginPage = this.props.beforeRoute === 'login';
+    console.log('---- isLogin ---', isLoginPage);
+    const sceneStyle = isLoginPage ? styles.transparentScene : styles.routerScene;
+    console.log(sceneStyle);
+    const navigationBarStyle = isLoginPage ? styles.transparentNavBar : styles.navBar;
+    console.log(navigationBarStyle);
     return (
       <Router name="root" hideNavBar>
         {/* ------------------- Schemas ------------------------------------ */}
@@ -182,12 +199,12 @@ export default class AppRoutes extends Component {
           <SideDrawer ref={this.refSideDrawer}>
             <Router
               name="drawerRoot"
-              sceneStyle={styles.routerScene}
-              navigationBarStyle={styles.navBar}
+              sceneStyle={sceneStyle}
+              navigationBarStyle={navigationBarStyle}
               titleStyle={styles.navTitle}
             >
-              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route name="login" schema="interior" component={Login} title="登入" />
+              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route
                 name="createPost"
                 component={CreatePost}
@@ -228,9 +245,10 @@ AppRoutes.propTypes = {
 };
 
 
-function _injectPropsFromStore({ auth }) {
+function _injectPropsFromStore({ auth, router }) {
   return {
     isLogin: auth.isLogin,
+    beforeRoute: router.beforeRoute,
   };
 }
 
