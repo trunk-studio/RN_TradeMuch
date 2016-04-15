@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: LIST_TITLE_COLOR,
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 5.5 * PIXEL_RATIO,
     fontSize: 8 * PIXEL_RATIO,
   },
   commentBody: {
@@ -35,6 +36,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 3 * PIXEL_RATIO,
+    fontWeight: '500',
   },
   itemImg: {
     borderRadius: 3,
