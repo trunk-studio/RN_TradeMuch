@@ -155,13 +155,9 @@ export default class AppRoutes extends Component {
 
 
   render() {
-    console.log('---- current route ---', this.props.beforeRoute);
-    const isLoginPage = this.props.beforeRoute === 'login';
-    console.log('---- isLogin ---', isLoginPage);
-    const sceneStyle = isLoginPage ? styles.transparentScene : styles.routerScene;
-    console.log(sceneStyle);
-    const navigationBarStyle = isLoginPage ? styles.transparentNavBar : styles.navBar;
-    console.log(navigationBarStyle);
+    // const isLoginPage = this.props.beforeRoute === 'login';
+    // const sceneStyle = isLoginPage ? styles.transparentScene : styles.routerScene;
+    // const navigationBarStyle = isLoginPage ? styles.transparentNavBar : styles.navBar;
     return (
       <Router name="root" hideNavBar>
         {/* ------------------- Schemas ------------------------------------ */}
@@ -199,8 +195,8 @@ export default class AppRoutes extends Component {
           <SideDrawer ref={this.refSideDrawer}>
             <Router
               name="drawerRoot"
-              sceneStyle={sceneStyle}
-              navigationBarStyle={navigationBarStyle}
+              sceneStyle={styles.routerScene}
+              navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
               <Route name="login" schema="interior" component={Login} title="登入" />
