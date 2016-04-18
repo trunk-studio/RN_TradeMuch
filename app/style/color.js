@@ -13,5 +13,7 @@ export const PROFILE_INFO_BLOCK_BACKGROUND_EDITABLE_COLOR = 'rgb(252, 238, 187)'
 export const PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR = 'rgb(227, 227, 227)';
 export const MAIN_BACKGROUND_COLOR = 'rgb(236,244,242)';
 export const SEGMENTED_CONTROL_SELECTED = 'rgb(95,162,146)';
+export const LIST_BACKGROUND_COLOR_1 = 'rgb(213, 226, 223)';
+// export const
 // export const
 // export const

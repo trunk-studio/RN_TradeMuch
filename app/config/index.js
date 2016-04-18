@@ -1,5 +1,5 @@
 export default {
-  // envMode: 'dev',
+  envMode: 'dev',
   serverDomain: 'http://localhost:1337',
   socketDomain: 'localhost:1337',
   // envMode: 'production',
