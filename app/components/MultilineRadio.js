@@ -1,18 +1,24 @@
 import React, {
   NativeModules,
-  ScrollView,
+  TouchableOpacity,
   View,
   Component,
   ListView,
   Alert,
+  PixelRatio,
+  Text,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
+import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import ListItem from '../components/PostList/ListItem';
+// import ListItem from '../components/PostList/ListItem';
+// import config from '../config/index';
 import ActionButton from '../components/ActionButton';
-import config from '../config/index';
+import CheckBox from 'react-native-icon-checkbox';
+import Dimensions from 'Dimensions';
+const windowSize = Dimensions.get('window');
+const PIXEL_RATIO = PixelRatio.get();
 
 const {
   RNSearchBarManager,
@@ -24,14 +30,48 @@ import {
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
 
+console.log("color=>",color);
+
 const styles = React.StyleSheet.create({
   content: {
+    backgroundColor: color.LIST_BACKGROUND_COLOR_1,
     flex: 1,
-    marginTop: 20,
-    backgroundColor: '#fff',
+    width: windowSize.width,
+    // marginTop: 20,
+    alignItems: 'center',
+    paddingTop: 20,
   },
-  ButtomButton: {
-
+  contentInner: {
+    width: windowSize.width * 0.9,
+    borderWidth: 0.5,
+    borderColor: 'rgb(173, 189, 185)',
+  },
+  menuItem: {
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+  },
+  itemInner: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  leftBlock: {
+    flex: 0.5,
+    alignItems: 'flex-start',
+    paddingLeft: 10,
+  },
+  rightBlock: {
+    flex: 0.5,
+    alignItems: 'flex-end',
+    paddingRight: 10,
+  },
+  checkBoxContainer: {
+    flex: 1,
+    alignSelf: 'stretch',
+  },
+  checkBox: {
+    color: '#000',
+    fontSize: 7 * PIXEL_RATIO,
   },
 });
 
@@ -49,25 +89,28 @@ export default class PostList extends Component {
   componentDidMount() {
     const tradeRecord = [
       {
+        id: 0,
+        title: 'ALL 都想要',
+      },
+      {
         id: 1,
-        title: '韓國進口茶包',
-        pic: 'http://i.imgur.com/8LadPEI.jpg',
-        rightText: '已成交',
-        distance: 0.232,
+        title: '保養品',
       },
       {
         id: 2,
-        title: '流行手提包',
-        pic: 'http://i.imgur.com/6fLGRMu.jpg',
-        rightText: '拒絕',
-        distance: 0.300,
+        title: '3C 產品',
       },
       {
         id: 3,
-        title: '全新馬克杯',
-        pic: 'http://i.imgur.com/Nww6aKU.jpg',
-        rightText: '',
-        distance: 0.350,
+        title: '居家用品',
+      },
+      {
+        id: 4,
+        title: '生活家電',
+      },
+      {
+        id: 5,
+        title: '運動用品',
       },
     ];
 
@@ -98,12 +141,16 @@ export default class PostList extends Component {
     Alert.alert('測試資料!');
   }
 
+  onItemPress = () => {
+    
+  }
+
   getListItem(rowData, sectionID, rowID, highlightRow) {
     let bakColor = {};
     if (rowID % 2 === 0) {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
+      bakColor = { backgroundColor: color.LIST_ITEM_COLOR1 };
     } else {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
+      bakColor = { backgroundColor: color.LIST_ITEM_COLOR2 };
     }
     let distance = '';
     if (rowData.distance !== -1) {
@@ -114,16 +161,25 @@ export default class PostList extends Component {
       }
     }
     return (
-      <ListItem
-        id={rowData.id}
-        index={rowData.index}
-        title={rowData.title}
-        img={rowData.pic}
-        description={distance}
-        onItemPress={this.onListItemPress}
-        bakColor={bakColor}
-        rightText={rowData.rightText}
-      />
+      <TouchableOpacity
+        style={[styles.menuItem, bakColor]}
+        onPress={this.onItemPress}
+      >
+        <View style={styles.itemInner}>
+          <View style={styles.leftBlock}>
+            <Text>{rowData.title}</Text>
+          </View>
+          <View style={styles.rightBlock}>
+            <CheckBox
+              id={rowData.id}
+              label=""
+              size={30}
+              checked={this.state.isAgreePolicies}
+              onPress={this.handleCheck}
+            />
+          </View>
+        </View>
+      </TouchableOpacity>
     );
   }
 
@@ -157,19 +213,16 @@ export default class PostList extends Component {
   render() {
     return (
       <View style={styles.content}>
-        <ListView
-          keyboardDismissMode="on-drag"
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
-          dataSource={this.state.dataSource}
-          renderRow={this.getListItem}
-          onLoadMoreAsync={this.loadMorePost}
-          canLoadMore={this.props.canLoadMore}
-        />
-        <ActionButton
-          text="我要上架"
-          img="http://qa.trademuch.co.uk/img/add.png"
-          onPress={this.handleActionButtonPress}
-        />
+        <View style={styles.contentInner}>
+          <ListView
+            keyboardDismissMode="on-drag"
+            renderScrollComponent={props => <InfiniteScrollView {...props} />}
+            dataSource={this.state.dataSource}
+            renderRow={this.getListItem}
+            onLoadMoreAsync={this.loadMorePost}
+            canLoadMore={this.props.canLoadMore}
+          />
+        </View>
     </View>
     );
   }

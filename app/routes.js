@@ -29,6 +29,9 @@ import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 import Messenger from './containers/Messenger';
 import TradeRecord from './containers/TradeRecord';
+import FavoriteList from './containers/FavoriteList';
+import MyItems from './containers/MyItems';
+import Category from './containers/Category';
 
 // colors
 import {
@@ -229,6 +232,9 @@ export default class AppRoutes extends Component {
               <Route name="profile" component={Profile} schema="interior" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               <Route name="tradeRecord" component={TradeRecord} schema="interior" title="我撿的資源" />
+              <Route name="favoriteList" component={FavoriteList} schema="interior" title="我追蹤的資源" />
+              <Route name="myItems" component={MyItems} schema="interior" title="我的倉庫" />
+              <Route name="category" component={Category} schema="interior" title="尋寶去" />
               <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
             </Router>
           </SideDrawer>

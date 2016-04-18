@@ -59,15 +59,29 @@ export default class PostList extends Component {
         id: 2,
         title: '流行手提包',
         pic: 'http://i.imgur.com/6fLGRMu.jpg',
-        rightText: '拒絕',
+        rightText: '',
         distance: 0.300,
       },
       {
         id: 3,
         title: '全新馬克杯',
         pic: 'http://i.imgur.com/Nww6aKU.jpg',
+        rightText: '已下架',
+        distance: 0.10,
+      },
+      {
+        id: 4,
+        title: '全新滑鼠',
+        pic: 'http://dreamatico.com/data_images/mouse/mouse-8.jpg',
         rightText: '',
-        distance: 0.350,
+        distance: 0.375,
+      },
+      {
+        id: 5,
+        title: '韓國咖啡豆巧克力',
+        pic: 'http://www.valois.com.tw/adbanner/02.jpg',
+        rightText: '已下架',
+        distance: 0.391,
       },
     ];
 
@@ -113,6 +127,7 @@ export default class PostList extends Component {
         distance = `${rowData.distance} km`;
       }
     }
+    // {/*img={`${config.serverDomain}${rowData.pic}`}*/}
     return (
       <ListItem
         id={rowData.id}

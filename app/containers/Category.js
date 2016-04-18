@@ -1,19 +1,25 @@
 import React, {
   NativeModules,
-  ScrollView,
+  Dimensions,
   View,
   Component,
   ListView,
   Alert,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
+import {
+  LIST_ITEM_COLOR1,
+  LIST_ITEM_COLOR2,
+  SEARCHBAR_COLOR,
+  WHITE_COLOR,
+ } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
 import config from '../config/index';
-
+// import SearchBar from '../components/SearchBar';
+import SearchBar from 'react-native-search-bar';
 const {
   RNSearchBarManager,
 } = NativeModules;
@@ -23,15 +29,15 @@ import {
   requestSearchPostNextPage,
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
+import MultilineRadio from '../components/MultilineRadio';
 
+const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: '#fff',
-  },
-  ButtomButton: {
-
+    backgroundColor: WHITE_COLOR,
+    paddingBottom: windowSize.height * 0.11,
   },
 });
 
@@ -47,33 +53,18 @@ export default class PostList extends Component {
     };
   }
   componentDidMount() {
-    const tradeRecord = [
-      {
-        id: 1,
-        title: '韓國進口茶包',
-        pic: 'http://i.imgur.com/8LadPEI.jpg',
-        rightText: '已成交',
-        distance: 0.232,
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.requestSetLocation(position);
+        this.props.requestSearchLoadMore(false);
+        this.props.requestSearchPost(null, '300km', {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
       },
-      {
-        id: 2,
-        title: '流行手提包',
-        pic: 'http://i.imgur.com/6fLGRMu.jpg',
-        rightText: '拒絕',
-        distance: 0.300,
-      },
-      {
-        id: 3,
-        title: '全新馬克杯',
-        pic: 'http://i.imgur.com/Nww6aKU.jpg',
-        rightText: '',
-        distance: 0.350,
-      },
-    ];
-
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(tradeRecord),
-    });
+      (error) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.postList !== this.props.postList) {
@@ -93,9 +84,8 @@ export default class PostList extends Component {
   }
 
   onListItemPress = (id) => {
-    // this.handleSearchCancelPress();
-    // Actions.postDetail({ id });
-    Alert.alert('測試資料!');
+    this.handleSearchCancelPress();
+    Actions.postDetail({ id });
   }
 
   getListItem(rowData, sectionID, rowID, highlightRow) {
@@ -118,11 +108,11 @@ export default class PostList extends Component {
         id={rowData.id}
         index={rowData.index}
         title={rowData.title}
-        img={rowData.pic}
+        img={`${config.serverDomain}${rowData.pic}`}
         description={distance}
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
-        rightText={rowData.rightText}
+        rightText={''}
       />
     );
   }
@@ -154,19 +144,67 @@ export default class PostList extends Component {
     Actions.createPost.call();
   }
 
+  categoryItemPress = () => {
+    Alert.alert('click1');
+  }
+
+  categoryArray() {
+    return [
+      {
+        id: 0,
+        title: 'ALL 都想要',
+      },
+      {
+        id: 1,
+        title: 'ALL 都想要',
+      },
+      {
+        id: 2,
+        title: 'ALL 都想要',
+      },
+      {
+        id: 3,
+        title: 'ALL 都想要',
+      },
+      {
+        id: 4,
+        title: 'ALL 都想要',
+      },
+      {
+        id: 5,
+        title: 'ALL 都想要',
+      },
+    ];
+  }
+
   render() {
     return (
       <View style={styles.content}>
-        <ListView
+        <SearchBar
+          ref="postSearchBar"
+          onBlur={this.handleSearchCancelPress}
+          onFocus={this.handleSearchBarOnFocus}
+          onChangeText={this.onChangeText}
+          onSearchButtonPress={this.handleSearchButtonPress}
+          onCancelButtonPress={this.handleSearchCancelPress}
+          showsCancelButton={this.state.showsCancelButton}
+          barTintColor={SEARCHBAR_COLOR}
+          searchBarStyle="default"
+        />
+        <MultilineRadio
+          options={this.categoryArray()}
+          onItemPress={this.categoryItemPress}
+        />
+        {/*<ListView
           keyboardDismissMode="on-drag"
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
           onLoadMoreAsync={this.loadMorePost}
           canLoadMore={this.props.canLoadMore}
-        />
+        />*/}
         <ActionButton
-          text="我要上架"
+          text="GO!尋寶去"
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />

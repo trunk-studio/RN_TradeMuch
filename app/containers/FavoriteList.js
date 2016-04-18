@@ -50,24 +50,31 @@ export default class PostList extends Component {
     const tradeRecord = [
       {
         id: 1,
-        title: '韓國進口茶包',
-        pic: 'http://i.imgur.com/8LadPEI.jpg',
+        title: '全新滑鼠',
+        pic: 'http://i.imgur.com/3bE9Zqa.jpg',
+        rightText: '已成交',
+        distance: 0.112,
+      },
+      {
+        id: 2,
+        title: '韓國進口咖啡',
+        pic: 'http://i.imgur.com/qzwm33Q.jpg',
+        rightText: '已下架',
+        distance: 0.200,
+      },
+      {
+        id: 3,
+        title: '韓國咖啡豆巧克力',
+        pic: 'http://www.valois.com.tw/adbanner/02.jpg',
         rightText: '已成交',
         distance: 0.232,
       },
       {
-        id: 2,
-        title: '流行手提包',
-        pic: 'http://i.imgur.com/6fLGRMu.jpg',
-        rightText: '拒絕',
-        distance: 0.300,
-      },
-      {
-        id: 3,
-        title: '全新馬克杯',
-        pic: 'http://i.imgur.com/Nww6aKU.jpg',
+        id: 4,
+        title: '自家烘培手作茶包',
+        pic: 'http://i.imgur.com/hLhOug9.jpg',
         rightText: '',
-        distance: 0.350,
+        distance: 0.253,
       },
     ];
 
