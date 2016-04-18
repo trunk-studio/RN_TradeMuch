@@ -10,7 +10,7 @@ import {
 } from '../actions/MessengerActions';
 import { getItem } from '../utils/asyncStorage';
 import config from '../config/index';
-
+import * as color from '../style/color';
 const socket = io(`ws://${config.socketDomain}?__sails_io_sdk_version=0.13.5`, { jsonp: false, transports: ['websocket'] });
 
 async function composeRequestWithAuthToken(url, data) {
@@ -140,12 +140,18 @@ export default class Messenger extends Component {
           handleSend={this.handleSend}
           maxHeight={Dimensions.get('window').height - 45} // 64 for the navBar
           styles={{
+            textLeft: {
+              color: '#000',
+            },
             bubbleLeft: {
-              backgroundColor: '#e6e6eb',
+              backgroundColor: color.MESSENGER_BUBBLE_COLOR,
               marginRight: 70,
             },
+            textRight: {
+              color: '#000',
+            },
             bubbleRight: {
-              backgroundColor: '#007aff',
+              backgroundColor: color.MESSENGER_BUBBLE_COLOR,
               marginLeft: 70,
             },
           }}
