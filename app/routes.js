@@ -17,7 +17,7 @@ import RNRF, {
 import Icon from 'react-native-vector-icons/FontAwesome';
 const Router = connect()(RNRF.Router);
 
-// View
+// Views
 import Login from './containers/Login';
 import Policies from './containers/Policies';
 import Profile from './containers/Profile';
@@ -28,6 +28,9 @@ import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 import Messenger from './containers/Messenger';
+import TradeRecord from './containers/TradeRecord';
+
+// colors
 import {
   NAVBAR_BACKGROUND_COLOR,
   WHITE_COLOR,
@@ -225,6 +228,7 @@ export default class AppRoutes extends Component {
               <Route schema="none" name="policies" component={Policies} title="服務條款" />
               <Route name="profile" component={Profile} schema="interior" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
+              <Route name="tradeRecord" component={TradeRecord} schema="interior" title="我撿的資源" />
               <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
             </Router>
           </SideDrawer>
