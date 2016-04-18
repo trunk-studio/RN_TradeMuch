@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 9 * PIXEL_RATIO,
     fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   contentBlock: {
     width: windowSize.width,
