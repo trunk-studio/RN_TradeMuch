@@ -4,7 +4,6 @@ import React, {
   View,
   Component,
   TouchableOpacity,
-  Image,
   Text,
   ScrollView,
   PixelRatio,
@@ -14,7 +13,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Dimensions from 'Dimensions';
 import { requestAgreePolicies } from '../actions/AuthActions';
-import Checkbox from 'react-native-checkbox';
+import CheckBox from 'react-native-icon-checkbox';
 const windowSize = Dimensions.get('window');
 const PIXEL_RATIO = PixelRatio.get();
 const styles = StyleSheet.create({
@@ -128,11 +127,11 @@ export default class Policies extends Component {
             TradeMuch 的部分「服務」可以在行動裝置上使用。但請勿在會分散注意力的情況下使用這些「服務」，以免違反交通或安全法規。{"\n"}
           </Text>
           <View style={styles.checkBoxContainer} >
-            <Checkbox
+            <CheckBox
               label="我願意同意並遵守上述條款"
-              labelStyle={styles.checkBox}
+              size={30}
               checked={this.state.isAgreePolicies}
-              onChange={this.handleCheck}
+              onPress={this.handleCheck}
             />
           </View>
         </ScrollView>
