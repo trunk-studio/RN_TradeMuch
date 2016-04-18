@@ -28,6 +28,10 @@ import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 import Messenger from './containers/Messenger';
+import {
+  NAVBAR_BACKGROUND_COLOR,
+  WHITE_COLOR,
+} from './style/color';
 
 const styles = StyleSheet.create({
   navBar: {
@@ -35,13 +39,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgb(60, 180, 190)',
+    backgroundColor: NAVBAR_BACKGROUND_COLOR,
+  },
+  transparentNavBar: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   navTitle: {
     color: 'white',
   },
   routerScene: {
     paddingTop: Navigator.NavigationBar.Styles.General.NavBarHeight,
+  },
+  transparentScene: {
+    paddingTop: 0,
   },
   leftButtonContainer: {
     paddingLeft: 15,
@@ -52,6 +66,7 @@ const styles = StyleSheet.create({
   },
   menuIcon: {
     paddingRight: 10 * PixelRatio.get(),
+    marginTop: -1,
   },
 });
 
@@ -94,8 +109,8 @@ export default class AppRoutes extends Component {
       >
         <Icon
           name="list-ul"
-          size={24}
-          color={'rgb(255, 255, 255)'}
+          size={20}
+          color={WHITE_COLOR}
           style={styles.menuIcon}
         />
       </TouchableOpacity>
@@ -126,7 +141,7 @@ export default class AppRoutes extends Component {
         <Icon
           name="angle-left"
           size={24}
-          color={'rgb(255, 255, 255)'}
+          color={WHITE_COLOR}
           style={styles.menuIcon}
         />
         <Text style={styles.navTitle}>返回</Text>
@@ -140,6 +155,9 @@ export default class AppRoutes extends Component {
 
 
   render() {
+    // const isLoginPage = this.props.beforeRoute === 'login';
+    // const sceneStyle = isLoginPage ? styles.transparentScene : styles.routerScene;
+    // const navigationBarStyle = isLoginPage ? styles.transparentNavBar : styles.navBar;
     return (
       <Router name="root" hideNavBar>
         {/* ------------------- Schemas ------------------------------------ */}
@@ -181,8 +199,8 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
+              <Route name="login" schema="interior" component={Login} title="Checkbox" />
               <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
-              <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
                 component={CreatePost}
@@ -223,9 +241,10 @@ AppRoutes.propTypes = {
 };
 
 
-function _injectPropsFromStore({ auth }) {
+function _injectPropsFromStore({ auth, router }) {
   return {
     isLogin: auth.isLogin,
+    beforeRoute: router.beforeRoute,
   };
 }
 

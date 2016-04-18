@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   commentContent: {
     height: 42 * PIXEL_RATIO,
     paddingTop: 3.5 * PIXEL_RATIO,
+    paddingBottom: 3.5 * PIXEL_RATIO,
     marginLeft: 13 * PIXEL_RATIO,
     // flex: 1,
     flexDirection: 'row',
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: LIST_TITLE_COLOR,
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 5.5 * PIXEL_RATIO,
     fontSize: 8 * PIXEL_RATIO,
   },
   commentBody: {
@@ -34,11 +36,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 3 * PIXEL_RATIO,
+    fontWeight: '500',
   },
   itemImg: {
     borderRadius: 3,
     width: 42 * PIXEL_RATIO,
     height: 35 * PIXEL_RATIO,
+  },
+  rightBlock: {
+    flex: 1,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -46,12 +56,21 @@ export default function PostListItem(props) {
   function onItemPress() {
     props.onItemPress(props.id);
   }
+
+  let rightBlock = null;
+  if (props.rightText) {
+    rightBlock = (
+      <View style={styles.rightBlock}>
+        <Text>{props.rightText}</Text>
+      </View>
+    );
+  }
   return (
     <View style={props.bakColor}>
       <TouchableOpacity underlayColor={"#f3f3f3"} onPress={onItemPress}>
         <View>
           <View style={styles.commentContent}>
-              <Image source={{ uri: props.img }} style={styles.itemImg} />
+            <Image source={{ uri: props.img }} style={styles.itemImg} />
             <View style={styles.commentBody}>
               <Text style={styles.title}>
                 {props.title}
@@ -60,6 +79,7 @@ export default function PostListItem(props) {
                 {props.description}
               </Text>
             </View>
+            {rightBlock}
           </View>
         </View>
       </TouchableOpacity>
@@ -74,6 +94,7 @@ PostListItem.propTypes = {
   img: React.PropTypes.string,
   onItemPress: React.PropTypes.func,
   bakColor: React.PropTypes.object,
+  rightText: React.PropTypes.string,
 };
 
 PostListItem.defaultProps = {

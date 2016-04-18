@@ -1,4 +1,4 @@
-import React, { Component, StyleSheet, Dimensions, View } from 'react-native';
+import React, { Component, Dimensions, View } from 'react-native';
 import { connect } from 'react-redux';
 window.navigator.userAgent = 'react-native';
 const io = require('socket.io-client/socket.io');
@@ -6,6 +6,7 @@ import GiftedMessenger from 'react-native-gifted-messenger';
 import {
   receivedMessages,
   receivedNewMessage,
+  requestClearMessages,
 } from '../actions/MessengerActions';
 import { getItem } from '../utils/asyncStorage';
 import config from '../config/index';
@@ -26,54 +27,53 @@ async function composeRequestWithAuthToken(url, data) {
 }
 
 async function joinRoom(chatRoomId) {
-  const url = `/rest/room/${chatRoomId}/users`;
-  const request = await composeRequestWithAuthToken(url);
-  return new Promise((resolve) => {
-    socket.emit('post', request, (response) => {
-      resolve(response);
+  try {
+    const url = `/rest/room/${chatRoomId}/users`;
+    const request = await composeRequestWithAuthToken(url);
+    return new Promise((resolve) => {
+      socket.emit('post', request, (response) => {
+        resolve(response);
+      });
     });
-  });
+  } catch (e) {
+    throw e;
+  }
 }
 
 async function sendMessage(chatRoomId, message) {
-  const url = `/rest/chat/${chatRoomId}/public`;
-  const request = await composeRequestWithAuthToken(url, message);
-  return new Promise((resolve) => {
-    socket.emit('post', request, (response) => {
-      resolve(response);
+  try {
+    const url = `/rest/chat/${chatRoomId}/public`;
+    const request = await composeRequestWithAuthToken(url, message);
+    return new Promise((resolve) => {
+      socket.emit('post', request, (response) => {
+        resolve(response);
+      });
     });
-  });
+  } catch (e) {
+    throw e;
+  }
 }
 
 async function getChatHistory(chatRoomId) {
-  const url = `/rest/chat/${chatRoomId}/history`;
-  const request = await composeRequestWithAuthToken(url);
-  return new Promise((resolve) => {
-    socket.emit('get', request, (response) => {
-      resolve(response.body.result);
+  try {
+    const url = `/rest/chat/${chatRoomId}/history`;
+    const request = await composeRequestWithAuthToken(url);
+    return new Promise((resolve) => {
+      socket.emit('get', request, (response) => {
+        resolve(response.body.result);
+      });
     });
-  });
+  } catch (e) {
+    throw e;
+  }
 }
-
-const styles = StyleSheet.create({
-  nav: {
-    backgroundColor: '#007aff',
-    height: 64,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navText: {
-    marginTop: 15,
-    color: '#FFF',
-  },
-});
-
 
 export default class Messenger extends Component {
 
   static propTypes = {
     receivedMessages: React.PropTypes.func,
     receivedNewMessage: React.PropTypes.func,
+    requestClearMessages: React.PropTypes.func,
     messages: React.PropTypes.array,
     postId: React.PropTypes.number,
     sendMessageInitial: React.PropTypes.string,
@@ -89,9 +89,15 @@ export default class Messenger extends Component {
     this.handleInitial();
   }
 
+  componentWillUnmount() {
+    this.props.requestClearMessages();
+  }
+
   async handleInitial() {
     const messageHistory = await getChatHistory(this.props.postId);
-    this.props.receivedMessages(messageHistory);
+    if (messageHistory) {
+      this.props.receivedMessages(messageHistory);
+    }
     await joinRoom(this.props.postId);
     socket.on('public', (response) => {
       this.props.receivedNewMessage(response);
@@ -158,6 +164,7 @@ function _injectPropsFromStore({ messenger }) {
 const _injectPropsFormActions = {
   receivedMessages,
   receivedNewMessage,
+  requestClearMessages,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(Messenger);

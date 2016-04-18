@@ -52,9 +52,9 @@ export default class SideDrawer extends Component {
     return (
       <Drawer
         ref={this.refDrawer}
-        type="static"
+        type="displace"
         content={<SideDrawerContent closeDrawer={this.closeDrawer} />}
-        tapToClose
+        tapToClose={true}
         onOpen={this.onOpen}
         onClose={this.onClose}
         disabled={this.state.drawerDisabled}
@@ -62,9 +62,8 @@ export default class SideDrawer extends Component {
         tweenHandler={Drawer.tweenPresets.parallax}
         tweenDuration={100}
         negotiatePan
-        panThreshold={0.08}
-        panOpenMask={2}
-        openDrawerOffset={70}
+        panCloseMask={0.2}
+        openDrawerOffset={60}
         closedDrawerOffset={0}
       >
         {

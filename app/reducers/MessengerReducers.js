@@ -1,6 +1,7 @@
 import {
   RECEIVED_MESSAGES,
   RECEIVED_NEW_MESSAGE,
+  CLEAR_MESSAGES,
 } from '../actions/MessengerActions';
 
 export function messenger(state = { messages: [] }, action) {
@@ -17,6 +18,11 @@ export function messenger(state = { messages: [] }, action) {
           ...state.messages,
           action.data,
         ],
+      };
+    case CLEAR_MESSAGES:
+      return {
+        ...state,
+        messages: [],
       };
     default:
       return state;

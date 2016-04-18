@@ -21,16 +21,16 @@ const styles = StyleSheet.create({
   },
   icon: {
     width: 11 * PIXEL_RATIO,
-    height: 11 * PIXEL_RATIO,
+    height: 10 * PIXEL_RATIO,
   },
   blockIcon: {
-    alignItems: 'flex-end',
-    width: 10 * PIXEL_RATIO,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 42.5 * PIXEL_RATIO,
   },
   blockTitle: {
     flex: 1,
-    marginLeft: 10 * PIXEL_RATIO,
-    width: 60 * PIXEL_RATIO,
+    width: 84 * PIXEL_RATIO,
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
@@ -40,10 +40,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   contentBlock: {
+    flex: 1,
     flexDirection: 'row',
+    alignSelf: 'stretch',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 33 * PIXEL_RATIO,
+    height: 30 * PIXEL_RATIO,
   },
   blockNotification: {
     width: 10 * PIXEL_RATIO,
@@ -65,8 +67,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
   },
 });
 
