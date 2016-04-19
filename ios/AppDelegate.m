@@ -41,7 +41,7 @@
 
   jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
 
-  //jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.12:8081/index.ios.bundle?platform=ios&dev=true"];
+  //jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.22:8081/index.ios.bundle?platform=ios&dev=true"];
   /**
    * OPTION 2
    * Load from pre-bundled file on disk. To re-generate the static bundle

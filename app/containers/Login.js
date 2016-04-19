@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 100,
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
   },
   header: {
     justifyContent: 'center',
@@ -47,6 +47,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
     color: '#fff',
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
 });
 
@@ -109,7 +116,7 @@ export default class Login extends Component {
           <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
         <View style={styles.loginButtonContainer} >
-          <Text style={styles.text}>使用 Facebook 登入</Text>
+          <Text style={styles.text}>Log in or sign up with Facebook</Text>
           <FBSDKLoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}

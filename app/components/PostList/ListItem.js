@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 const PIXEL_RATIO = PixelRatio.get();
 import { LIST_TITLE_COLOR } from '../../style/color';
-
+import NotificationCircle from '../NotificationCount';
 const styles = StyleSheet.create({
   commentContent: {
     height: 42 * PIXEL_RATIO,
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: LIST_TITLE_COLOR,
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 5.5 * PIXEL_RATIO,
     fontSize: 8 * PIXEL_RATIO,
   },
   commentBody: {
@@ -35,6 +36,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 3 * PIXEL_RATIO,
+    fontWeight: '500',
   },
   itemImg: {
     borderRadius: 3,
@@ -59,6 +62,12 @@ export default function PostListItem(props) {
     rightBlock = (
       <View style={styles.rightBlock}>
         <Text>{props.rightText}</Text>
+      </View>
+    );
+  } else if (props.notificationCount) {
+    rightBlock = (
+      <View style={styles.rightBlock}>
+        <NotificationCircle count={props.notificationCount} />
       </View>
     );
   }
@@ -92,6 +101,7 @@ PostListItem.propTypes = {
   onItemPress: React.PropTypes.func,
   bakColor: React.PropTypes.object,
   rightText: React.PropTypes.string,
+  notificationCount: React.PropTypes.number,
 };
 
 PostListItem.defaultProps = {
