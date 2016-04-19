@@ -8,7 +8,13 @@ import React, {
   Dimensions,
   PropTypes,
 } from 'react-native';
-const windowSize = Dimensions.get('window');
+let windowSize = Dimensions.get('window');
+const isShort = windowSize.width < windowSize.height;
+windowSize = {
+  width: isShort ? windowSize.width : windowSize.height,
+  height: isShort ? windowSize.width : windowSize.height,
+};
+
 const PIXEL_RATIO = PixelRatio.get();
 const styles = StyleSheet.create({
   icon: {
@@ -28,10 +34,12 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 9 * PIXEL_RATIO,
     fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   contentBlock: {
-    width: windowSize.width,
     flex: 1,
+    width: windowSize.width,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

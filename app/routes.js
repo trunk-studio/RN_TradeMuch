@@ -17,7 +17,7 @@ import RNRF, {
 import Icon from 'react-native-vector-icons/FontAwesome';
 const Router = connect()(RNRF.Router);
 
-// View
+// Views
 import Login from './containers/Login';
 import Policies from './containers/Policies';
 import Profile from './containers/Profile';
@@ -28,6 +28,13 @@ import CreateFinish from './components/CreateFinish';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 import Messenger from './containers/Messenger';
+import MessageBoard from './containers/MessageBoard';
+import TradeRecord from './containers/TradeRecord';
+import FavoriteList from './containers/FavoriteList';
+import MyItems from './containers/MyItems';
+import Category from './containers/Category';
+
+// colors
 import {
   NAVBAR_BACKGROUND_COLOR,
   WHITE_COLOR,
@@ -199,7 +206,7 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="login" schema="interior" component={Login} title="Checkbox" />
+              <Route name="login" schema="interior" component={Login} title="登入" />
               <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
               <Route
                 name="createPost"
@@ -225,6 +232,11 @@ export default class AppRoutes extends Component {
               <Route schema="none" name="policies" component={Policies} title="服務條款" />
               <Route name="profile" component={Profile} schema="interior" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
+              <Route name="messageBoard" schema="home" component={MessageBoard} title="我的留言板" />
+              <Route name="tradeRecord" component={TradeRecord} schema="interior" title="我撿的資源" />
+              <Route name="favoriteList" component={FavoriteList} schema="interior" title="我追蹤的資源" />
+              <Route name="myItems" component={MyItems} schema="interior" title="我的倉庫" />
+              <Route name="category" component={Category} schema="interior" title="尋寶去" />
               <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
             </Router>
           </SideDrawer>
