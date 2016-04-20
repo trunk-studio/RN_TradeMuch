@@ -1,28 +1,18 @@
 import React, {
-  NativeModules,
-  ScrollView,
   View,
   Component,
   ListView,
   Alert,
 } from 'react-native';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
+import config from '../config/index';
+import Swipeout from 'react-native-swipeout';
 // import config from '../config/index';
 
-const {
-  RNSearchBarManager,
-} = NativeModules;
-import {
-  requestSearchLoadMore,
-  requestSearchPost,
-  requestSearchPostNextPage,
-} from '../actions/SearchPostActions';
-import { requestSetLocation } from '../actions/GeoActions';
 
 const styles = React.StyleSheet.create({
   content: {
@@ -47,91 +37,48 @@ export default class MyItems extends Component {
     };
   }
   componentDidMount() {
-    const tradeRecord = [
-      {
-        id: 1,
-        title: '韓國進口茶包',
-        pic: 'http://i.imgur.com/8LadPEI.jpg',
-        rightText: '已成交',
-        distance: 0.232,
-      },
-      {
-        id: 2,
-        title: '流行手提包',
-        pic: 'http://i.imgur.com/6fLGRMu.jpg',
-        rightText: '',
-        distance: 0.300,
-      },
-      {
-        id: 3,
-        title: '全新馬克杯',
-        pic: 'http://i.imgur.com/Nww6aKU.jpg',
-        rightText: '已下架',
-        distance: 0.10,
-      },
-      {
-        id: 4,
-        title: '全新滑鼠',
-        pic: 'http://dreamatico.com/data_images/mouse/mouse-8.jpg',
-        rightText: '',
-        distance: 0.375,
-      },
-      {
-        id: 5,
-        title: '韓國咖啡豆巧克力',
-        pic: 'http://www.valois.com.tw/adbanner/02.jpg',
-        rightText: '已下架',
-        distance: 0.391,
-      },
-    ];
-
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(tradeRecord),
+    const items = this.props.myItems.map((item) => {
+      let rightText = '';
+      if (item.status === 'off') {
+        rightText = '已下架';
+      } else if (item.status === 'sold') {
+        rightText = '已成交';
+      }
+      return {
+        ...item,
+        pic: `${config.serverDomain}${item.pic}`,
+        rightText,
+      };
     });
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.MyItems !== this.props.MyItems) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.MyItems),
-      });
-    }
-  }
-
-  onChangeText = (value) => {
-    const { location } = this.props;
-    this.props.requestSearchLoadMore(false);
-    this.props.requestSearchPost(value, '60000km', {
-      lat: location.latitude,
-      lon: location.longitude,
-    }, this.props.MyItems.length);
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(items),
+    });
   }
 
   onListItemPress = (id) => {
-    // this.handleSearchCancelPress();
-    // Actions.postDetail({ id });
-    Alert.alert('測試資料!');
+    const item = this.findMyItemById(id);
+    Actions.ownerPostDetail({
+      itemTitle: item.title,
+      description: item.description,
+      pic: `${config.serverDomain}${item.pic}`,
+    });
   }
 
-  getListItem(rowData, sectionID, rowID, highlightRow) {
+  onListItemSwipoutPress = () => {
+    Alert.alert('下架');
+  }
+
+  getListItem(rowData, sectionID, rowID) {
     let bakColor = {};
     if (rowID % 2 === 0) {
       bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
     } else {
       bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
     }
-    let distance = '';
-    if (rowData.distance !== -1) {
-      if (rowData.distance <= 1) {
-        distance = `${rowData.distance * 1000} m`;
-      } else {
-        distance = `${rowData.distance} km`;
-      }
-    }
-    // {/*img={`${config.serverDomain}${rowData.pic}`}*/}
-    return (
+    const distance = '';
+    const item = (
       <ListItem
         id={rowData.id}
-        index={rowData.index}
         title={rowData.title}
         img={rowData.pic}
         description={distance}
@@ -140,29 +87,37 @@ export default class MyItems extends Component {
         rightText={rowData.rightText}
       />
     );
+    let listItem;
+    if (rowData.status === 'on') {
+      const swipeoutBtns = [
+        {
+          text: '下架',
+          onPress: this.onListItemSwipoutPress,
+        },
+      ];
+      listItem = (
+        <Swipeout
+          right={swipeoutBtns}
+          autoClose
+        >
+          {item}
+        </Swipeout>
+      );
+    } else {
+      listItem = item;
+    }
+    return listItem;
   }
 
-  handleSearchButtonPress = () => {
-    this.searchBarDissmissKeyBoard();
-  }
-
-  searchBarDissmissKeyBoard = () => {
-    RNSearchBarManager.blur(React.findNodeHandle(this.refs.postSearchBar));
-  }
-
-  loadMorePost = () => {
-    const { MyItems, lastSeachApi } = this.props;
-    this.props.requestSearchLoadMore(false);
-    this.props.requestSearchPostNextPage(lastSeachApi, MyItems.length);
-  }
-
-  handleSearchCancelPress = () => {
-    this.searchBarDissmissKeyBoard();
-    this.setState({ showsCancelButton: false });
-  }
-
-  handleSearchBarOnFocus = () => {
-    this.setState({ showsCancelButton: true });
+  findMyItemById = (id) => {
+    const postList = this.props.myItems;
+    let postItem = {};
+    for (let i = 0; i < postList.length; i++) {
+      if (postList[i].id === id) {
+        postItem = postList[i];
+      }
+    }
+    return postItem;
   }
 
   handleActionButtonPress = () => {
@@ -173,12 +128,8 @@ export default class MyItems extends Component {
     return (
       <View style={styles.content}>
         <ListView
-          keyboardDismissMode="on-drag"
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
-          onLoadMoreAsync={this.loadMorePost}
-          canLoadMore={this.props.canLoadMore}
         />
         <ActionButton
           text="我要上架"
@@ -191,40 +142,20 @@ export default class MyItems extends Component {
 }
 
 MyItems.propTypes = {
-  MyItems: React.PropTypes.array,
-  location: React.PropTypes.object,
-  lastSeachApi: React.PropTypes.string,
-  canLoadMore: React.PropTypes.bool,
-  requestSearchLoadMore: React.PropTypes.func,
-  requestSearchPost: React.PropTypes.func,
-  onListItemPress: React.PropTypes.func,
-  requestSetLocation: React.PropTypes.func,
-  requestSearchPostNextPage: React.PropTypes.func,
+  myItems: React.PropTypes.array,
 };
 
 MyItems.defaultProps = {
-  MyItems: [],
-  location: {
-    latitude: 24.148657699999998,
-    longitude: 120.67413979999999,
-  },
-  canLoadMore: true,
+  myItems: [],
 };
 
 function _injectPropsFromStore(state) {
   return {
-    MyItems: state.search.MyItems,
-    lastSeachApi: state.search.lastSeachApi,
-    canLoadMore: state.search.canLoadMore,
-    location: state.geo.location,
+    myItems: state.post.myItems,
   };
 }
 
 const _injectPropsFormActions = {
-  requestSearchLoadMore,
-  requestSearchPost,
-  requestSetLocation,
-  requestSearchPostNextPage,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(MyItems);

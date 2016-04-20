@@ -3,6 +3,7 @@ import {
   RECEIVED_UPLOAD_IMG,
   RECEIVED_INPUT_TITLE,
   RECEIVED_INPUT_DESCRIPTION,
+  RECEIVED_GET_MY_ITEMS,
 } from '../actions/PostActions';
 
 export function post(state = {}, action) {
@@ -26,6 +27,11 @@ export function post(state = {}, action) {
       return {
         ...state,
         description: action.data,
+      };
+    case RECEIVED_GET_MY_ITEMS:
+      return {
+        ...state,
+        myItems: action.data,
       };
     default:
       return state;

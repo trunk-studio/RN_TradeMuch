@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { loginValidation } from './actions/AuthActions';
+import { requestGetMyItems } from './actions/PostActions';
 import React, {
   Navigator,
 	StyleSheet,
@@ -25,6 +26,7 @@ import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import CreateFinish from './components/CreateFinish';
+import OwnerPostDetail from './components/OwnerPostDetail';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
 import Messenger from './containers/Messenger';
@@ -104,6 +106,9 @@ export default class AppRoutes extends Component {
   renderMenuButton() {
     const switchSideDrawer = () => {
       if (!this.drawer._open) {
+        if (this.props.isLogin) {
+          this.props.requestGetMyItems();
+        }
         this.drawer.open();
       } else {
         this.drawer.close();
@@ -223,6 +228,12 @@ export default class AppRoutes extends Component {
                 hideNavBar={false}
               />
               <Route
+                name="ownerPostDetail"
+                component={OwnerPostDetail}
+                schema="interior"
+                hideNavBar={false}
+              />
+              <Route
                 name="createFinish"
                 component={CreateFinish}
                 schema="none"
@@ -249,6 +260,7 @@ export default class AppRoutes extends Component {
 AppRoutes.propTypes = {
   renderMenuButton: React.PropTypes.func,
   renderBackButton: React.PropTypes.func,
+  requestGetMyItems: React.PropTypes.func,
   isLogin: React.PropTypes.bool,
 };
 
@@ -262,6 +274,7 @@ function _injectPropsFromStore({ auth, router }) {
 
 const _injectPropsFormActions = {
   loginValidation,
+  requestGetMyItems,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(AppRoutes);

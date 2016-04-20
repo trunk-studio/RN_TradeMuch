@@ -8,6 +8,7 @@ export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
 export const RECEIVED_INPUT_TITLE = 'RECEIVED_INPUT_TITLE';
 export const RECEIVED_INPUT_DESCRIPTION = 'RECEIVED_INPUT_Description';
 export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
+export const RECEIVED_GET_MY_ITEMS = 'RECEIVED_GET_MY_ITEMS';
 
 function receivedCreate(data = {
   id: null,
@@ -120,4 +121,24 @@ export async function requestInputDescription(description) {
   return (dispatch) => {
     dispatch(receivedInputDescription(description));
   };
+}
+
+export function receivedGetMyItems(postList) {
+  return {
+    type: RECEIVED_GET_MY_ITEMS,
+    data: postList,
+  };
+}
+
+export async function requestGetMyItems() {
+  const getMyItemsApi = '/rest/post/mypost';
+  try {
+    const postList = await fetchWithAuth(getMyItemsApi);
+    return (dispatch) => {
+      dispatch(receivedGetMyItems(postList.data));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
 }
