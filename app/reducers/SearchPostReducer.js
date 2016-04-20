@@ -7,7 +7,11 @@ import {
 
 import { RECEIVED_ADD_POSTLIST } from '../actions/PostActions';
 
-export function search(state = {}, action) {
+const searchDefault = {
+  postList: [],
+};
+
+export function search(state = searchDefault, action) {
   switch (action.type) {
     case RECEIVED_SEARCH_POST:
       return {
@@ -30,14 +34,9 @@ export function search(state = {}, action) {
         canLoadMore: action.data,
       };
     case RECEIVED_ADD_POSTLIST:
-      let newList = [];
-      newList = [...state.postList];
-      if (state.postList.length > 0) {
-        newList.concat([action.data]);
-      }
       return {
         ...state,
-        postList: newList,
+        postList: state.postList.concat([action.data]),
       };
     default:
       return state;
