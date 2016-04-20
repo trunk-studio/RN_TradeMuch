@@ -110,7 +110,10 @@ MenuItem.propTypes = {
   title: PropTypes.string,
   img: PropTypes.string,
   onItemPress: PropTypes.func,
-  notification: PropTypes.string,
+  notification: React.PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 };
 
 MenuItem.defaultProps = {
