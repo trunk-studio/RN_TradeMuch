@@ -154,8 +154,14 @@ const styles = React.StyleSheet.create({
   footContainer: {
     flex: 0.21,
   },
-  footBackColor: {
+  footBackColor1: {
     height: windowSize.height / 3,
+    width: windowSize.width,
+    position: 'absolute',
+    bottom: 0,
+  },
+  footBackColor2: {
+    height: windowSize.height,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
@@ -264,7 +270,7 @@ export default class PostDetail extends Component {
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
-          style={styles.footBackColor}
+          style={styles.footBackColor1}
         />,
       ];
     } else {
@@ -272,7 +278,7 @@ export default class PostDetail extends Component {
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
-          style={styles.footBackColor}
+          style={styles.footBackColor2}
         />,
       ];
       noneImg = [

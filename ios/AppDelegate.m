@@ -38,9 +38,10 @@
    * `inet` value under `en0:`) and make sure your computer and iOS device are
    * on the same Wi-Fi network.
    */
-
+#if DEBUG
+  #warning "DEV MODE"
   jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
-
+#else
   //jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.22:8081/index.ios.bundle?platform=ios&dev=true"];
   /**
    * OPTION 2
@@ -51,9 +52,9 @@
    *
    * see http://facebook.github.io/react-native/docs/runningondevice.html
    */
-
-//   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-
+   #warning "PROD MODE"
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+#endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"TradeMuch"
                                                initialProperties:nil
