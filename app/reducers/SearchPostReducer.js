@@ -30,9 +30,14 @@ export function search(state = {}, action) {
         canLoadMore: action.data,
       };
     case RECEIVED_ADD_POSTLIST:
+      let newList = [];
+      newList = [...state.postList];
+      if (state.postList.length > 0) {
+        newList.concat([action.data]);
+      }
       return {
         ...state,
-        postList: state.postList.concat([action.data]),
+        postList: newList,
       };
     default:
       return state;

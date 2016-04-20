@@ -23,10 +23,13 @@ const styles = {
 };
 
 export default class SideDrawer extends Component {
-  state={
-    drawerOpen: false,
-    drawerDisabled: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      drawerOpen: false,
+      drawerDisabled: false,
+    };
+  }
 
   onOpen = () => {
 
