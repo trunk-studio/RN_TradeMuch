@@ -141,8 +141,8 @@ export default class SideDrawerContent extends Component {
     if (isLogin) {
       let unReadCountSum = 0;
       for (let i = 0; i < myItems.length; i++) {
-        if (myItems.unReadCount) {
-          unReadCountSum += parseInt(myItems.unReadCount, 10);
+        if (myItems[i].unReadCount) {
+          unReadCountSum += parseInt(myItems[i].unReadCount, 10);
         }
       }
       messageBoard = (

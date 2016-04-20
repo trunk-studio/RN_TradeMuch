@@ -1,11 +1,9 @@
 import React, {
-  NativeModules,
   Dimensions,
   View,
   Component,
   ListView,
   Alert,
-  Text,
   SegmentedControlIOS,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
@@ -13,20 +11,8 @@ import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 // import SearchBar from '../components/SearchBar';
-import SearchBar from 'react-native-search-bar';
-import NotificationCircle from '../components/NotificationCount';
-const {
-  RNSearchBarManager,
-} = NativeModules;
-import {
-  requestSearchLoadMore,
-  requestSearchPost,
-  requestSearchPostNextPage,
-} from '../actions/SearchPostActions';
-import { requestSetLocation } from '../actions/GeoActions';
 
 const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
@@ -50,42 +36,36 @@ export default class MessageBoard extends Component {
     this.state = {
       dataSource,
       showsCancelButton: false,
+      selectedIndex: 0,
     };
   }
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.props.requestSetLocation(position);
-        this.props.requestSearchLoadMore(false);
-        this.props.requestSearchPost(null, '300km', {
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      },
-      (error) => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.postList !== this.props.postList) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.postList),
-      });
-    }
-  }
 
-  onChangeText = (value) => {
-    const { location } = this.props;
-    this.props.requestSearchLoadMore(false);
-    this.props.requestSearchPost(value, '60000km', {
-      lat: location.latitude,
-      lon: location.longitude,
-    }, this.props.postList.length);
+  componentDidMount() {
+    const items = this.props.myItems.map((item) => {
+      let rightText = '';
+      if (item.status === 'off') {
+        rightText = '已下架';
+      } else if (item.status === 'sold') {
+        rightText = '已成交';
+      }
+      return {
+        ...item,
+        pic: `${config.serverDomain}${item.pic}`,
+        rightText,
+      };
+    });
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(items),
+    });
   }
 
   onListItemPress = (id) => {
-    this.handleSearchCancelPress();
-    Actions.postDetail({ id });
+    // this.handleSearchCancelPress();
+    const item = this.findMyItemById(id);
+    Actions.messenger({
+      title: item.title,
+      postId: item.id,
+    });
   }
 
   getListItem(rowData, sectionID, rowID, highlightRow) {
@@ -95,53 +75,58 @@ export default class MessageBoard extends Component {
     } else {
       bakColor = { backgroundColor: color.LIST_ITEM_COLOR2 };
     }
-    let distance = '';
-    if (rowData.distance !== -1) {
-      if (rowData.distance <= 1) {
-        distance = `${rowData.distance * 1000} m`;
-      } else {
-        distance = `${rowData.distance} km`;
-      }
-    }
     return (
       <ListItem
         id={rowData.id}
-        index={rowData.index}
         title={rowData.title}
-        img={`${config.serverDomain}${rowData.pic}`}
-        description={distance}
+        img={rowData.pic}
+        description={''}
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
-        notificationCount={101}
+        notificationCount={rowData.unReadCount}
       />
     );
   }
-
-  handleSearchButtonPress = () => {
-    this.searchBarDissmissKeyBoard();
+  findMyItemById = (id) => {
+    const postList = this.props.myItems;
+    let postItem = {};
+    for (let i = 0; i < postList.length; i++) {
+      if (postList[i].id === id) {
+        postItem = postList[i];
+      }
+    }
+    return postItem;
   }
 
-  searchBarDissmissKeyBoard = () => {
-    RNSearchBarManager.blur(React.findNodeHandle(this.refs.postSearchBar));
-  }
-
-  loadMorePost = () => {
-    const { postList, lastSeachApi } = this.props;
-    this.props.requestSearchLoadMore(false);
-    this.props.requestSearchPostNextPage(lastSeachApi, postList.length);
-  }
-
-  handleSearchCancelPress = () => {
-    this.searchBarDissmissKeyBoard();
-    this.setState({ showsCancelButton: false });
-  }
-
-  handleSearchBarOnFocus = () => {
-    this.setState({ showsCancelButton: true });
-  }
 
   handleActionButtonPress = () => {
     Actions.createPost.call();
+  }
+
+  handleSelectCnahge = (event) => {
+    const selectedSegmentIndex = event.nativeEvent.selectedSegmentIndex;
+    const items = [];
+    this.props.myItems.forEach((item) => {
+      const data = {
+        ...item,
+        pic: `${config.serverDomain}${item.pic}`,
+      };
+      if (selectedSegmentIndex === 0) {
+        items.push(data);
+      } else if (selectedSegmentIndex === 1) {
+        if (!item.unReadCount) {
+          items.push(data);
+        }
+      } else if (selectedSegmentIndex === 2) {
+        if (item.unReadCount > 0) {
+          items.push(data);
+        }
+      }
+    });
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(items),
+      selectedIndex: event.nativeEvent.selectedSegmentIndex,
+    });
   }
 
   render() {
@@ -150,17 +135,15 @@ export default class MessageBoard extends Component {
         <View style={styles.header}>
           <SegmentedControlIOS
             values={['全部', '已讀', '未讀']}
-            selectedIndex={0}
+            selectedIndex={this.state.selectedIndex}
             tintColor={color.SEGMENTED_CONTROL_SELECTED}
+            onChange={this.handleSelectCnahge}
           />
         </View>
         <ListView
           keyboardDismissMode="on-drag"
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
-          onLoadMoreAsync={this.loadMorePost}
-          canLoadMore={this.props.canLoadMore}
         />
     </View>
     );
@@ -168,40 +151,20 @@ export default class MessageBoard extends Component {
 }
 
 MessageBoard.propTypes = {
-  postList: React.PropTypes.array,
-  location: React.PropTypes.object,
-  lastSeachApi: React.PropTypes.string,
-  canLoadMore: React.PropTypes.bool,
-  requestSearchLoadMore: React.PropTypes.func,
-  requestSearchPost: React.PropTypes.func,
-  onListItemPress: React.PropTypes.func,
-  requestSetLocation: React.PropTypes.func,
-  requestSearchPostNextPage: React.PropTypes.func,
+  myItems: React.PropTypes.array,
 };
 
 MessageBoard.defaultProps = {
-  postList: [],
-  location: {
-    latitude: 24.148657699999998,
-    longitude: 120.67413979999999,
-  },
-  canLoadMore: true,
+  myItems: [],
 };
 
 function _injectPropsFromStore(state) {
   return {
-    postList: state.search.postList,
-    lastSeachApi: state.search.lastSeachApi,
-    canLoadMore: state.search.canLoadMore,
-    location: state.geo.location,
+    myItems: state.post.myItems,
   };
 }
 
 const _injectPropsFormActions = {
-  requestSearchLoadMore,
-  requestSearchPost,
-  requestSetLocation,
-  requestSearchPostNextPage,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(MessageBoard);
