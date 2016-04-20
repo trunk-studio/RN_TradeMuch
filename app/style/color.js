@@ -15,5 +15,5 @@ export const MAIN_BACKGROUND_COLOR = 'rgb(236,244,242)';
 export const SEGMENTED_CONTROL_SELECTED = 'rgb(95,162,146)';
 export const LIST_BACKGROUND_COLOR_1 = 'rgb(213, 226, 223)';
 export const MESSENGER_BUBBLE_COLOR = 'rgb(244, 227, 213)';
-// export const
+export const LIST_BORDER = 'rgb(173, 189, 185)';
 // export const
