@@ -15,6 +15,10 @@ import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 import Swipeout from 'react-native-swipeout';
 import SwipeOutButton from '../components/SwipeOutButton';
+
+import {
+  requestUpdatePostStatus,
+} from '../actions/PostActions';
 // import config from '../config/index';
 
 
@@ -59,6 +63,28 @@ export default class MyItems extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      console.log('in Will');
+      const items = this.props.myItems.map((item) => {
+        let rightText = '';
+        if (item.status === 'off') {
+          rightText = '已下架';
+        } else if (item.status === 'sold') {
+          rightText = '已成交';
+        }
+        return {
+          ...item,
+          pic: `${config.serverDomain}${item.pic}`,
+          rightText,
+        };
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items),
+      });
+    }
+  }
+
   onListItemPress = (id) => {
     const item = this.findMyItemById(id);
     Actions.ownerPostDetail({
@@ -71,9 +97,8 @@ export default class MyItems extends Component {
   onListItemSwipoutPress = () => {
   }
 
-
-
   getListItem(rowData, sectionID, rowID) {
+    console.log('getListItem');
     let bakColor = {};
     if (rowID % 2 === 0) {
       bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
@@ -95,10 +120,11 @@ export default class MyItems extends Component {
     );
     let listItem;
     if (rowData.status === 'on') {
+      console.log('rowDataId',rowData.id);
       const swipeoutBtns = [
         {
           backgroundColor: color.SWIPE_BUTTON_COLOR_1,
-          onPress: this.takeOffPost,
+          onPress: this.takeOffPost.bind(this, rowData.id),
           component: (
             <SwipeOutButton label={"下架"} imgSource={{ uri: 'http://i.imgur.com/z83iW6N.png' }} />
           ),
@@ -116,7 +142,7 @@ export default class MyItems extends Component {
       const swipeoutBtns = [
         {
           backgroundColor: color.SWIPE_BUTTON_COLOR_2,
-          onPress: this.putOnPost,
+          onPress: this.putOnPost.bind(this, rowData.id),
           component: (
             <SwipeOutButton label={"上架"} imgSource={{ uri: 'http://i.imgur.com/cxvFxzn.png' }} />
           ),
@@ -136,12 +162,12 @@ export default class MyItems extends Component {
     return listItem;
   }
 
-  takeOffPost = () => {
-    Alert.alert('下架');
+  takeOffPost = (postId) => {
+    this.props.requestUpdatePostStatus(postId, 'off');
   }
 
-  putOnPost = () => {
-    Alert.alert('上架');
+  putOnPost = (postId) => {
+    this.props.requestUpdatePostStatus(postId, 'on');
   }
 
   findMyItemById = (id) => {
@@ -160,6 +186,7 @@ export default class MyItems extends Component {
   }
 
   render() {
+    console.log('rerender');
     return (
       <View style={styles.content}>
         <ListView
@@ -171,13 +198,14 @@ export default class MyItems extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
-    </View>
+      </View>
     );
   }
 }
 
 MyItems.propTypes = {
   myItems: React.PropTypes.array,
+  requestUpdatePostStatus: React.PropTypes.func,
 };
 
 MyItems.defaultProps = {
@@ -191,6 +219,7 @@ function _injectPropsFromStore(state) {
 }
 
 const _injectPropsFormActions = {
+  requestUpdatePostStatus,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(MyItems);

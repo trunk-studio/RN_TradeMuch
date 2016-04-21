@@ -52,7 +52,7 @@ export function post(state = {}, action) {
         'id',
         action.data.postId,
         (item) => {
-          let newItem = item;
+          let newItem = {...item};
           newItem.status = action.data.status;
           return newItem;
         }
