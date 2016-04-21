@@ -4,7 +4,20 @@ import {
   RECEIVED_INPUT_TITLE,
   RECEIVED_INPUT_DESCRIPTION,
   RECEIVED_GET_MY_ITEMS,
+  RECEIVED_UPDATE_POST_STATUS_SUCCESS,
 } from '../actions/PostActions';
+
+function findObjById(objArray, targetObjKey, targetValue, callback) {
+  let newArray = [];
+  for (const item of objArray) {
+    if (item[targetObjKey] === targetValue) {
+      newArray.push(callback(item));
+    } else {
+      newArray.push(item);
+    }
+  }
+  return newArray;
+}
 
 export function post(state = {}, action) {
   switch (action.type) {
@@ -33,6 +46,22 @@ export function post(state = {}, action) {
         ...state,
         myItems: action.data,
       };
+    case RECEIVED_UPDATE_POST_STATUS_SUCCESS: {
+      const newMyItems = findObjById(
+        state.myItems,
+        'id',
+        action.data.postId,
+        (item) => {
+          let newItem = {...item};
+          newItem.status = action.data.status;
+          return newItem;
+        }
+      );
+      return {
+        ...state,
+        myItems: newMyItems,
+      };
+    }
     default:
       return state;
   }

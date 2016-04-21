@@ -35,7 +35,7 @@ import TradeRecord from './containers/TradeRecord';
 import FavoriteList from './containers/FavoriteList';
 import MyItems from './containers/MyItems';
 import Category from './containers/Category';
-
+import GivePage from './containers/GivePage';
 // colors
 import {
   NAVBAR_BACKGROUND_COLOR,
@@ -211,8 +211,8 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="login" schema="interior" component={Login} title="登入" />
               <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
+              <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
                 component={CreatePost}
@@ -249,6 +249,7 @@ export default class AppRoutes extends Component {
               <Route name="myItems" component={MyItems} schema="interior" title="我的倉庫" />
               <Route name="category" component={Category} schema="interior" title="尋寶去" />
               <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
+              <Route name="givePage" schema="interior" component={GivePage} title="物品名稱" />
             </Router>
           </SideDrawer>
         </Route>

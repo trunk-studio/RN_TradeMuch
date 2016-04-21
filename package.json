@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./node_modules/react-native/local-cli/cli.js start && node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver ",
+    "start": "node ./node_modules/react-native/local-cli/cli.js start && node node_modules/react-native/local-cli/cli.js run-ios",
+    "dev": "node ./node_modules/react-native/local-cli/cli.js start && node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver ",
     "eslint": "./node_modules/eslint/bin/eslint.js ./app/*",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
     "test": "mocha test",
-    "dev": "node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver",
+    "devtool": "node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver",
     "prod": "node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle"
   },
   "dependencies": {
