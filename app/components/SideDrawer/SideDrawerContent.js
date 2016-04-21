@@ -140,11 +140,11 @@ export default class SideDrawerContent extends Component {
     let messageBoard;
     if (isLogin) {
       let unReadCountSum = 0;
-      for (let i = 0; i < myItems.length; i++) {
-        if (myItems[i].unReadCount) {
-          unReadCountSum += parseInt(myItems[i].unReadCount, 10);
+      myItems.forEach((item) => {
+        if (item.unReadCount) {
+          unReadCountSum += parseInt(item.unReadCount, 10);
         }
-      }
+      });
       messageBoard = (
         <MenuItem id="messageBoard" title="我的留言板" img="http://i.imgur.com/NBbuVv3.png  " notification={unReadCountSum} onItemPress={this.onItemPress} />
       );

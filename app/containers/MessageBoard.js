@@ -62,13 +62,16 @@ export default class MessageBoard extends Component {
           ...item,
           pic: `${config.serverDomain}${item.pic}`,
         };
-        if (selectedSegmentIndex === 0) {
+        const allMessage = selectedSegmentIndex === 0;
+        const read = selectedSegmentIndex === 1;
+        const unread = selectedSegmentIndex === 2;
+        if (allMessage) {
           items.push(data);
-        } else if (selectedSegmentIndex === 1) {
+        } else if (read) {
           if (!item.unReadCount) {
             items.push(data);
           }
-        } else if (selectedSegmentIndex === 2) {
+        } else if (unread) {
           if (item.unReadCount > 0) {
             items.push(data);
           }
@@ -112,9 +115,10 @@ export default class MessageBoard extends Component {
   findMyItemById = (id) => {
     const postList = this.props.myItems;
     let postItem = {};
-    for (let i = 0; i < postList.length; i++) {
-      if (postList[i].id === id) {
-        postItem = postList[i];
+    for (const post of postList) {
+      if (post.id === id) {
+        postItem = post;
+        break;
       }
     }
     return postItem;
@@ -133,13 +137,16 @@ export default class MessageBoard extends Component {
         ...item,
         pic: `${config.serverDomain}${item.pic}`,
       };
-      if (selectedSegmentIndex === 0) {
+      const allMessage = selectedSegmentIndex === 0;
+      const read = selectedSegmentIndex === 1;
+      const unread = selectedSegmentIndex === 2;
+      if (allMessage) {
         items.push(data);
-      } else if (selectedSegmentIndex === 1) {
+      } else if (read) {
         if (!item.unReadCount) {
           items.push(data);
         }
-      } else if (selectedSegmentIndex === 2) {
+      } else if (unread) {
         if (item.unReadCount > 0) {
           items.push(data);
         }
