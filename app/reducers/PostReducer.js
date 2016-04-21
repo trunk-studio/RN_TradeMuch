@@ -5,6 +5,7 @@ import {
   RECEIVED_INPUT_DESCRIPTION,
   RECEIVED_GET_MY_ITEMS,
   RECEIVED_UPDATE_POST_STATUS_SUCCESS,
+  RECEIVED_GET_TRADE_RECORDS,
 } from '../actions/PostActions';
 
 function findObjById(objArray, targetObjKey, targetValue, callback) {
@@ -62,6 +63,11 @@ export function post(state = {}, action) {
         myItems: newMyItems,
       };
     }
+    case RECEIVED_GET_TRADE_RECORDS:
+      return {
+        ...state,
+        myTradeRecords: action.data,
+      };
     default:
       return state;
   }
