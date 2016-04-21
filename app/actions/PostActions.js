@@ -9,7 +9,8 @@ export const RECEIVED_INPUT_TITLE = 'RECEIVED_INPUT_TITLE';
 export const RECEIVED_INPUT_DESCRIPTION = 'RECEIVED_INPUT_Description';
 export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
 export const RECEIVED_GET_MY_ITEMS = 'RECEIVED_GET_MY_ITEMS';
-
+export const RECEIVED_UPDATE_POST_STATUS_SUCCESS = 'RECEIVED_UPDATE_POST_STATUS_SUCCESS';
+export const RECEIVED_UPDATE_POST_STATUS_FAIL = 'RECEIVED_UPDATE_POST_STATUS_FAIL';
 function receivedCreate(data = {
   id: null,
   uuid: '',
@@ -136,6 +137,34 @@ export async function requestGetMyItems() {
     const postList = await fetchWithAuth(getMyItemsApi);
     return (dispatch) => {
       dispatch(receivedGetMyItems(postList.data));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+export function receivedUpdatePostStatus(isSuccess, postId, status) {
+  let actionType;
+  if (isSuccess) {
+    actionType = RECEIVED_UPDATE_POST_STATUS_SUCCESS;
+  } else {
+    actionType = RECEIVED_UPDATE_POST_STATUS_FAIL;
+  }
+  return {
+    type: actionType,
+    data: {
+      postId,
+      status,
+    },
+  };
+}
+
+export async function requestUpdatePostStatus(postId, status) {
+  try {
+    const result = await fetchWithAuth(postId, status);
+    return (dispatch) => {
+      dispatch(receivedUpdatePostStatus(result.success, postId, status));
     };
   } catch (e) {
     errorHandle(e.message);
