@@ -1,5 +1,6 @@
 export const RECEIVED_MESSAGES = 'RECEIVED_MESSAGES';
 export const RECEIVED_NEW_MESSAGE = 'RECEIVED_NEW_MESSAGE';
+export const RECEIVED_READ_MESSAGE = 'RECEIVED_READ_MESSAGE';
 export const CLEAR_MESSAGES = 'CLEAR_MESSAGES';
 import { getItem } from '../utils/asyncStorage';
 
@@ -51,6 +52,15 @@ export async function requestClearMessages() {
   return (dispatch) => {
     dispatch({
       type: CLEAR_MESSAGES,
+    });
+  };
+}
+
+export async function receivedReadMessages(postId) {
+  return (dispatch) => {
+    dispatch({
+      type: RECEIVED_READ_MESSAGE,
+      data: postId,
     });
   };
 }

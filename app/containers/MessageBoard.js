@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import config from '../config/index';
+import { receivedReadMessages } from '../actions/MessengerActions';
 // import SearchBar from '../components/SearchBar';
 
 const windowSize = Dimensions.get('window');
@@ -42,16 +43,9 @@ export default class MessageBoard extends Component {
 
   componentDidMount() {
     const items = this.props.myItems.map((item) => {
-      let rightText = '';
-      if (item.status === 'off') {
-        rightText = '已下架';
-      } else if (item.status === 'sold') {
-        rightText = '已成交';
-      }
       return {
         ...item,
         pic: `${config.serverDomain}${item.pic}`,
-        rightText,
       };
     });
     this.setState({
@@ -59,8 +53,36 @@ export default class MessageBoard extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      let items = [];
+      const selectedSegmentIndex = this.state.selectedIndex;
+      nextProps.myItems.forEach((item) => {
+        const data = {
+          ...item,
+          pic: `${config.serverDomain}${item.pic}`,
+        };
+        if (selectedSegmentIndex === 0) {
+          items.push(data);
+        } else if (selectedSegmentIndex === 1) {
+          if (!item.unReadCount) {
+            items.push(data);
+          }
+        } else if (selectedSegmentIndex === 2) {
+          if (item.unReadCount > 0) {
+            items.push(data);
+          }
+        }
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items),
+      });
+    }
+  }
+
   onListItemPress = (id) => {
     // this.handleSearchCancelPress();
+    this.props.receivedReadMessages(id);
     const item = this.findMyItemById(id);
     Actions.messenger({
       title: item.title,
@@ -125,7 +147,7 @@ export default class MessageBoard extends Component {
     });
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(items),
-      selectedIndex: event.nativeEvent.selectedSegmentIndex,
+      selectedIndex: selectedSegmentIndex,
     });
   }
 
@@ -152,6 +174,7 @@ export default class MessageBoard extends Component {
 
 MessageBoard.propTypes = {
   myItems: React.PropTypes.array,
+  receivedReadMessages: React.PropTypes.func,
 };
 
 MessageBoard.defaultProps = {
@@ -165,6 +188,7 @@ function _injectPropsFromStore(state) {
 }
 
 const _injectPropsFormActions = {
+  receivedReadMessages,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(MessageBoard);
