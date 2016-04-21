@@ -61,7 +61,7 @@ export default function PostListItem(props) {
   if (props.rightText) {
     rightBlock = (
       <View style={styles.rightBlock}>
-        <Text>{props.rightText}</Text>
+        <Text style={props.rightTextStyle}>{props.rightText}</Text>
       </View>
     );
   } else if (props.notificationCount) {
@@ -101,6 +101,7 @@ PostListItem.propTypes = {
   onItemPress: React.PropTypes.func,
   bakColor: React.PropTypes.object,
   rightText: React.PropTypes.string,
+  rightTextStyle: React.PropTypes.object,
   notificationCount: React.PropTypes.number,
 };
 

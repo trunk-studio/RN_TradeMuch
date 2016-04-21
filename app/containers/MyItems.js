@@ -3,14 +3,22 @@ import React, {
   Component,
   ListView,
   Alert,
+  Image,
+  Text,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
+import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 import Swipeout from 'react-native-swipeout';
+import SwipeOutButton from '../components/SwipeOutButton';
+
+import {
+  requestUpdatePostStatus,
+} from '../actions/PostActions';
 // import config from '../config/index';
 
 
@@ -18,7 +26,7 @@ const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: '#fff',
+    backgroundColor: color.MAIN_BACKGROUND_COLOR,
   },
   ButtomButton: {
 
@@ -36,6 +44,7 @@ export default class MyItems extends Component {
       showsCancelButton: false,
     };
   }
+
   componentDidMount() {
     const items = this.props.myItems.map((item) => {
       let rightText = '';
@@ -55,6 +64,27 @@ export default class MyItems extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      const items = nextProps.myItems.map((item) => {
+        let rightText = '';
+        if (item.status === 'off') {
+          rightText = '已下架';
+        } else if (item.status === 'sold') {
+          rightText = '已成交';
+        }
+        return {
+          ...item,
+          pic: `${config.serverDomain}${item.pic}`,
+          rightText,
+        };
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items),
+      });
+    }
+  }
+
   onListItemPress = (id) => {
     const item = this.findMyItemById(id);
     Actions.ownerPostDetail({
@@ -65,7 +95,6 @@ export default class MyItems extends Component {
   }
 
   onListItemSwipoutPress = () => {
-    Alert.alert('下架');
   }
 
   getListItem(rowData, sectionID, rowID) {
@@ -85,14 +114,36 @@ export default class MyItems extends Component {
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
         rightText={rowData.rightText}
+        rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );
     let listItem;
     if (rowData.status === 'on') {
       const swipeoutBtns = [
         {
-          text: '下架',
-          onPress: this.onListItemSwipoutPress,
+          backgroundColor: color.SWIPE_BUTTON_COLOR_1,
+          onPress: this.takeOffPost.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"下架"} imgSource={{ uri: 'http://i.imgur.com/z83iW6N.png' }} />
+          ),
+        },
+      ];
+      listItem = (
+        <Swipeout
+          right={swipeoutBtns}
+          autoClose
+        >
+          {item}
+        </Swipeout>
+      );
+    } else if (rowData.status === 'off') {
+      const swipeoutBtns = [
+        {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_2,
+          onPress: this.putOnPost.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"上架"} imgSource={{ uri: 'http://i.imgur.com/cxvFxzn.png' }} />
+          ),
         },
       ];
       listItem = (
@@ -107,6 +158,14 @@ export default class MyItems extends Component {
       listItem = item;
     }
     return listItem;
+  }
+
+  takeOffPost = (postId) => {
+    this.props.requestUpdatePostStatus(postId, 'off');
+  }
+
+  putOnPost = (postId) => {
+    this.props.requestUpdatePostStatus(postId, 'on');
   }
 
   findMyItemById = (id) => {
@@ -136,13 +195,14 @@ export default class MyItems extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
-    </View>
+      </View>
     );
   }
 }
 
 MyItems.propTypes = {
   myItems: React.PropTypes.array,
+  requestUpdatePostStatus: React.PropTypes.func,
 };
 
 MyItems.defaultProps = {
@@ -156,6 +216,7 @@ function _injectPropsFromStore(state) {
 }
 
 const _injectPropsFormActions = {
+  requestUpdatePostStatus,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(MyItems);
