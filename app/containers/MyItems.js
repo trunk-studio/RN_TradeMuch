@@ -3,14 +3,18 @@ import React, {
   Component,
   ListView,
   Alert,
+  Image,
+  Text,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
+import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 import Swipeout from 'react-native-swipeout';
+import SwipeOutButton from '../components/SwipeOutButton';
 // import config from '../config/index';
 
 
@@ -18,7 +22,7 @@ const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: '#fff',
+    backgroundColor: color.MAIN_BACKGROUND_COLOR,
   },
   ButtomButton: {
 
@@ -65,8 +69,9 @@ export default class MyItems extends Component {
   }
 
   onListItemSwipoutPress = () => {
-    Alert.alert('下架');
   }
+
+
 
   getListItem(rowData, sectionID, rowID) {
     let bakColor = {};
@@ -85,14 +90,36 @@ export default class MyItems extends Component {
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
         rightText={rowData.rightText}
+        rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );
     let listItem;
     if (rowData.status === 'on') {
       const swipeoutBtns = [
         {
-          text: '下架',
-          onPress: this.onListItemSwipoutPress,
+          backgroundColor: color.SWIPE_BUTTON_COLOR_1,
+          onPress: this.takeOffPost,
+          component: (
+            <SwipeOutButton label={"下架"} imgSource={{ uri: 'http://i.imgur.com/z83iW6N.png' }} />
+          ),
+        },
+      ];
+      listItem = (
+        <Swipeout
+          right={swipeoutBtns}
+          autoClose
+        >
+          {item}
+        </Swipeout>
+      );
+    } else if (rowData.status === 'off') {
+      const swipeoutBtns = [
+        {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_2,
+          onPress: this.putOnPost,
+          component: (
+            <SwipeOutButton label={"上架"} imgSource={{ uri: 'http://i.imgur.com/cxvFxzn.png' }} />
+          ),
         },
       ];
       listItem = (
@@ -107,6 +134,14 @@ export default class MyItems extends Component {
       listItem = item;
     }
     return listItem;
+  }
+
+  takeOffPost = () => {
+    Alert.alert('下架');
+  }
+
+  putOnPost = () => {
+    Alert.alert('上架');
   }
 
   findMyItemById = (id) => {
