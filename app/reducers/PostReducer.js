@@ -9,7 +9,7 @@ import {
 
 function findObjById(objArray, targetObjKey, targetValue, callback) {
   let newArray = [];
-  for (let item of objArray) {
+  for (const item of objArray) {
     if (item[targetObjKey] === targetValue) {
       newArray.push(callback(item));
     } else {

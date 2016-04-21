@@ -44,6 +44,7 @@ export default class MyItems extends Component {
       showsCancelButton: false,
     };
   }
+
   componentDidMount() {
     const items = this.props.myItems.map((item) => {
       let rightText = '';
@@ -65,8 +66,7 @@ export default class MyItems extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.myItems !== this.props.myItems) {
-      console.log('in Will');
-      const items = this.props.myItems.map((item) => {
+      const items = nextProps.myItems.map((item) => {
         let rightText = '';
         if (item.status === 'off') {
           rightText = '已下架';
@@ -98,7 +98,6 @@ export default class MyItems extends Component {
   }
 
   getListItem(rowData, sectionID, rowID) {
-    console.log('getListItem');
     let bakColor = {};
     if (rowID % 2 === 0) {
       bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
@@ -120,7 +119,6 @@ export default class MyItems extends Component {
     );
     let listItem;
     if (rowData.status === 'on') {
-      console.log('rowDataId',rowData.id);
       const swipeoutBtns = [
         {
           backgroundColor: color.SWIPE_BUTTON_COLOR_1,
@@ -186,7 +184,6 @@ export default class MyItems extends Component {
   }
 
   render() {
-    console.log('rerender');
     return (
       <View style={styles.content}>
         <ListView

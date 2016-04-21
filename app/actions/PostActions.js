@@ -166,9 +166,7 @@ export async function requestUpdatePostStatus(postId, status) {
       postId,
       status,
     };
-    console.log('Action ===', data);
     const result = await fetchWithAuth('/rest/post/status', 'post', data);
-    console.log('--- status result --', result);
     return (dispatch) => {
       dispatch(receivedUpdatePostStatus(result.success, postId, status));
     };
