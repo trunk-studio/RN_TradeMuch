@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { loginValidation } from './actions/AuthActions';
-import { requestGetMyItems } from './actions/PostActions';
+import { requestGetMyItems, requestGetTradeRecords } from './actions/PostActions';
 import React, {
   Navigator,
 	StyleSheet,
@@ -108,6 +108,7 @@ export default class AppRoutes extends Component {
       if (!this.drawer._open) {
         if (this.props.isLogin) {
           this.props.requestGetMyItems();
+          this.props.requestGetTradeRecords();
         }
         this.drawer.open();
       } else {
@@ -262,6 +263,7 @@ AppRoutes.propTypes = {
   renderMenuButton: React.PropTypes.func,
   renderBackButton: React.PropTypes.func,
   requestGetMyItems: React.PropTypes.func,
+  requestGetTradeRecords: React.PropTypes.func,
   isLogin: React.PropTypes.bool,
 };
 
@@ -276,6 +278,7 @@ function _injectPropsFromStore({ auth, router }) {
 const _injectPropsFormActions = {
   loginValidation,
   requestGetMyItems,
+  requestGetTradeRecords,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(AppRoutes);

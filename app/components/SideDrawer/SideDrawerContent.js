@@ -135,8 +135,20 @@ export default class SideDrawerContent extends Component {
 
   render() {
     // const { drawer } = this.context
-    const { userInfo, isLogin } = this.props;
+    const { userInfo, isLogin, myItems } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
+    let messageBoard;
+    if (isLogin) {
+      let unReadCountSum = 0;
+      myItems.forEach((item) => {
+        if (item.unReadCount) {
+          unReadCountSum += parseInt(item.unReadCount, 10);
+        }
+      });
+      messageBoard = (
+        <MenuItem id="messageBoard" title="我的留言板" img="http://i.imgur.com/NBbuVv3.png  " notification={unReadCountSum} onItemPress={this.onItemPress} />
+      );
+    }
     return (
       <View style={styles.contentWrapper}>
         <View style={styles.contentAvatar}>
@@ -149,7 +161,7 @@ export default class SideDrawerContent extends Component {
           <MenuItem id="postList" title="附近的好康物品" img="http://i.imgur.com/OKrJ2m3.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="tradeRecord" title="我撿的資源" img="http://i.imgur.com/gwzwb5F.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="favoriteList" title="我追蹤的資源" img="http://i.imgur.com/v8iXJJP.png" notification="" onItemPress={this.onItemPress} />
-          <MenuItem id="messageBoard" title="我的留言板" img="http://i.imgur.com/NBbuVv3.png  " notification="" onItemPress={this.onItemPress} />
+          {messageBoard}
           <MenuItem id="myItems" title="我的倉庫" img="http://i.imgur.com/YHOYSAa.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="category" title="尋寶去" img="http://i.imgur.com/dGhdv4x.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title={loginBtnTitle} img="http://i.imgur.com/UDw6ykK.png" notification="" onItemPress={this.onItemPress} />
@@ -165,19 +177,22 @@ SideDrawerContent.propTypes = {
   isLogin: PropTypes.bool,
   beforeRoute: PropTypes.string,
   routeHistory: PropTypes.array,
+  myItems: PropTypes.array,
 };
 
 SideDrawerContent.defaultProps = {
   beforeRoute: 'postList',
   routeHistory: ['postList'],
+  myItems: [],
 };
 
-function _injectPropsFromStore({ auth, router }) {
+function _injectPropsFromStore({ auth, router, post }) {
   return {
     userInfo: auth.userInfo,
     isLogin: auth.isLogin,
     beforeRoute: router.beforeRoute,
     routeHistory: router.routeHistory,
+    myItems: post.myItems,
   };
 }
 

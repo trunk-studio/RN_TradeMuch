@@ -5,7 +5,10 @@ import {
   RECEIVED_INPUT_DESCRIPTION,
   RECEIVED_GET_MY_ITEMS,
   RECEIVED_UPDATE_POST_STATUS_SUCCESS,
+  RECEIVED_GET_TRADE_RECORDS,
 } from '../actions/PostActions';
+
+import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
 
 function findObjById(objArray, targetObjKey, targetValue, callback) {
   let newArray = [];
@@ -54,6 +57,27 @@ export function post(state = {}, action) {
         (item) => {
           let newItem = {...item};
           newItem.status = action.data.status;
+          return newItem;
+        }
+      );
+      return {
+        ...state,
+        myItems: newMyItems,
+      };
+    }
+    case RECEIVED_GET_TRADE_RECORDS:
+      return {
+        ...state,
+        myTradeRecords: action.data,
+      };
+    case RECEIVED_READ_MESSAGE: {
+      const newMyItems = findObjById(
+        state.myItems,
+        'id',
+        action.data,
+        (item) => {
+          let newItem = {...item};
+          newItem.unReadCount = null;
           return newItem;
         }
       );
