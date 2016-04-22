@@ -71,37 +71,50 @@ export default class GivePage extends React.Component {
       return result;
     });
 
-    console.log("defaultCheckboxStatus=>",defaultCheckboxStatus);
+    // console.log("defaultCheckboxStatus=>",defaultCheckboxStatus);
 
-    this.setState = {
+    this.setState({
       checkboxStatus: defaultCheckboxStatus,
-    };
-    console.log("state.checkboxStatus=>",this.state.checkboxStatus);
+    });
+    // console.log("state.checkboxStatus=>",this.state.checkboxStatus);
   }
 
   handleActionButtonPress = () => {
     const { records, postId } = this.props;
-    const msg = [];
-    for (const record of records) {
-      msg.push(
-        `post id=>${record.post_id}`
-      );
+    // const msg = [];
+    // for (const record of records) {
+    //   msg.push(
+    //     `post id=>${record.post_id}`
+    //   );
+    // }
+    // Alert.alert(msg);
+
+    // const userId = this.state.checkboxStatus.map((staus, i) => {
+    //   let tmp = 0;
+    //   if (staus) tmp = records[i].User.id;
+    //   return tmp;
+    // });
+    let userId = 0;
+    const status = this.state.checkboxStatus;
+    for (let i = 0; i < status.length; i++) {
+      if (status[i]) userId = records[i].User.id;
     }
-    Alert.alert(msg);
+
+    console.log("userId=>",userId);
 
     this.props.requestUpdateTradeRecordStatus({
       postId,
-      userId: 1,
+      userId,
       action: 'accepted',
     });
   }
 
   handleCheck = (index) => {
-    console.log("index=>",index);
+    // console.log("index=>",index);
     let result;
     const checkboxStatus = this.state.checkboxStatus;
 
-    console.log("checkboxStatus=>",checkboxStatus);
+    // console.log("checkboxStatus=>",checkboxStatus);
 
     const newCheckboxStatus = checkboxStatus.map((status, i) => {
       if (i === index) result = true;
@@ -109,11 +122,11 @@ export default class GivePage extends React.Component {
       return result;
     });
 
-    console.log("newCheckboxStatus=>",newCheckboxStatus);
+    // console.log("newCheckboxStatus=>",newCheckboxStatus);
 
-    // this.setState = {
-    //   checkboxStatus: newCheckboxStatus,
-    // }
+    this.setState({
+      checkboxStatus: newCheckboxStatus,
+    });
     // console.log("this.state.checkboxStatus=>",this.state.checkboxStatus);
   }
 
@@ -138,6 +151,7 @@ export default class GivePage extends React.Component {
               uncheckedIconName="radio-button-unchecked"
               checkedIconName="radio-button-checked"
               onPress={this.handleCheck.bind(this, index)}
+              checked={this.state.checkboxStatus[index]}
             />
         </View>
       );
