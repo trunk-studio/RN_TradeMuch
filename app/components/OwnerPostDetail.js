@@ -80,19 +80,17 @@ const styles = React.StyleSheet.create({
 
 
 export default function OwnerPostDetail(props) {
-  const { pic, itemTitle, description, requests, id, records } = props;
+  const { pic, itemTitle, description, id, requests } = props;
 
   function onTradeClickHandler() {
     if (requests === 0) {
-      Alert.alert('目前沒有任何人對此物品有興趣');
+      Alert.alert('目前沒有任何人對此物品有興趣:(');
     } else {
       Actions.givePage({
         id,
-        records,
       });
     }
   }
-
 
   return (
     <View style={styles.imageContainer}>
@@ -114,7 +112,7 @@ export default function OwnerPostDetail(props) {
             style={styles.button}
             onPress={ onTradeClickHandler }
           >
-            <Text style={styles.buttonText} >{requests} 個請求</Text>
+            <Text style={styles.buttonText} >{requests} 個人想要</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
@@ -136,7 +134,6 @@ OwnerPostDetail.propTypes = {
   pic: React.PropTypes.string,
   id: React.PropTypes.number,
   requests: React.PropTypes.number,
-  records: React.PropTypes.array,
 };
 
 OwnerPostDetail.defaultProps = {
@@ -145,5 +142,4 @@ OwnerPostDetail.defaultProps = {
   pic: {},
   id: 0,
   requests: 0,
-  records: [],
 };

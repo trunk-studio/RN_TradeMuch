@@ -93,7 +93,7 @@ export default class MyItems extends Component {
       pic: `${config.serverDomain}${item.pic}`,
       id,
       requests: item.requests,
-      records: item.records,
+      // records: item.records,
     });
   }
 
@@ -107,7 +107,8 @@ export default class MyItems extends Component {
     } else {
       bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
     }
-    const requests = rowData.requests === 0 ? '' : `${rowData.requests} 個請求`;
+    const requests = rowData.requests === 0 ? '' : `${rowData.requests} 個人想要`;
+    const rightText = rowData.rightText.length === 0 ? requests : rowData.rightText;
     const distance = '';
 
     const item = (
@@ -118,7 +119,7 @@ export default class MyItems extends Component {
         description={distance}
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
-        rightText={requests}
+        rightText={rightText}
         rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );

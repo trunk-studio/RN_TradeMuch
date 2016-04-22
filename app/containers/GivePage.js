@@ -10,6 +10,7 @@ import ActionButton from '../components/ActionButton';
 import CheckBox from 'react-native-icon-checkbox';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import {
   requestUpdateTradeRecordStatus,
 } from '../actions/PostActions';
@@ -63,8 +64,9 @@ export default class GivePage extends React.Component {
   }
 
   componentDidMount() {
-    const { records } = this.props;
     let result = false;
+    const { id } = this.props;
+    const records = this.findMyItemById(id).records;
     const defaultCheckboxStatus = records.map((record) => {
       if (record.status !== 'accepted') result = false;
       else result = true;
@@ -79,28 +81,35 @@ export default class GivePage extends React.Component {
     // console.log("state.checkboxStatus=>",this.state.checkboxStatus);
   }
 
-  handleActionButtonPress = () => {
-    const { records, id } = this.props;
-    // const msg = [];
-    // for (const record of records) {
-    //   msg.push(
-    //     `post id=>${record.post_id}`
-    //   );
-    // }
-    // Alert.alert(msg);
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      Alert.alert('給予成功！');
+      Actions.pop();
+    }
+  }
 
-    // const userId = this.state.checkboxStatus.map((staus, i) => {
-    //   let tmp = 0;
-    //   if (staus) tmp = records[i].User.id;
-    //   return tmp;
-    // });
+  findMyItemById = (id) => {
+    const postList = this.props.myItems;
+    let postItem = {};
+    for (let i = 0; i < postList.length; i++) {
+      if (postList[i].id === id) {
+        postItem = postList[i];
+      }
+    }
+    return postItem;
+  }
+
+  handleActionButtonPress = () => {
+    const { id } = this.props;
+    const records = this.findMyItemById(id).records;
+
     let userId = 0;
     const status = this.state.checkboxStatus;
     for (let i = 0; i < status.length; i++) {
       if (status[i]) userId = records[i].User.id;
     }
 
-    console.log("userId=>",userId);
+    // console.log("userId=>",userId);
 
     this.props.requestUpdateTradeRecordStatus({
       postId: id,
@@ -109,15 +118,15 @@ export default class GivePage extends React.Component {
     });
   }
 
-  handleCheck = (index) => {
+  handleCheckboxPress = (index) => {
     // console.log("index=>",index);
     let result;
     const checkboxStatus = this.state.checkboxStatus;
 
     // console.log("checkboxStatus=>",checkboxStatus);
 
-    const newCheckboxStatus = checkboxStatus.map((status, i) => {
-      if (i === index) result = true;
+    const newCheckboxStatus = checkboxStatus.map((status, mapIndex) => {
+      if (mapIndex === index) result = true;
       else result = false;
       return result;
     });
@@ -131,7 +140,8 @@ export default class GivePage extends React.Component {
   }
 
   render() {
-    const { records } = this.props;
+    const { id } = this.props;
+    const records = this.findMyItemById(id).records;
     const candidates = [];
     let index = 0;
 
@@ -150,7 +160,7 @@ export default class GivePage extends React.Component {
               size={30}
               uncheckedIconName="radio-button-unchecked"
               checkedIconName="radio-button-checked"
-              onPress={this.handleCheck.bind(this, index)}
+              onPress={this.handleCheckboxPress.bind(this, index)}
               checked={this.state.checkboxStatus[index]}
             />
         </View>
@@ -174,20 +184,18 @@ export default class GivePage extends React.Component {
 
 GivePage.propTypes = {
   id: React.PropTypes.number,
-  records: React.PropTypes.array,
-  // myItems: React.PropTypes.array,
+  myItems: React.PropTypes.array,
   requestUpdateTradeRecordStatus: React.PropTypes.func,
 };
 
 GivePage.defaultProps = {
   id: 0,
-  // myItems: [],
-  records: [],
+  myItems: [],
 };
 
 function _injectPropsFromStore(state) {
   return {
-    // myItems: state.post.myItems,
+    myItems: state.post.myItems,
   };
 }
 

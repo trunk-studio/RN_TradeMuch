@@ -202,8 +202,8 @@ export async function requestGetTradeRecords() {
   }
 }
 
-// ------------------------------------------------------------------ ask a item
-export function receivedUpdateTradeRecordStatus(isSuccess, recordId, status) {
+// ----------------------------------- when receive the result of asking an item
+export function receivedUpdateTradeRecordStatus(isSuccess, postId, recordId) {
   let actionType;
   if (isSuccess) {
     actionType = RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS;
@@ -213,13 +213,13 @@ export function receivedUpdateTradeRecordStatus(isSuccess, recordId, status) {
   return {
     type: actionType,
     data: {
+      postId,
       recordId,
-      status,
     },
   };
 }
 
-// ------------------------------------------------------------------ ask a item
+// ----------------------------------------------- make a request to ask an item
 export async function requestUpdateTradeRecordStatus(data = {
   postId: '',
   userId: '',
@@ -228,9 +228,9 @@ export async function requestUpdateTradeRecordStatus(data = {
   try {
     console.log("data=>",data);
 
-    const result = await fetchWithAuth('/rest/trade/', 'put', data);
+    const result = await fetchWithAuth(`/rest/trade/${data.postId}`, 'put', data);
     return (dispatch) => {
-      dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, status));
+      dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, data.userId));
     };
   } catch (e) {
     errorHandle(e.message);
