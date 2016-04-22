@@ -91,6 +91,8 @@ export default class MyItems extends Component {
       itemTitle: item.title,
       description: item.description,
       pic: `${config.serverDomain}${item.pic}`,
+      id,
+      requests: item.requests,
     });
   }
 
@@ -104,7 +106,9 @@ export default class MyItems extends Component {
     } else {
       bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
     }
+    const requests = rowData.requests === 0 ? '' : rowData.requests;
     const distance = '';
+
     const item = (
       <ListItem
         id={rowData.id}
@@ -113,7 +117,7 @@ export default class MyItems extends Component {
         description={distance}
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
-        rightText={rowData.rightText}
+        rightText={`${requests.toString()}個請求`}
         rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );

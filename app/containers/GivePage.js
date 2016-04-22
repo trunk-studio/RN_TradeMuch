@@ -8,6 +8,10 @@ import React, {
 import ActionButton from '../components/ActionButton';
 import CheckBox from 'react-native-icon-checkbox';
 import * as color from '../style/color';
+import { connect } from 'react-redux';
+import {
+  requestUpdatePostStatus,
+} from '../actions/PostActions';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +55,10 @@ const styles = StyleSheet.create({
 
 export default class GivePage extends React.Component {
 
+  handleActionButtonPress = () => {
+
+  }
+
   render() {
     const candidates = [];
     candidates.push(
@@ -80,3 +88,23 @@ export default class GivePage extends React.Component {
     );
   }
 }
+
+GivePage.propTypes = {
+  id: React.PropTypes.number,
+};
+
+GivePage.defaultProps = {
+  id: 0,
+};
+
+function _injectPropsFromStore(state) {
+  return {
+    myItems: state.post.myItems,
+  };
+}
+
+const _injectPropsFormActions = {
+  requestUpdatePostStatus,
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(MyItems);

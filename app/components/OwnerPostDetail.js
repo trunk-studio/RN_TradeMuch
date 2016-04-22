@@ -5,6 +5,7 @@ import React, {
   Image,
   TouchableOpacity,
   Text,
+  Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
@@ -79,7 +80,19 @@ const styles = React.StyleSheet.create({
 
 
 export default function OwnerPostDetail(props) {
-  const { pic, itemTitle, description } = props;
+  const { pic, itemTitle, description, requests, id } = props;
+
+  function onTradeClickHandler() {
+    if (requests === 0) {
+      Alert.alert('目前沒有任何人對此物品有興趣');
+    } else {
+      Actions.givePage({
+        id,
+      });
+    }
+  }
+
+
   return (
     <View style={styles.imageContainer}>
       <Image key="img" source={{ uri: pic }} style={styles.itemImg} />
@@ -98,6 +111,14 @@ export default function OwnerPostDetail(props) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
+            onPress={ onTradeClickHandler }
+          >
+            <Text style={styles.buttonText} >{requests} 個請求</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
             onPress={ Actions.pop }
           >
             <Text style={styles.buttonText} >完成</Text>
@@ -112,10 +133,14 @@ OwnerPostDetail.propTypes = {
   itemTitle: React.PropTypes.string,
   description: React.PropTypes.string,
   pic: React.PropTypes.string,
+  id: React.PropTypes.number,
+  requests: React.PropTypes.number,
 };
 
 OwnerPostDetail.defaultProps = {
   itemTitle: '',
   description: '',
   pic: {},
+  id: 0,
+  requests: 0,
 };
