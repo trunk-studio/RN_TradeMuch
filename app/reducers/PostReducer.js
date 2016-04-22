@@ -7,6 +7,8 @@ import {
   RECEIVED_UPDATE_POST_STATUS_SUCCESS,
 } from '../actions/PostActions';
 
+import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
+
 function findObjById(objArray, targetObjKey, targetValue, callback) {
   let newArray = [];
   for (const item of objArray) {
@@ -54,6 +56,22 @@ export function post(state = {}, action) {
         (item) => {
           let newItem = {...item};
           newItem.status = action.data.status;
+          return newItem;
+        }
+      );
+      return {
+        ...state,
+        myItems: newMyItems,
+      };
+    }
+    case RECEIVED_READ_MESSAGE: {
+      const newMyItems = findObjById(
+        state.myItems,
+        'id',
+        action.data,
+        (item) => {
+          let newItem = {...item};
+          newItem.unReadCount = null;
           return newItem;
         }
       );
