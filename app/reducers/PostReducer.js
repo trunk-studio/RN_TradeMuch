@@ -8,6 +8,8 @@ import {
   RECEIVED_GET_TRADE_RECORDS,
 } from '../actions/PostActions';
 
+import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
+
 function findObjById(objArray, targetObjKey, targetValue, callback) {
   let newArray = [];
   for (const item of objArray) {
@@ -68,6 +70,22 @@ export function post(state = {}, action) {
         ...state,
         myTradeRecords: action.data,
       };
+    case RECEIVED_READ_MESSAGE: {
+      const newMyItems = findObjById(
+        state.myItems,
+        'id',
+        action.data,
+        (item) => {
+          let newItem = {...item};
+          newItem.unReadCount = null;
+          return newItem;
+        }
+      );
+      return {
+        ...state,
+        myItems: newMyItems,
+      };
+    }
     default:
       return state;
   }
