@@ -220,13 +220,14 @@ export function receivedUpdateTradeRecordStatus(isSuccess, recordId, status) {
 }
 
 // ------------------------------------------------------------------ ask a item
-export async function requestUpdateTradeRecordStatus(postId, userId, action) {
+export async function requestUpdateTradeRecordStatus(data = {
+  postId: '',
+  userId: '',
+  action: '',
+}) {
   try {
-    const data = {
-      postId,
-      userId,
-      action,
-    };
+    console.log("data=>",data);
+
     const result = await fetchWithAuth('/rest/trade/', 'put', data);
     return (dispatch) => {
       dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, status));

@@ -80,7 +80,7 @@ export default class GivePage extends React.Component {
   }
 
   handleActionButtonPress = () => {
-    const { records, postId } = this.props;
+    const { records, id } = this.props;
     // const msg = [];
     // for (const record of records) {
     //   msg.push(
@@ -103,7 +103,7 @@ export default class GivePage extends React.Component {
     console.log("userId=>",userId);
 
     this.props.requestUpdateTradeRecordStatus({
-      postId,
+      postId: id,
       userId,
       action: 'accepted',
     });
@@ -173,7 +173,7 @@ export default class GivePage extends React.Component {
 }
 
 GivePage.propTypes = {
-  postId: React.PropTypes.number,
+  id: React.PropTypes.number,
   records: React.PropTypes.array,
   // myItems: React.PropTypes.array,
   requestUpdateTradeRecordStatus: React.PropTypes.func,
