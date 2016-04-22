@@ -46,6 +46,33 @@ export default class MyItems extends Component {
   }
 
   componentDidMount() {
+    this.onMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      const items = nextProps.myItems.map((item) => {
+        let rightText = '';
+        if (item.status === 'off') {
+          rightText = '已下架';
+          Alert.alert('下架成功！');
+        } else if (item.status === 'sold') {
+          rightText = '已成交';
+          Alert.alert('給予成功！');
+        }
+        return {
+          ...item,
+          pic: `${config.serverDomain}${item.pic}`,
+          rightText,
+        };
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items),
+      });
+    }
+  }
+
+  onMount() {
     const items = this.props.myItems.map((item) => {
       let rightText = '';
       if (item.status === 'off') {
@@ -62,27 +89,6 @@ export default class MyItems extends Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(items),
     });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.myItems !== this.props.myItems) {
-      const items = nextProps.myItems.map((item) => {
-        let rightText = '';
-        if (item.status === 'off') {
-          rightText = '已下架';
-        } else if (item.status === 'sold') {
-          rightText = '已成交';
-        }
-        return {
-          ...item,
-          pic: `${config.serverDomain}${item.pic}`,
-          rightText,
-        };
-      });
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(items),
-      });
-    }
   }
 
   onListItemPress = (id) => {

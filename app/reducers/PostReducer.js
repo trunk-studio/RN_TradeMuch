@@ -56,7 +56,7 @@ export function post(state = {}, action) {
         'id',
         action.data.postId,
         (item) => {
-          let newItem = {...item};
+          const newItem = { ...item };
           newItem.status = action.data.status;
           return newItem;
         }

@@ -5,6 +5,7 @@ import React, {
   Image,
   StyleSheet,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import ActionButton from '../components/ActionButton';
 import CheckBox from 'react-native-icon-checkbox';
@@ -64,6 +65,20 @@ export default class GivePage extends React.Component {
   }
 
   componentDidMount() {
+    this.onMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let lock = false;
+    if (nextProps.myItems !== this.props.myItems) {
+      if (!lock) {
+        lock = true;
+        Actions.pop(2);
+      }
+    }
+  }
+
+  onMount() {
     let result = false;
     const { id } = this.props;
     const records = this.findMyItemById(id).records;
@@ -72,20 +87,11 @@ export default class GivePage extends React.Component {
       else result = true;
       return result;
     });
-
-    // console.log("defaultCheckboxStatus=>",defaultCheckboxStatus);
-
     this.setState({
       checkboxStatus: defaultCheckboxStatus,
     });
+    // console.log("defaultCheckboxStatus=>",defaultCheckboxStatus);
     // console.log("state.checkboxStatus=>",this.state.checkboxStatus);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.myItems !== this.props.myItems) {
-      Alert.alert('給予成功！');
-      Actions.pop();
-    }
   }
 
   findMyItemById = (id) => {
@@ -145,11 +151,19 @@ export default class GivePage extends React.Component {
     const candidates = [];
     let index = 0;
 
+
     for (const record of records) {
+      let bakColor = {};
+      if (record.id % 2 === 0) {
+        bakColor = { backgroundColor: color.LIST_ITEM_COLOR1 };
+      } else {
+        bakColor = { backgroundColor: color.LIST_ITEM_COLOR2 };
+      }
       candidates.push(
-        <View
+        <TouchableOpacity
           key={record.id}
-          style={[styles.candidateBlock, { backgroundColor: color.LIST_ITEM_COLOR1 }]}
+          style={[styles.candidateBlock, bakColor]}
+          onPress={this.handleCheckboxPress.bind(this, index)}
         >
           <Image style={styles.avatar} source={record.User.Avatar} />
           <Text style={styles.userName}>{record.User.username}</Text>
@@ -160,10 +174,10 @@ export default class GivePage extends React.Component {
               size={30}
               uncheckedIconName="radio-button-unchecked"
               checkedIconName="radio-button-checked"
-              onPress={this.handleCheckboxPress.bind(this, index)}
               checked={this.state.checkboxStatus[index]}
+              onPress={this.handleCheckboxPress.bind(this, index)}
             />
-        </View>
+        </TouchableOpacity>
       );
       index++;
     }

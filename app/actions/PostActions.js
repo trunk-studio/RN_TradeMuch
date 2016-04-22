@@ -231,6 +231,7 @@ export async function requestUpdateTradeRecordStatus(data = {
     const result = await fetchWithAuth(`/rest/trade/${data.postId}`, 'put', data);
     return (dispatch) => {
       dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, data.userId));
+      dispatch(receivedUpdatePostStatus(result.success, data.postId, 'sold'));
     };
   } catch (e) {
     errorHandle(e.message);
