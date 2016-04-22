@@ -83,3 +83,31 @@ export async function requestDeleteItemToFavList(data = {
     return () => {};
   }
 }
+
+// ------------------------------------------------------------------ ask a item
+export async function requestAskItem(data = {
+  id: '',
+}) {
+  const favoriteApi = `/rest/favorite/${data.id}`;
+  try {
+    const response = await fetchWithAuth(favoriteApi, 'DELETE');
+
+    let postList = [];
+    postList = [...data.postList];
+
+    if (response.result) {
+      // Alert.alert('result', '刪除我的最愛成功!');
+      postList = findItemById(data.id, postList, false);
+    } else {
+      // const msg = `name:${response.name}\nmessage:${response.message}`;
+      Alert.alert('result', '請先登入！');
+    }
+
+    return (dispatch) => {
+      dispatch(receivedSearchPost(postList));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}

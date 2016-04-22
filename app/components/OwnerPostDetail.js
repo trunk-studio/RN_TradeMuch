@@ -80,7 +80,7 @@ const styles = React.StyleSheet.create({
 
 
 export default function OwnerPostDetail(props) {
-  const { pic, itemTitle, description, requests, id } = props;
+  const { pic, itemTitle, description, requests, id, records } = props;
 
   function onTradeClickHandler() {
     if (requests === 0) {
@@ -88,6 +88,7 @@ export default function OwnerPostDetail(props) {
     } else {
       Actions.givePage({
         id,
+        records,
       });
     }
   }
@@ -135,6 +136,7 @@ OwnerPostDetail.propTypes = {
   pic: React.PropTypes.string,
   id: React.PropTypes.number,
   requests: React.PropTypes.number,
+  records: React.PropTypes.array,
 };
 
 OwnerPostDetail.defaultProps = {
@@ -143,4 +145,5 @@ OwnerPostDetail.defaultProps = {
   pic: {},
   id: 0,
   requests: 0,
+  records: [],
 };

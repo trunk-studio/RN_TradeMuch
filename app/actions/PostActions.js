@@ -12,6 +12,12 @@ export const RECEIVED_GET_MY_ITEMS = 'RECEIVED_GET_MY_ITEMS';
 export const RECEIVED_UPDATE_POST_STATUS_SUCCESS = 'RECEIVED_UPDATE_POST_STATUS_SUCCESS';
 export const RECEIVED_UPDATE_POST_STATUS_FAIL = 'RECEIVED_UPDATE_POST_STATUS_FAIL';
 export const RECEIVED_GET_TRADE_RECORDS = 'RECEIVED_GET_TRADE_RECORDS';
+export const RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS =
+  'RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS';
+export const RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL =
+  'RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL';
+
+
 function receivedCreate(data = {
   id: null,
   uuid: '',
@@ -189,6 +195,41 @@ export async function requestGetTradeRecords() {
     const result = await fetchWithAuth('/rest/trade/list');
     return (dispatch) => {
       dispatch(receivedGetTradeRecords(result.data));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+// ------------------------------------------------------------------ ask a item
+export function receivedUpdateTradeRecordStatus(isSuccess, recordId, status) {
+  let actionType;
+  if (isSuccess) {
+    actionType = RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS;
+  } else {
+    actionType = RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL;
+  }
+  return {
+    type: actionType,
+    data: {
+      recordId,
+      status,
+    },
+  };
+}
+
+// ------------------------------------------------------------------ ask a item
+export async function requestUpdateTradeRecordStatus(postId, userId, action) {
+  try {
+    const data = {
+      postId,
+      userId,
+      action,
+    };
+    const result = await fetchWithAuth('/rest/trade/', 'put', data);
+    return (dispatch) => {
+      dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, status));
     };
   } catch (e) {
     errorHandle(e.message);

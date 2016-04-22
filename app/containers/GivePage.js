@@ -4,13 +4,14 @@ import React, {
   Text,
   Image,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import ActionButton from '../components/ActionButton';
 import CheckBox from 'react-native-icon-checkbox';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
 import {
-  requestUpdatePostStatus,
+  requestUpdateTradeRecordStatus,
 } from '../actions/PostActions';
 
 const styles = StyleSheet.create({
@@ -54,26 +55,94 @@ const styles = StyleSheet.create({
 });
 
 export default class GivePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkboxStatus: [],
+    };
+  }
+
+  componentDidMount() {
+    const { records } = this.props;
+    let result = false;
+    const defaultCheckboxStatus = records.map((record) => {
+      if (record.status !== 'accepted') result = false;
+      else result = true;
+      return result;
+    });
+
+    console.log("defaultCheckboxStatus=>",defaultCheckboxStatus);
+
+    this.setState = {
+      checkboxStatus: defaultCheckboxStatus,
+    };
+    console.log("state.checkboxStatus=>",this.state.checkboxStatus);
+  }
 
   handleActionButtonPress = () => {
+    const { records, postId } = this.props;
+    const msg = [];
+    for (const record of records) {
+      msg.push(
+        `post id=>${record.post_id}`
+      );
+    }
+    Alert.alert(msg);
 
+    this.props.requestUpdateTradeRecordStatus({
+      postId,
+      userId: 1,
+      action: 'accepted',
+    });
+  }
+
+  handleCheck = (index) => {
+    console.log("index=>",index);
+    let result;
+    const checkboxStatus = this.state.checkboxStatus;
+
+    console.log("checkboxStatus=>",checkboxStatus);
+
+    const newCheckboxStatus = checkboxStatus.map((status, i) => {
+      if (i === index) result = true;
+      else result = false;
+      return result;
+    });
+
+    console.log("newCheckboxStatus=>",newCheckboxStatus);
+
+    // this.setState = {
+    //   checkboxStatus: newCheckboxStatus,
+    // }
+    // console.log("this.state.checkboxStatus=>",this.state.checkboxStatus);
   }
 
   render() {
+    const { records } = this.props;
     const candidates = [];
-    candidates.push(
-      <View key={1} style={[styles.candidateBlock, { backgroundColor: color.LIST_ITEM_COLOR1 }]}>
-        <Image style={styles.avatar} source={{ uri: 'https://facebook.github.io/react/img/logo_og.png' }} />
-        <Text style={styles.userName}>Candy</Text>
-          <CheckBox
-            style={styles.radioButton}
-            iconStyle={{ color: color.TRADEMUCH_MAIN_COLOR_1 }}
-            size={30}
-            uncheckedIconName="radio-button-unchecked"
-            checkedIconName="radio-button-checked"
-          />
-      </View>
-    );
+    let index = 0;
+
+    for (const record of records) {
+      candidates.push(
+        <View
+          key={record.id}
+          style={[styles.candidateBlock, { backgroundColor: color.LIST_ITEM_COLOR1 }]}
+        >
+          <Image style={styles.avatar} source={record.User.Avatar} />
+          <Text style={styles.userName}>{record.User.username}</Text>
+            <CheckBox
+              key={record.User.id}
+              style={styles.radioButton}
+              iconStyle={{ color: color.TRADEMUCH_MAIN_COLOR_1 }}
+              size={30}
+              uncheckedIconName="radio-button-unchecked"
+              checkedIconName="radio-button-checked"
+              onPress={this.handleCheck.bind(this, index)}
+            />
+        </View>
+      );
+      index++;
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>選擇要給予的對象</Text>
@@ -90,21 +159,26 @@ export default class GivePage extends React.Component {
 }
 
 GivePage.propTypes = {
-  id: React.PropTypes.number,
+  postId: React.PropTypes.number,
+  records: React.PropTypes.array,
+  // myItems: React.PropTypes.array,
+  requestUpdateTradeRecordStatus: React.PropTypes.func,
 };
 
 GivePage.defaultProps = {
   id: 0,
+  // myItems: [],
+  records: [],
 };
 
 function _injectPropsFromStore(state) {
   return {
-    myItems: state.post.myItems,
+    // myItems: state.post.myItems,
   };
 }
 
 const _injectPropsFormActions = {
-  requestUpdatePostStatus,
+  requestUpdateTradeRecordStatus,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(MyItems);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(GivePage);

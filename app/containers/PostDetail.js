@@ -15,6 +15,7 @@ import Dimensions from 'Dimensions';
 import {
   requestAddItemToFavList,
   requestDeleteItemToFavList,
+  requestAskItem,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
 
@@ -163,6 +164,9 @@ export default class PostDetail extends Component {
         postId: this.props.id,
         sendMessageInitial: `嗨！我想要${this.postItem.title}`,
       });
+      this.props.requestAskItem({
+        id: this.props.id,
+      });
     } else {
       this.pleaseLogin();
     }
@@ -309,6 +313,7 @@ PostDetail.propTypes = {
   isLogin: React.PropTypes.bool,
   requestAddItemToFavList: React.PropTypes.func,
   requestDeleteItemToFavList: React.PropTypes.func,
+  requestAskItem: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
@@ -326,6 +331,7 @@ function _injectPropsFromStore(state) {
 const _injectPropsFormActions = {
   requestAddItemToFavList,
   requestDeleteItemToFavList,
+  requestAskItem,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
