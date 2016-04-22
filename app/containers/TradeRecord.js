@@ -1,27 +1,18 @@
 import React, {
-  NativeModules,
-  ScrollView,
   View,
   Component,
   ListView,
   Alert,
 } from 'react-native';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
+import config from '../config/index';
+import * as color from '../style/color';
 // import config from '../config/index';
 
-const {
-  RNSearchBarManager,
-} = NativeModules;
-import {
-  requestSearchLoadMore,
-  requestSearchPost,
-  requestSearchPostNextPage,
-} from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
 
 const styles = React.StyleSheet.create({
@@ -47,49 +38,42 @@ export default class TradeRecord extends Component {
     };
   }
   componentDidMount() {
-    const tradeRecord = [
-      {
-        id: 1,
-        title: '韓國進口茶包',
-        pic: 'http://i.imgur.com/8LadPEI.jpg',
-        rightText: '已成交',
-        distance: 0.232,
-      },
-      {
-        id: 2,
-        title: '流行手提包',
-        pic: 'http://i.imgur.com/6fLGRMu.jpg',
-        rightText: '拒絕',
-        distance: 0.300,
-      },
-      {
-        id: 3,
-        title: '全新馬克杯',
-        pic: 'http://i.imgur.com/Nww6aKU.jpg',
-        rightText: '',
-        distance: 0.350,
-      },
-    ];
-
+    const items = this.props.tradeRecord.map((item) => {
+      let rightText = '';
+      if (item.status === 'accepted') {
+        rightText = '已成交';
+      } else if (item.status === 'refused') {
+        rightText = '已拒絕';
+      }
+      let distance = 0;
+      const userLocation = this.props.location;
+      const itemLocation = item.location;
+      if (userLocation) {
+        distance = this.calcDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          itemLocation.lat,
+          itemLocation.lon
+        );
+      }
+      return {
+        ...item,
+        pic: `${config.serverDomain}${item.pic}`,
+        rightText,
+        distance,
+      };
+    });
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(tradeRecord),
+      dataSource: this.state.dataSource.cloneWithRows(items),
     });
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.TradeRecord !== this.props.TradeRecord) {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(nextProps.TradeRecord),
       });
     }
-  }
-
-  onChangeText = (value) => {
-    const { location } = this.props;
-    this.props.requestSearchLoadMore(false);
-    this.props.requestSearchPost(value, '60000km', {
-      lat: location.latitude,
-      lon: location.longitude,
-    }, this.props.TradeRecord.length);
   }
 
   onListItemPress = (id) => {
@@ -123,47 +107,33 @@ export default class TradeRecord extends Component {
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
         rightText={rowData.rightText}
+        rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );
-  }
-
-  handleSearchButtonPress = () => {
-    this.searchBarDissmissKeyBoard();
-  }
-
-  searchBarDissmissKeyBoard = () => {
-    RNSearchBarManager.blur(React.findNodeHandle(this.refs.postSearchBar));
-  }
-
-  loadMorePost = () => {
-    const { TradeRecord, lastSeachApi } = this.props;
-    this.props.requestSearchLoadMore(false);
-    this.props.requestSearchPostNextPage(lastSeachApi, TradeRecord.length);
-  }
-
-  handleSearchCancelPress = () => {
-    this.searchBarDissmissKeyBoard();
-    this.setState({ showsCancelButton: false });
-  }
-
-  handleSearchBarOnFocus = () => {
-    this.setState({ showsCancelButton: true });
   }
 
   handleActionButtonPress = () => {
     Actions.createPost.call();
   }
 
+  calcDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = Math.round(R * c * 100) / 100;
+    return d;
+  }
+
   render() {
     return (
       <View style={styles.content}>
         <ListView
-          keyboardDismissMode="on-drag"
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
-          onLoadMoreAsync={this.loadMorePost}
-          canLoadMore={this.props.canLoadMore}
         />
         <ActionButton
           text="我要上架"
@@ -176,40 +146,23 @@ export default class TradeRecord extends Component {
 }
 
 TradeRecord.propTypes = {
-  TradeRecord: React.PropTypes.array,
+  tradeRecord: React.PropTypes.array,
   location: React.PropTypes.object,
-  lastSeachApi: React.PropTypes.string,
-  canLoadMore: React.PropTypes.bool,
-  requestSearchLoadMore: React.PropTypes.func,
-  requestSearchPost: React.PropTypes.func,
-  onListItemPress: React.PropTypes.func,
-  requestSetLocation: React.PropTypes.func,
-  requestSearchPostNextPage: React.PropTypes.func,
 };
 
 TradeRecord.defaultProps = {
-  TradeRecord: [],
-  location: {
-    latitude: 24.148657699999998,
-    longitude: 120.67413979999999,
-  },
-  canLoadMore: true,
+  tradeRecord: [],
+  location: null,
 };
 
 function _injectPropsFromStore(state) {
   return {
-    TradeRecord: state.search.TradeRecord,
-    lastSeachApi: state.search.lastSeachApi,
-    canLoadMore: state.search.canLoadMore,
+    tradeRecord: state.post.myTradeRecords,
     location: state.geo.location,
   };
 }
 
 const _injectPropsFormActions = {
-  requestSearchLoadMore,
-  requestSearchPost,
-  requestSetLocation,
-  requestSearchPostNextPage,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(TradeRecord);

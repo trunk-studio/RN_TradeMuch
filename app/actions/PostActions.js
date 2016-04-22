@@ -11,6 +11,7 @@ export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
 export const RECEIVED_GET_MY_ITEMS = 'RECEIVED_GET_MY_ITEMS';
 export const RECEIVED_UPDATE_POST_STATUS_SUCCESS = 'RECEIVED_UPDATE_POST_STATUS_SUCCESS';
 export const RECEIVED_UPDATE_POST_STATUS_FAIL = 'RECEIVED_UPDATE_POST_STATUS_FAIL';
+export const RECEIVED_GET_TRADE_RECORDS = 'RECEIVED_GET_TRADE_RECORDS';
 function receivedCreate(data = {
   id: null,
   uuid: '',
@@ -169,6 +170,25 @@ export async function requestUpdatePostStatus(postId, status) {
     const result = await fetchWithAuth('/rest/post/status', 'put', data);
     return (dispatch) => {
       dispatch(receivedUpdatePostStatus(result.success, postId, status));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+export function receivedGetTradeRecords(list) {
+  return {
+    type: RECEIVED_GET_TRADE_RECORDS,
+    data: list,
+  };
+}
+
+export async function requestGetTradeRecords() {
+  try {
+    const result = await fetchWithAuth('/rest/trade/list');
+    return (dispatch) => {
+      dispatch(receivedGetTradeRecords(result.data));
     };
   } catch (e) {
     errorHandle(e.message);
