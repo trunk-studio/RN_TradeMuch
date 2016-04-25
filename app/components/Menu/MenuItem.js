@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   blockTitle: {
     flex: 1,
-    width: 84 * PIXEL_RATIO,
+    width: 80 * PIXEL_RATIO,
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     height: 30 * PIXEL_RATIO,
   },
   blockNotification: {
-    width: 10 * PIXEL_RATIO,
+    width: 25 * PIXEL_RATIO,
+    paddingTop: 3,
     justifyContent: 'center',
     alignItems: 'center',
   },

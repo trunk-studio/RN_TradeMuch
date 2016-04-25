@@ -19,7 +19,6 @@ import SwipeOutButton from '../components/SwipeOutButton';
 import {
   requestUpdatePostStatus,
 } from '../actions/PostActions';
-// import config from '../config/index';
 
 
 const styles = React.StyleSheet.create({
@@ -74,8 +73,7 @@ export default class MyItems extends Component {
 
   onMount() {
     const items = this.props.myItems.map((item) => {
-      const requests = item.requests === 0 ? '' : `${item.requests} 個人想要`;
-      let rightText = requests;
+      let rightText = '';
       if (item.status === 'off') {
         rightText = '已下架';
       } else if (item.status === 'sold') {
@@ -100,7 +98,6 @@ export default class MyItems extends Component {
       pic: `${config.serverDomain}${item.pic}`,
       id,
       requests: item.requests,
-      // records: item.records,
     });
   }
 
@@ -125,7 +122,12 @@ export default class MyItems extends Component {
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
         rightText={rowData.rightText}
-        rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
+        rightTextStyle={{
+          color: color.TEXT_PRIMARY_COLOR,
+          fontWeight: 'bold',
+          fontSize: 12,
+        }}
+        notificationCount={rowData.requests}
       />
     );
     let listItem;
