@@ -15,7 +15,7 @@ rnpm link react-native-linear-gradient
 
 # Run Project （dev）
 
-
+mv app/config/index.default.js app/config/index.js
 npm run dev
 
 open `Counter.xcworkspace` in Xcode and run
