@@ -24,9 +24,10 @@ const styles = StyleSheet.create({
   blockIcon: {
     alignItems: 'flex-end',
     width: 15 * PIXEL_RATIO,
+    marginRight: -8,
   },
   blockButtonText: {
-    width: 60 * PIXEL_RATIO,
+    width: 50 * PIXEL_RATIO,
     alignItems: 'center',
     justifyContent: 'center',
   },

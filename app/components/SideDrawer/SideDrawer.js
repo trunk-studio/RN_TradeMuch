@@ -1,6 +1,11 @@
-import React, { PropTypes, Component } from 'react-native';
+import React, {
+  PropTypes,
+  Component,
+  Alert,
+} from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideDrawerContent from './SideDrawerContent';
+import { Actions } from 'react-native-router-flux';
 
 const styles = {
   drawerStyles: {
@@ -32,7 +37,10 @@ export default class SideDrawer extends Component {
   }
 
   onOpen = () => {
-
+    // Alert.alert('1');
+    // Actions.postDetail({
+    //   id: 1,
+    // });
   }
 
   onClose = () => {

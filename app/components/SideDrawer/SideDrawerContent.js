@@ -137,11 +137,12 @@ export default class SideDrawerContent extends Component {
     // const { drawer } = this.context
     const { userInfo, isLogin, myItems } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
-    let messageBoard, myItemList;
+    let messageBoard;
+    let myItemList;
     if (isLogin) {
       let unReadCountSum = 0;
       myItems.forEach((item) => {
-        if (item.unReadCount) {
+        if (item.unReadCount && item.unReadCount !== 0) {
           unReadCountSum += parseInt(item.unReadCount, 10);
         }
       });
