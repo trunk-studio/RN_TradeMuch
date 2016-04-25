@@ -16,11 +16,9 @@ import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 import Swipeout from 'react-native-swipeout';
 import SwipeOutButton from '../components/SwipeOutButton';
-
 import {
   requestUpdatePostStatus,
 } from '../actions/PostActions';
-
 
 const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
@@ -34,7 +32,6 @@ const styles = React.StyleSheet.create({
 
   },
 });
-
 
 export default class MyItems extends Component {
   constructor(props) {
@@ -57,10 +54,8 @@ export default class MyItems extends Component {
         let rightText = '';
         if (item.status === 'off') {
           rightText = '已下架';
-          Alert.alert('下架成功！');
         } else if (item.status === 'sold') {
           rightText = '已成交';
-          Alert.alert('給予成功！');
         }
         return {
           ...item,
