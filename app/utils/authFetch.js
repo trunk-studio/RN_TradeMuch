@@ -39,6 +39,10 @@ export async function fetchWithAuth(url, method = 'get', data = null) {
     const response = await fetch(config.serverDomain + url, requestOption);
     const responseJson = await response.json();
     if (responseJson.requestStatus !== 200) {
+      if (config.envMode !== 'production') {
+        console.log(' ===== Request Failed =====');
+        console.log(response);
+      }
       throw new Error(JSON.stringify(responseJson));
     }
     return responseJson;

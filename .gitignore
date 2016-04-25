@@ -6,3 +6,4 @@ npm-debug.log
 xcuserdata
 build/
 main.jsbundle
+app/config/index.js
