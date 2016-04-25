@@ -56,7 +56,8 @@ export function post(state = {}, action) {
         'id',
         action.data.postId,
         (item) => {
-          const newItem = { ...item };
+          let newItem = {};
+          newItem = { ...item };
           newItem.status = action.data.status;
           return newItem;
         }
@@ -77,7 +78,7 @@ export function post(state = {}, action) {
         'id',
         action.data.postId,
         (item) => {
-          let newItem = [];
+          let newItem = {};
           newItem = { ...item };
           let record;
           for (record of newItem.records) {
@@ -101,7 +102,7 @@ export function post(state = {}, action) {
         'id',
         action.data,
         (item) => {
-          let newItem = [];
+          let newItem = {};
           newItem = { ...item };
           newItem.unReadCount = null;
           return newItem;
