@@ -13,12 +13,12 @@ export function receivedSearchPost(postList) {
   };
 }
 
-function findItemById(id, postList, state) {
+function setItemFavStatusById(id, postList, status) {
   let tPostList = [];
   tPostList = postList;
   for (let i = 0; i < tPostList.length; i++) {
     if (tPostList[i].id === id) {
-      tPostList[i].isFav = state;
+      tPostList[i].isFav = status;
     }
   }
   return tPostList;
@@ -40,7 +40,7 @@ export async function requestAddItemToFavList(data = {
       // const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
       // Alert.alert('result', '加入我的最愛成功!');
 
-      postList = findItemById(data.id, postList, true);
+      postList = setItemFavStatusById(data.id, postList, true);
     } else {
       // const msg = `name:${response.name}\nmessage:${response.message}`;
       Alert.alert('請先登入！');
@@ -69,7 +69,7 @@ export async function requestDeleteItemToFavList(data = {
 
     if (response.result) {
       // Alert.alert('result', '刪除我的最愛成功!');
-      postList = findItemById(data.id, postList, false);
+      postList = setItemFavStatusById(data.id, postList, false);
     } else {
       // const msg = `name:${response.name}\nmessage:${response.message}`;
       Alert.alert('result', '請先登入！');
@@ -84,28 +84,38 @@ export async function requestDeleteItemToFavList(data = {
   }
 }
 
+export function receivedSearchPost(postList) {
+  return {
+    type: RECEIVED_SEARCH_POST,
+    data: postList,
+  };
+}
+
 // ------------------------------------------------------------------ ask a item
 export async function requestAskItem(data = {
   id: '',
 }) {
-  const favoriteApi = `/rest/favorite/${data.id}`;
+  const requestItemApi = `/rest/trade/${data.id}`;
   try {
-    const response = await fetchWithAuth(favoriteApi, 'DELETE');
+    const response = await fetchWithAuth(requestItemApi, 'POST');
 
-    let postList = [];
-    postList = [...data.postList];
+    console.log("!!!=>",response);
 
-    if (response.result) {
-      // Alert.alert('result', '刪除我的最愛成功!');
-      postList = findItemById(data.id, postList, false);
-    } else {
-      // const msg = `name:${response.name}\nmessage:${response.message}`;
-      Alert.alert('result', '請先登入！');
-    }
-
-    return (dispatch) => {
-      dispatch(receivedSearchPost(postList));
-    };
+    // let postList = [];
+    // postList = [...data.postList];
+    //
+    // if (response.result) {
+    //   // Alert.alert('result', '刪除我的最愛成功!');
+    //   postList = findItemById(data.id, postList, false);
+    // } else {
+    //   // const msg = `name:${response.name}\nmessage:${response.message}`;
+    //   Alert.alert('result', '請先登入！');
+    // }
+    //
+    // return (dispatch) => {
+    //   dispatch(receivedSearchPost(postList));
+    // };
+    return () => {};
   } catch (e) {
     errorHandle(e.message);
     return () => {};

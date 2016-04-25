@@ -4,7 +4,6 @@ import React, {
   Text,
   Image,
   StyleSheet,
-  Alert,
   TouchableOpacity,
 } from 'react-native';
 import ActionButton from '../components/ActionButton';
@@ -79,6 +78,20 @@ export default class GivePage extends React.Component {
   }
 
   onMount() {
+    this.resetCheckboxSatue();
+  }
+
+  setCheckboxSatue = (index) => {
+    let newCheckboxStatus = [];
+    newCheckboxStatus = [...this.state.checkboxStatus];
+    newCheckboxStatus[index] = true;
+
+    this.setState({
+      checkboxStatus: newCheckboxStatus,
+    });
+  }
+
+  resetCheckboxSatue = () => {
     let result = false;
     const { id } = this.props;
     const records = this.findMyItemById(id).records;
@@ -126,22 +139,23 @@ export default class GivePage extends React.Component {
 
   handleCheckboxPress = (index) => {
     // console.log("index=>",index);
-    let result;
-    const checkboxStatus = this.state.checkboxStatus;
+    // let result;
+    // const checkboxStatus = this.state.checkboxStatus;
 
     // console.log("checkboxStatus=>",checkboxStatus);
 
-    const newCheckboxStatus = checkboxStatus.map((status, mapIndex) => {
-      if (mapIndex === index) result = true;
-      else result = false;
-      return result;
-    });
+    // const newCheckboxStatus = checkboxStatus.map((status, mapIndex) => {
+    //   if (mapIndex === index) result = true;
+    //   else result = false;
+    //   return result;
+    // });
+    this.setCheckboxSatue(index);
 
     // console.log("newCheckboxStatus=>",newCheckboxStatus);
 
-    this.setState({
-      checkboxStatus: newCheckboxStatus,
-    });
+    // this.setState({
+    //   checkboxStatus: newCheckboxStatus,
+    // });
     // console.log("this.state.checkboxStatus=>",this.state.checkboxStatus);
   }
 

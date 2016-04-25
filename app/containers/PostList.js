@@ -30,7 +30,7 @@ const styles = React.StyleSheet.create({
     flex: 1,
     marginTop: 20,
     backgroundColor: color.WHITE_COLOR,
-    paddingBottom: windowSize.height * 0.11,
+    paddingBottom: windowSize.height * 0.05,
   },
 });
 

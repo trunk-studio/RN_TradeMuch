@@ -77,8 +77,10 @@ export function post(state = {}, action) {
         'id',
         action.data.postId,
         (item) => {
-          const newItem = { ...item };
-          for (const record of newItem.records) {
+          let newItem = [];
+          newItem = { ...item };
+          let record;
+          for (record of newItem.records) {
             if (record.id === action.data.user_id) {
               record.status = 'accepted';
             } else {
@@ -99,7 +101,8 @@ export function post(state = {}, action) {
         'id',
         action.data,
         (item) => {
-          let newItem = {...item};
+          let newItem = [];
+          newItem = { ...item };
           newItem.unReadCount = null;
           return newItem;
         }

@@ -74,7 +74,8 @@ export default class MyItems extends Component {
 
   onMount() {
     const items = this.props.myItems.map((item) => {
-      let rightText = '';
+      const requests = item.requests === 0 ? '' : `${item.requests} 個人想要`;
+      let rightText = requests;
       if (item.status === 'off') {
         rightText = '已下架';
       } else if (item.status === 'sold') {
@@ -113,8 +114,6 @@ export default class MyItems extends Component {
     } else {
       bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
     }
-    const requests = rowData.requests === 0 ? '' : `${rowData.requests} 個人想要`;
-    const rightText = rowData.rightText.length === 0 ? requests : rowData.rightText;
     const distance = '';
 
     const item = (
@@ -125,7 +124,7 @@ export default class MyItems extends Component {
         description={distance}
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
-        rightText={rightText}
+        rightText={rowData.rightText}
         rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );
