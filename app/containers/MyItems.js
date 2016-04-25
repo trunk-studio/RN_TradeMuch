@@ -46,8 +46,36 @@ export default class MyItems extends Component {
   }
 
   componentDidMount() {
+    this.onMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      const items = nextProps.myItems.map((item) => {
+        let rightText = '';
+        if (item.status === 'off') {
+          rightText = '已下架';
+          Alert.alert('下架成功！');
+        } else if (item.status === 'sold') {
+          rightText = '已成交';
+          Alert.alert('給予成功！');
+        }
+        return {
+          ...item,
+          pic: `${config.serverDomain}${item.pic}`,
+          rightText,
+        };
+      });
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(items),
+      });
+    }
+  }
+
+  onMount() {
     const items = this.props.myItems.map((item) => {
-      let rightText = '';
+      const requests = item.requests === 0 ? '' : `${item.requests} 個人想要`;
+      let rightText = requests;
       if (item.status === 'off') {
         rightText = '已下架';
       } else if (item.status === 'sold') {
@@ -64,33 +92,15 @@ export default class MyItems extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.myItems !== this.props.myItems) {
-      const items = nextProps.myItems.map((item) => {
-        let rightText = '';
-        if (item.status === 'off') {
-          rightText = '已下架';
-        } else if (item.status === 'sold') {
-          rightText = '已成交';
-        }
-        return {
-          ...item,
-          pic: `${config.serverDomain}${item.pic}`,
-          rightText,
-        };
-      });
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(items),
-      });
-    }
-  }
-
   onListItemPress = (id) => {
     const item = this.findMyItemById(id);
     Actions.ownerPostDetail({
       itemTitle: item.title,
       description: item.description,
       pic: `${config.serverDomain}${item.pic}`,
+      id,
+      requests: item.requests,
+      // records: item.records,
     });
   }
 
@@ -105,6 +115,7 @@ export default class MyItems extends Component {
       bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
     }
     const distance = '';
+
     const item = (
       <ListItem
         id={rowData.id}
