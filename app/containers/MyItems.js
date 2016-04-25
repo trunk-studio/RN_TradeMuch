@@ -1,5 +1,6 @@
 import React, {
   View,
+  Dimensions,
   Component,
   ListView,
   Alert,
@@ -21,11 +22,13 @@ import {
 } from '../actions/PostActions';
 
 
+const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: color.MAIN_BACKGROUND_COLOR,
+    paddingBottom: windowSize.height * 0.05,
   },
   ButtomButton: {
 

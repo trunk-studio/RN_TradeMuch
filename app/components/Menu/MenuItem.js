@@ -62,9 +62,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textNotification: {
-    fontSize: 5 * PIXEL_RATIO,
+    fontSize: 7 * PIXEL_RATIO,
     color: '#fff',
-    fontWeight: '700',
+    fontWeight: 'bold',
   },
   container: {
     flexDirection: 'column',

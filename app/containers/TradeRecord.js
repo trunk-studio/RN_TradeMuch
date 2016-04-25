@@ -1,6 +1,7 @@
 import React, {
   View,
   Component,
+  Dimensions,
   ListView,
   Alert,
 } from 'react-native';
@@ -12,11 +13,13 @@ import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
 
+const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: '#fff',
+    paddingBottom: windowSize.height * 0.05,
   },
   ButtomButton: {
 

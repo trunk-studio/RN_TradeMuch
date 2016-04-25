@@ -79,7 +79,7 @@ export default function PostListItem(props) {
           <View style={styles.commentContent}>
             <Image source={{ uri: props.img }} style={styles.itemImg} />
             <View style={styles.commentBody}>
-              <Text style={styles.title}>
+              <Text style={styles.title} numberOfLines={1} >
                 {props.title}
               </Text>
               <Text style={styles.commentText}>

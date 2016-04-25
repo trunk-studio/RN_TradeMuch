@@ -137,7 +137,7 @@ export default class SideDrawerContent extends Component {
     // const { drawer } = this.context
     const { userInfo, isLogin, myItems } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
-    let messageBoard;
+    let messageBoard, myItemList;
     if (isLogin) {
       let unReadCountSum = 0;
       myItems.forEach((item) => {
@@ -147,6 +147,16 @@ export default class SideDrawerContent extends Component {
       });
       messageBoard = (
         <MenuItem id="messageBoard" title="我的留言板" img="http://i.imgur.com/NBbuVv3.png  " notification={unReadCountSum} onItemPress={this.onItemPress} />
+      );
+
+      let requestCount = 0;
+      myItems.forEach((item) => {
+        if (item.requests) {
+          requestCount += parseInt(item.requests, 10);
+        }
+      });
+      myItemList = (
+        <MenuItem id="myItems" title="我的倉庫" img="http://i.imgur.com/YHOYSAa.png" notification={requestCount} onItemPress={this.onItemPress} />
       );
     }
     return (
@@ -162,7 +172,7 @@ export default class SideDrawerContent extends Component {
           <MenuItem id="tradeRecord" title="我撿的資源" img="http://i.imgur.com/gwzwb5F.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="favoriteList" title="我追蹤的資源" img="http://i.imgur.com/v8iXJJP.png" notification="" onItemPress={this.onItemPress} />
           {messageBoard}
-          <MenuItem id="myItems" title="我的倉庫" img="http://i.imgur.com/YHOYSAa.png" notification="" onItemPress={this.onItemPress} />
+          {myItemList}
           <MenuItem id="category" title="尋寶去" img="http://i.imgur.com/dGhdv4x.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title={loginBtnTitle} img="http://i.imgur.com/UDw6ykK.png" notification="" onItemPress={this.onItemPress} />
         </ScrollView>
