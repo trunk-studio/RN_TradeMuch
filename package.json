@@ -22,7 +22,6 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-cookies": "0.0.5",
     "react-native-drawer": "1.16.7",
-    "react-native-env": "git@github.com:kyoyadmoon/react-native-env.git#master",
     "react-native-fbsdkcore": "0.0.8",
     "react-native-fbsdklogin": "0.0.8",
     "react-native-fbsdkshare": "0.0.8",
