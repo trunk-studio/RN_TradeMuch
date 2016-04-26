@@ -7,18 +7,12 @@ import React, {
   Alert,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import {
-  LIST_ITEM_COLOR1,
-  LIST_ITEM_COLOR2,
-  SEARCHBAR_COLOR,
-  WHITE_COLOR,
- } from '../style/color';
+import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
 import config from '../config/index';
-// import SearchBar from '../components/SearchBar';
 import SearchBar from 'react-native-search-bar';
 const {
   RNSearchBarManager,
@@ -35,8 +29,8 @@ const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: WHITE_COLOR,
-    paddingBottom: windowSize.height * 0.11,
+    backgroundColor: color.WHITE_COLOR,
+    paddingBottom: windowSize.height * 0.05,
   },
 });
 
@@ -87,12 +81,12 @@ export default class PostList extends Component {
     Actions.postDetail({ id });
   }
 
-  getListItem(rowData, sectionID, rowID, highlightRow) {
+  getListItem(rowData, sectionID, rowID) {
     let bakColor = {};
     if (rowID % 2 === 0) {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
+      bakColor = { backgroundColor: color.LIST_ITEM_COLOR1 };
     } else {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
+      bakColor = { backgroundColor: color.LIST_ITEM_COLOR2 };
     }
     let distance = '';
     if (rowData.distance !== -1) {
@@ -154,7 +148,7 @@ export default class PostList extends Component {
           onSearchButtonPress={this.handleSearchButtonPress}
           onCancelButtonPress={this.handleSearchCancelPress}
           showsCancelButton={this.state.showsCancelButton}
-          barTintColor={SEARCHBAR_COLOR}
+          barTintColor={color.SEARCHBAR_COLOR}
           searchBarStyle="default"
         />
         <ListView

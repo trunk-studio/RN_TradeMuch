@@ -6,6 +6,7 @@ import {
   RECEIVED_GET_MY_ITEMS,
   RECEIVED_UPDATE_POST_STATUS_SUCCESS,
   RECEIVED_GET_TRADE_RECORDS,
+  RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS,
 } from '../actions/PostActions';
 
 import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
@@ -55,7 +56,8 @@ export function post(state = {}, action) {
         'id',
         action.data.postId,
         (item) => {
-          let newItem = {...item};
+          let newItem = {};
+          newItem = { ...item };
           newItem.status = action.data.status;
           return newItem;
         }
@@ -70,13 +72,38 @@ export function post(state = {}, action) {
         ...state,
         myTradeRecords: action.data,
       };
+    case RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS: {
+      const newMyItems = findObjById(
+        state.myItems,
+        'id',
+        action.data.postId,
+        (item) => {
+          let newItem = {};
+          newItem = { ...item };
+          let record;
+          for (record of newItem.records) {
+            if (record.id === action.data.user_id) {
+              record.status = 'accepted';
+            } else {
+              record.status = 'refused';
+            }
+          }
+          return newItem;
+        }
+      );
+      return {
+        ...state,
+        myItems: newMyItems,
+      };
+    }
     case RECEIVED_READ_MESSAGE: {
       const newMyItems = findObjById(
         state.myItems,
         'id',
         action.data,
         (item) => {
-          let newItem = {...item};
+          let newItem = {};
+          newItem = { ...item };
           newItem.unReadCount = null;
           return newItem;
         }
