@@ -43,6 +43,9 @@ export default class PostList extends Component {
     this.state = {
       dataSource,
       showsCancelButton: false,
+      scrollOffset: 0,
+      enableHandleScroll: true,
+      minimalMode: false,
     };
   }
   componentDidMount() {
@@ -137,7 +140,41 @@ export default class PostList extends Component {
     Actions.createPost.call();
   }
 
+  handleScroll = (event: Object) => {
+    const scrollOffset = event.nativeEvent.contentOffset.y;
+    const contentHeight = event.nativeEvent.contentSize.height;
+    const layoutHeight = event.nativeEvent.layoutMeasurement.height;
+    const scrollDown = scrollOffset > this.state.scrollOffset;
+    const scrollUp = !scrollDown;
+    const isBounce = scrollOffset < 20 || contentHeight - scrollOffset - layoutHeight < 40;
+    if (this.state.enableHandleScroll && scrollDown && !isBounce) {
+      this.setState({
+        enableHandleScroll: false,
+        minimalMode: true,
+      });
+      setTimeout(() => {
+        this.setState({ enableHandleScroll: true });
+      }, 500);
+    } else if (scrollUp && !isBounce) {
+      this.setState({ minimalMode: false });
+    }
+
+    /* update scrollOffset */
+    this.setState({
+      scrollOffset,
+    });
+  }
+
   render() {
+    let ActionBtn = null;
+    if (!this.state.minimalMode) {
+      ActionBtn = (<ActionButton
+        text="我要上架"
+        img="http://qa.trademuch.co.uk/img/add.png"
+        onPress={this.handleActionButtonPress}
+      />);
+    }
+
     return (
       <View style={styles.content}>
         <SearchBar
@@ -158,12 +195,9 @@ export default class PostList extends Component {
           renderRow={this.getListItem}
           onLoadMoreAsync={this.loadMorePost}
           canLoadMore={this.props.canLoadMore}
+          onScroll={this.handleScroll}
         />
-        <ActionButton
-          text="我要上架"
-          img="http://qa.trademuch.co.uk/img/add.png"
-          onPress={this.handleActionButtonPress}
-        />
+        {ActionBtn}
     </View>
     );
   }

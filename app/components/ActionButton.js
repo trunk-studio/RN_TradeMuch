@@ -70,7 +70,7 @@ export default function ActionButton(props) {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: props.color }]}>
+    <View style={[styles.container, { backgroundColor: props.color }, props.style]}>
       <TouchableOpacity style={styles.contentBlock} onPress={onPress}>
         {buttonImg}
         <View style={styles.blockButtonText}>
@@ -86,6 +86,7 @@ ActionButton.propTypes = {
   img: PropTypes.string,
   color: PropTypes.string,
   onPress: PropTypes.func,
+  style: PropTypes.object,
 };
 
 ActionButton.defaultProps = {
