@@ -1,22 +1,20 @@
-
-let envMode = '';
+const envMode = 'EDIT_ENV_MODE';
+const localServerDomain = 'EDIT_LOCAL_SERVER_DOMAIN';
 let config = {};
 
 const defaultConfig = {};
 
 // --------------- dev mode -------------
-envMode = 'dev';
-
-config = {
-  ...defaultConfig,
-  envMode,
-  serverDomain: 'http://localhost:1337',
-  socketDomain: 'localhost:1337',
-};
+if (envMode === 'development') {
+  config = {
+    ...defaultConfig,
+    envMode,
+    serverDomain: `http://${localServerDomain}:1337`,
+    socketDomain: `${localServerDomain}:1337`,
+  };
+}
 
 // --------------- prod mode -------------
-
-// envMode = 'production';
 if (envMode === 'production') {
   config = {
     ...defaultConfig,

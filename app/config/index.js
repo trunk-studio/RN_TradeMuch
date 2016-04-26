@@ -1,5 +1,5 @@
-
-let envMode = '';
+let envMode = 'development';
+const localServerDomain = '10.0.1.22';
 let config = {};
 
 const defaultConfig = {};
@@ -10,13 +10,22 @@ envMode = 'dev';
 config = {
   ...defaultConfig,
   envMode,
-  serverDomain: 'http://localhost:1337',
-  socketDomain: 'localhost:1337',
+  serverDomain: `http://${localServerDomain}:1337`,
+  socketDomain: `${localServerDomain}:1337`,
 };
 
 // --------------- prod mode -------------
 
 // envMode = 'production';
+if (envMode === 'qa') {
+  config = {
+    ...defaultConfig,
+    envMode,
+    serverDomain: 'http://qa.trademuch.co.uk',
+    socketDomain: 'qa.trademuch.co.uk:1337',
+  };
+}
+
 if (envMode === 'production') {
   config = {
     ...defaultConfig,
@@ -25,5 +34,7 @@ if (envMode === 'production') {
     socketDomain: 'qa.trademuch.co.uk:1337',
   };
 }
+
+
 
 export default config;

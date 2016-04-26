@@ -7,3 +7,4 @@ xcuserdata
 build/
 main.jsbundle
 app/config/index.js
+app/config/index.jsconfig.bak
