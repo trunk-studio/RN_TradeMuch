@@ -3,7 +3,6 @@ import React, {
   Component,
   Dimensions,
   ListView,
-  Alert,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
@@ -12,6 +11,9 @@ import ListItem from '../components/PostList/ListItem';
 import ActionButton from '../components/ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
+import {
+  requestGetItemDataFromAPI,
+} from '../actions/PostDetailActions';
 
 const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({

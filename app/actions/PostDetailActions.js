@@ -4,6 +4,7 @@ import {
 import { errorHandle } from '../utils/errorHandle';
 import { Alert } from 'react-native';
 export const RECEIVED_SEARCH_POST = 'RECEIVED_SEARCH_POST';
+export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
 
 // -------------------------------- using the same dispatcher with search action
 export function receivedSearchPost(postList) {
@@ -84,22 +85,33 @@ export async function requestDeleteItemToFavList(data = {
   }
 }
 
-export function receivedSearchPost(postList) {
-  return {
-    type: RECEIVED_SEARCH_POST,
-    data: postList,
-  };
-}
+// ----------------------------------------------- get item data from server api
+export async function requestGetItemDataFromAPI(data = {
+  id: '',
+}) {
+  const getItemDataApi = `/rest/post/${data.id}`;
+  try {
+    const response = await fetchWithAuth(getItemDataApi, 'GET');
 
+    console.log('requestGetItemDataFromAPI=>', response);
+    return {
+      type: RECEIVED_ADD_POSTLIST,
+      data: response.post,
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
 // ------------------------------------------------------------------ ask a item
-export async function requestAskItem(data = {
+export async function requestTradeItem(data = {
   id: '',
 }) {
   const requestItemApi = `/rest/trade/${data.id}`;
   try {
     const response = await fetchWithAuth(requestItemApi, 'POST');
 
-    // console.log("!!!=>",response);
+    console.log('!!!=>', response);
     return () => {};
   } catch (e) {
     errorHandle(e.message);

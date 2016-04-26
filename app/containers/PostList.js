@@ -45,6 +45,7 @@ export default class PostList extends Component {
       showsCancelButton: false,
     };
   }
+
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -59,6 +60,7 @@ export default class PostList extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.postList !== this.props.postList) {
       this.setState({
