@@ -11,8 +11,8 @@ import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
-import config from '../config/index';
+import ActionButton from './ActionButton';
+import TMListView from './TMListView';
 
 const {
   RNSearchBarManager,
@@ -164,7 +164,7 @@ export default class PostList extends Component {
   render() {
     return (
       <View style={styles.content}>
-        <ListView
+        <TMListView
           keyboardDismissMode="on-drag"
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}

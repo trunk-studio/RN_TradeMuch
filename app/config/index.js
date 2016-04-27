@@ -1,22 +1,20 @@
-let envMode = 'development';
-const localServerDomain = '10.0.1.22';
+const envMode = 'development';
+const localServerDomain = '192.168.168.52';
 let config = {};
 
 const defaultConfig = {};
 
 // --------------- dev mode -------------
-envMode = 'dev';
+if (envMode === 'development') {
+  config = {
+    ...defaultConfig,
+    envMode,
+    serverDomain: `http://${localServerDomain}:1337`,
+    socketDomain: `${localServerDomain}:1337`,
+  };
+}
 
-config = {
-  ...defaultConfig,
-  envMode,
-  serverDomain: `http://${localServerDomain}:1337`,
-  socketDomain: `${localServerDomain}:1337`,
-};
-
-// --------------- prod mode -------------
-
-// envMode = 'production';
+// --------------- qa mode -------------
 if (envMode === 'qa') {
   config = {
     ...defaultConfig,
@@ -26,6 +24,7 @@ if (envMode === 'qa') {
   };
 }
 
+// --------------- prod mode -------------
 if (envMode === 'production') {
   config = {
     ...defaultConfig,

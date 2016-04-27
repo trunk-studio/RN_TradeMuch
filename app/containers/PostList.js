@@ -3,15 +3,15 @@ import React, {
   Dimensions,
   View,
   Component,
-  ListView,
   Alert,
+  ListView,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import config from '../config/index';
 import SearchBar from 'react-native-search-bar';
 const {
@@ -23,14 +23,14 @@ import {
   requestSearchPostNextPage,
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
-
+import TMListView from './TMListView';
 const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: color.WHITE_COLOR,
-    paddingBottom: windowSize.height * 0.05,
+    // paddingBottom: windowSize.height * 0.05,
   },
 });
 
@@ -43,9 +43,6 @@ export default class PostList extends Component {
     this.state = {
       dataSource,
       showsCancelButton: false,
-      scrollOffset: 0,
-      enableHandleScroll: true,
-      minimalMode: false,
     };
   }
   componentDidMount() {
@@ -140,41 +137,7 @@ export default class PostList extends Component {
     Actions.createPost.call();
   }
 
-  handleScroll = (event: Object) => {
-    const scrollOffset = event.nativeEvent.contentOffset.y;
-    const contentHeight = event.nativeEvent.contentSize.height;
-    const layoutHeight = event.nativeEvent.layoutMeasurement.height;
-    const scrollDown = scrollOffset > this.state.scrollOffset;
-    const scrollUp = !scrollDown;
-    const isBounce = scrollOffset < 20 || contentHeight - scrollOffset - layoutHeight < 40;
-    if (this.state.enableHandleScroll && scrollDown && !isBounce) {
-      this.setState({
-        enableHandleScroll: false,
-        minimalMode: true,
-      });
-      setTimeout(() => {
-        this.setState({ enableHandleScroll: true });
-      }, 500);
-    } else if (scrollUp && !isBounce) {
-      this.setState({ minimalMode: false });
-    }
-
-    /* update scrollOffset */
-    this.setState({
-      scrollOffset,
-    });
-  }
-
   render() {
-    let ActionBtn = null;
-    if (!this.state.minimalMode) {
-      ActionBtn = (<ActionButton
-        text="我要上架"
-        img="http://qa.trademuch.co.uk/img/add.png"
-        onPress={this.handleActionButtonPress}
-      />);
-    }
-
     return (
       <View style={styles.content}>
         <SearchBar
@@ -188,16 +151,19 @@ export default class PostList extends Component {
           barTintColor={color.SEARCHBAR_COLOR}
           searchBarStyle="default"
         />
-        <ListView
+        <TMListView
           keyboardDismissMode="on-drag"
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
           onLoadMoreAsync={this.loadMorePost}
           canLoadMore={this.props.canLoadMore}
-          onScroll={this.handleScroll}
         />
-        {ActionBtn}
+        <ActionButton
+          text="我要上架"
+          img="http://qa.trademuch.co.uk/img/add.png"
+          onPress={this.handleActionButtonPress}
+        />
     </View>
     );
   }
