@@ -13,18 +13,21 @@ rnpm link react-native-linear-gradient
 ### edit config.js in config folder
 
 
-# Run Project （dev）
+# Run Project in dev Mode
 
+npm run start
 
-npm run dev
+or
 
-open `Counter.xcworkspace` in Xcode and run
+open `Counter.xcworkspace` in Xcode and run `TradeMuch` Scheme
+
+# Run in QA Mode
+
+npm run qa
 
 ##Production Mode
 
-1. edit /config/index.js  envMode = 'production'
-2. run project
-
+open `Counter.xcworkspace` in Xcode and run `TradeMuch Production` Scheme
 
 # 實體 iPhone 開發
 
