@@ -32,7 +32,7 @@ export default class SideDrawer extends Component {
   }
 
   onOpen = () => {
-
+    this.props.onOpen();
   }
 
   onClose = () => {
@@ -82,4 +82,5 @@ export default class SideDrawer extends Component {
 SideDrawer.propTypes = {
   children: PropTypes.node,
   route: PropTypes.object,
+  onOpen: PropTypes.func,
 };
