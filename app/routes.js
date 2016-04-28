@@ -88,7 +88,6 @@ export default class AppRoutes extends Component {
   constructor(props) {
     super(props);
     this.renderMenuButton = this.renderMenuButton.bind(this);
-    this.renderLoginButton = this.renderLoginButton.bind(this);
     this.renderNoneButton = this.renderNoneButton.bind(this);
   }
 
@@ -131,7 +130,7 @@ export default class AppRoutes extends Component {
     );
   }
 
-  renderLoginButton() {
+  renderLoginButton = () => {
     let loginButton = [];
     if (!this.props.isLogin) {
       loginButton = [
@@ -139,7 +138,7 @@ export default class AppRoutes extends Component {
           style={styles.leftButtonContainer}
           onPress={Actions.login}
         >
-        <Text style={styles.navTitle}>登入</Text>
+          <Text style={styles.navTitle}>登入</Text>
         </TouchableOpacity>,
       ];
     }
@@ -189,7 +188,7 @@ export default class AppRoutes extends Component {
           sceneConfig={Navigator.SceneConfigs.FloatFromRight}
           hideNavBar={false}
           renderLeftButton={this.renderMenuButton}
-          renderRightButton={this.renderLoginButton}
+          // renderRightButton={this.renderLoginButton.bind(this, this.props.login)}
         />
         <Schema
           name="interior"
