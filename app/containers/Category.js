@@ -16,13 +16,16 @@ import {
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import config from '../config/index';
 // import SearchBar from '../components/SearchBar';
 import SearchBar from 'react-native-search-bar';
+import TMListView from './TMListView';
+
 const {
   RNSearchBarManager,
 } = NativeModules;
+
 import {
   requestSearchLoadMore,
   requestSearchPost,

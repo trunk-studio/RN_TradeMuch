@@ -93,7 +93,6 @@ export async function requestGetItemDataFromAPI(data = {
   try {
     const response = await fetchWithAuth(getItemDataApi, 'GET');
 
-    console.log('requestGetItemDataFromAPI=>', response);
     return {
       type: RECEIVED_ADD_POSTLIST,
       data: response.post,
@@ -111,7 +110,6 @@ export async function requestTradeItem(data = {
   try {
     const response = await fetchWithAuth(requestItemApi, 'POST');
 
-    console.log('!!!=>', response);
     return () => {};
   } catch (e) {
     errorHandle(e.message);

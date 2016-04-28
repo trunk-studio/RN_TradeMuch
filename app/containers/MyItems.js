@@ -4,18 +4,18 @@ import React, {
   Component,
   ListView,
   Alert,
-  Image,
-  Text,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import config from '../config/index';
 import Swipeout from 'react-native-swipeout';
 import SwipeOutButton from '../components/SwipeOutButton';
+import TMListView from './TMListView';
+
 import {
   requestUpdatePostStatus,
 } from '../actions/PostActions';
@@ -197,7 +197,7 @@ export default class MyItems extends Component {
   render() {
     return (
       <View style={styles.content}>
-        <ListView
+        <TMListView
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
         />

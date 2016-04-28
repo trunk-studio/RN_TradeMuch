@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { loginValidation } from './actions/AuthActions';
 import { requestGetMyItems, requestGetTradeRecords } from './actions/PostActions';
+import { closeMinimalUIMode } from './actions/UIStatusActions';
 import React, {
   Navigator,
 	StyleSheet,
@@ -205,7 +206,7 @@ export default class AppRoutes extends Component {
 
         {/* ------------------- SideDrawer Router -------------------------- */}
         <Route name="drawer" hideNavBar type="switch" initial>
-          <SideDrawer ref={this.refSideDrawer}>
+          <SideDrawer ref={this.refSideDrawer} onOpen={this.props.closeMinimalUIMode} >
             <Router
               name="drawerRoot"
               sceneStyle={styles.routerScene}
@@ -265,6 +266,7 @@ AppRoutes.propTypes = {
   requestGetMyItems: React.PropTypes.func,
   requestGetTradeRecords: React.PropTypes.func,
   isLogin: React.PropTypes.bool,
+  closeMinimalUIMode: React.PropTypes.func,
 };
 
 
@@ -279,6 +281,7 @@ const _injectPropsFormActions = {
   loginValidation,
   requestGetMyItems,
   requestGetTradeRecords,
+  closeMinimalUIMode,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(AppRoutes);

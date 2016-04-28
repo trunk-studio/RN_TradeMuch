@@ -1,28 +1,27 @@
 import React, {
   PropTypes,
   Component,
-  Alert,
 } from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideDrawerContent from './SideDrawerContent';
-import { Actions } from 'react-native-router-flux';
+import * as color from '../style/color';
 
 const styles = {
   drawerStyles: {
     drawer: {
-      backgroundColor: '#ffffff',
+      backgroundColor: color.WHITE_COLOR,
       alignItems: 'center',
       flex: 1,
       flexDirection: 'column',
     },
     main: {
-      backgroundColor: '#ffffff',
-      shadowColor: '#000000',
+      backgroundColor: color.WHITE_COLOR,
+      shadowColor: color.BLACK_COLOR,
       shadowOpacity: 0.4,
       shadowRadius: 3,
     },
     sideDrawerContent: {
-      backgroundColor: '#500505',
+      backgroundColor: color.SIDE_DRAWER_CONTENT_BACKGROUND_COLOR,
     },
   },
 };
@@ -37,10 +36,7 @@ export default class SideDrawer extends Component {
   }
 
   onOpen = () => {
-    // Alert.alert('1');
-    // Actions.postDetail({
-    //   id: 1,
-    // });
+    this.props.onOpen();
   }
 
   onClose = () => {
@@ -90,4 +86,5 @@ export default class SideDrawer extends Component {
 SideDrawer.propTypes = {
   children: PropTypes.node,
   route: PropTypes.object,
+  onOpen: PropTypes.func,
 };

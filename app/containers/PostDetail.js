@@ -255,7 +255,6 @@ export default class PostDetail extends Component {
         postItem = postList[i];
       }
     }
-    console.log('findPostItemById postItem=>', postItem);
     if (!postItem.id) {
       this.props.requestGetItemDataFromAPI({
         id: this.props.id,

@@ -8,7 +8,7 @@ import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
 import {

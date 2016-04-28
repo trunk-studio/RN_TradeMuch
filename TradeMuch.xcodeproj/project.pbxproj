@@ -295,6 +295,8 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				A298685892000314546A3A49 /* Embed Pods Frameworks */,
 				D05715A3477F3E968519F539 /* Copy Pods Resources */,
+				6D6027FA1CCF0D8200ACC613 /* set env */,
+				6D6027EA1CCDC34100ACC613 /* Set IP */,
 			);
 			buildRules = (
 			);
@@ -449,6 +451,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		6D6027EA1CCDC34100ACC613 /* Set IP */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set IP";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "INFOPLIST=\"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\necho \"writing to $INFOPLIST\"\nPLISTCMD=\"Add :SERVER_IP string $(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1' | head -1)\"\necho -n \"$INFOPLIST\" | xargs -0 /usr/libexec/PlistBuddy -c \"$PLISTCMD\" || true\nPLISTCMD=\"Set :SERVER_IP $(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1' | head -1)\"\necho -n \"$INFOPLIST\" | xargs -0 /usr/libexec/PlistBuddy -c \"$PLISTCMD\" || true";
+		};
+		6D6027FA1CCF0D8200ACC613 /* set env */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "set env";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
 		A298685892000314546A3A49 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

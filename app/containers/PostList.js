@@ -3,15 +3,15 @@ import React, {
   Dimensions,
   View,
   Component,
-  ListView,
   Alert,
+  ListView,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import config from '../config/index';
 import SearchBar from 'react-native-search-bar';
 const {
@@ -23,14 +23,14 @@ import {
   requestSearchPostNextPage,
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
-
+import TMListView from './TMListView';
 const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: color.WHITE_COLOR,
-    paddingBottom: windowSize.height * 0.05,
+    // paddingBottom: windowSize.height * 0.05,
   },
 });
 
@@ -153,7 +153,7 @@ export default class PostList extends Component {
           barTintColor={color.SEARCHBAR_COLOR}
           searchBarStyle="default"
         />
-        <ListView
+        <TMListView
           keyboardDismissMode="on-drag"
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
