@@ -4,7 +4,7 @@ import React, {
 } from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideDrawerContent from './SideDrawerContent';
-import * as color from '../style/color';
+import * as color from '../../style/color';
 
 const styles = {
   drawerStyles: {
