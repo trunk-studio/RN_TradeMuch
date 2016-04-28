@@ -5,7 +5,6 @@ import React, {
   Component,
   Image,
   Text,
-  PixelRatio,
   Dimensions,
   TextInput,
   Alert,
@@ -17,7 +16,7 @@ import {
 } from '../actions/AuthActions';
 // import Dimensions from 'Dimensions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import {
   TRADEMUCH_MAIN_COLOR_1,
   PROFILE_BACKGROUND_COLOR,

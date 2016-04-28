@@ -6,7 +6,7 @@ import React, {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import ActionButton from '../components/ActionButton';
+import ActionButton from './ActionButton';
 import CheckBox from 'react-native-icon-checkbox';
 import * as color from '../style/color';
 import { connect } from 'react-redux';

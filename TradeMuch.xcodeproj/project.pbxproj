@@ -17,7 +17,6 @@
 		51898EAC8A9E4F79ABD06331 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73505FE73B2F4879A54B9EB4 /* Octicons.ttf */; };
 		565653FC1CB4D7F500436083 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 565653F91CB4D7EC00436083 /* libRCTLinking.a */; };
 		569A9F8E1CBF4AC600F47FFA /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 569A9F8D1CBF4AC600F47FFA /* main.jsbundle */; };
-		6D6027F91CCE281200ACC613 /* RNEnvironmentManagerIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D6027F81CCE281200ACC613 /* RNEnvironmentManagerIOS.m */; };
 		6DA693B71CBF71B500B42EE4 /* Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA693B61CBF71B500B42EE4 /* Orientation.m */; };
 		7DD16E341A0E42C8BB666D4A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2271A41F1F4340AEB0EF98B4 /* EvilIcons.ttf */; };
 		8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08C5F01CA00E6000961C8F /* libBVLinearGradient.a */; };
@@ -91,8 +90,6 @@
 		565653F21CB4D7EC00436083 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		569A9F8D1CBF4AC600F47FFA /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		6D6027F71CCE281200ACC613 /* RNEnvironmentManagerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNEnvironmentManagerIOS.h; sourceTree = "<group>"; };
-		6D6027F81CCE281200ACC613 /* RNEnvironmentManagerIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNEnvironmentManagerIOS.m; sourceTree = "<group>"; };
 		6DA693B51CBF71B500B42EE4 /* Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orientation.h; sourceTree = "<group>"; };
 		6DA693B61CBF71B500B42EE4 /* Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orientation.m; sourceTree = "<group>"; };
 		73505FE73B2F4879A54B9EB4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -164,16 +161,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6D6027F61CCE281200ACC613 /* RNEnvironmentManagerIOS */ = {
-			isa = PBXGroup;
-			children = (
-				6D6027F71CCE281200ACC613 /* RNEnvironmentManagerIOS.h */,
-				6D6027F81CCE281200ACC613 /* RNEnvironmentManagerIOS.m */,
-			);
-			name = RNEnvironmentManagerIOS;
-			path = "node_modules/react-native-env/RNEnvironmentManagerIOS";
-			sourceTree = "<group>";
-		};
 		6DA693B41CBF71B500B42EE4 /* RCTOrientation */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,7 +198,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				6D6027F61CCE281200ACC613 /* RNEnvironmentManagerIOS */,
 				6DA693B41CBF71B500B42EE4 /* RCTOrientation */,
 				8BB48A841C9AB8C9006D5BA2 /* Libraries */,
 				C87A08241B683A3800075643 /* plutoBack.png */,
@@ -548,7 +534,6 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				6DA693B71CBF71B500B42EE4 /* Orientation.m in Sources */,
-				6D6027F91CCE281200ACC613 /* RNEnvironmentManagerIOS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
