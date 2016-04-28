@@ -11,6 +11,7 @@ import React, {
   Easing,
   Animated,
 } from 'react-native';
+import * as color from '../style/color';
 let windowSize = Dimensions.get('window');
 const isShort = windowSize.width < windowSize.height;
 windowSize = {
@@ -147,7 +148,7 @@ ActionButton.propTypes = {
 ActionButton.defaultProps = {
   text: 'click',
   img: '',
-  color: 'rgb(95, 162, 146)',
+  color: color.ACTION_BUTTON,
   onPress: () => {},
 };
 
