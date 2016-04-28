@@ -5,7 +5,6 @@ import React, {
   Text,
   Component,
   Linking,
-  PixelRatio,
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -15,7 +14,8 @@ import Dimensions from 'Dimensions';
 import {
   requestAddItemToFavList,
   requestDeleteItemToFavList,
-  requestAskItem,
+  requestTradeItem,
+  requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
 
@@ -154,7 +154,34 @@ export default class PostDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.postItem = this.findPostItemById();
+    this.state = {
+      postItem: {},
+    };
+  }
+
+  componentDidMount() {
+    this.onMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.postList !== this.props.postList) {
+      let postItem;
+      for (const item of nextProps.postList) {
+        if (item.id === this.props.id) {
+          postItem = item;
+        }
+      }
+      this.setState({
+        postItem,
+      });
+    }
+  }
+
+  onMount() {
+    const postItem = this.findPostItemById();
+    this.setState({
+      postItem,
+    });
   }
 
   getItNowButtonHandle = () => {
@@ -164,7 +191,7 @@ export default class PostDetail extends Component {
         postId: this.props.id,
         sendMessageInitial: `嗨！我想要${this.postItem.title}`,
       });
-      this.props.requestAskItem({
+      this.props.requestTradeItem({
         id: this.props.id,
       });
     } else {
@@ -228,12 +255,16 @@ export default class PostDetail extends Component {
         postItem = postList[i];
       }
     }
+    if (!postItem.id) {
+      this.props.requestGetItemDataFromAPI({
+        id: this.props.id,
+      });
+    }
     return postItem;
   }
 
   render() {
-    // console.log("this.postItem=>",this.postItem);
-    const { title, description, pic, isFav } = this.postItem;
+    const { title, description, pic, isFav } = this.state.postItem;
     if (title === null) {
       Actions.postList.call();
     }
@@ -313,7 +344,8 @@ PostDetail.propTypes = {
   isLogin: React.PropTypes.bool,
   requestAddItemToFavList: React.PropTypes.func,
   requestDeleteItemToFavList: React.PropTypes.func,
-  requestAskItem: React.PropTypes.func,
+  requestTradeItem: React.PropTypes.func,
+  requestGetItemDataFromAPI: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
@@ -331,7 +363,8 @@ function _injectPropsFromStore(state) {
 const _injectPropsFormActions = {
   requestAddItemToFavList,
   requestDeleteItemToFavList,
-  requestAskItem,
+  requestTradeItem,
+  requestGetItemDataFromAPI,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);

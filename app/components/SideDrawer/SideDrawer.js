@@ -1,23 +1,27 @@
-import React, { PropTypes, Component } from 'react-native';
+import React, {
+  PropTypes,
+  Component,
+} from 'react-native';
 import Drawer from 'react-native-drawer';
 import SideDrawerContent from './SideDrawerContent';
+import * as color from '../../style/color';
 
 const styles = {
   drawerStyles: {
     drawer: {
-      backgroundColor: '#ffffff',
+      backgroundColor: color.WHITE_COLOR,
       alignItems: 'center',
       flex: 1,
       flexDirection: 'column',
     },
     main: {
-      backgroundColor: '#ffffff',
-      shadowColor: '#000000',
+      backgroundColor: color.WHITE_COLOR,
+      shadowColor: color.BLACK_COLOR,
       shadowOpacity: 0.4,
       shadowRadius: 3,
     },
     sideDrawerContent: {
-      backgroundColor: '#500505',
+      backgroundColor: color.SIDE_DRAWER_CONTENT_BACKGROUND_COLOR,
     },
   },
 };

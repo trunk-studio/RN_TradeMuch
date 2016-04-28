@@ -1,5 +1,6 @@
 import React, {
   View,
+  Dimensions,
   Component,
   ListView,
   Alert,
@@ -18,20 +19,19 @@ import TMListView from './TMListView';
 import {
   requestUpdatePostStatus,
 } from '../actions/PostActions';
-// import config from '../config/index';
 
-
+const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: color.MAIN_BACKGROUND_COLOR,
+    paddingBottom: windowSize.height * 0.05,
   },
   ButtomButton: {
 
   },
 });
-
 
 export default class MyItems extends Component {
   constructor(props) {
@@ -54,10 +54,8 @@ export default class MyItems extends Component {
         let rightText = '';
         if (item.status === 'off') {
           rightText = '已下架';
-          Alert.alert('下架成功！');
         } else if (item.status === 'sold') {
           rightText = '已成交';
-          Alert.alert('給予成功！');
         }
         return {
           ...item,
@@ -73,8 +71,7 @@ export default class MyItems extends Component {
 
   onMount() {
     const items = this.props.myItems.map((item) => {
-      const requests = item.requests === 0 ? '' : `${item.requests} 個人想要`;
-      let rightText = requests;
+      let rightText = '';
       if (item.status === 'off') {
         rightText = '已下架';
       } else if (item.status === 'sold') {
@@ -99,7 +96,6 @@ export default class MyItems extends Component {
       pic: `${config.serverDomain}${item.pic}`,
       id,
       requests: item.requests,
-      // records: item.records,
     });
   }
 
@@ -124,7 +120,12 @@ export default class MyItems extends Component {
         onItemPress={this.onListItemPress}
         bakColor={bakColor}
         rightText={rowData.rightText}
-        rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
+        rightTextStyle={{
+          color: color.TEXT_PRIMARY_COLOR,
+          fontWeight: 'bold',
+          fontSize: 12,
+        }}
+        notificationCount={rowData.requests}
       />
     );
     let listItem;

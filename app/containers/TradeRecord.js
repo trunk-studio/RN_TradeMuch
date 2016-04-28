@@ -1,8 +1,8 @@
 import React, {
   View,
   Component,
+  Dimensions,
   ListView,
-  Alert,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import { connect } from 'react-redux';
@@ -11,15 +11,17 @@ import ListItem from '../components/PostList/ListItem';
 import ActionButton from './ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
-// import config from '../config/index';
+import {
+  requestGetItemDataFromAPI,
+} from '../actions/PostDetailActions';
 
-import { requestSetLocation } from '../actions/GeoActions';
-
+const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: '#fff',
+    paddingBottom: windowSize.height * 0.05,
   },
   ButtomButton: {
 
@@ -38,6 +40,18 @@ export default class TradeRecord extends Component {
     };
   }
   componentDidMount() {
+    this.onMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.TradeRecord !== this.props.tradeRecord) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(nextProps.TradeRecord),
+      });
+    }
+  }
+
+  onMount() {
     const items = this.props.tradeRecord.map((item) => {
       let rightText = '';
       if (item.status === 'accepted') {
@@ -68,18 +82,8 @@ export default class TradeRecord extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.TradeRecord !== this.props.TradeRecord) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.TradeRecord),
-      });
-    }
-  }
-
   onListItemPress = (id) => {
-    // this.handleSearchCancelPress();
-    // Actions.postDetail({ id });
-    Alert.alert('測試資料!');
+    Actions.postDetail({ id });
   }
 
   getListItem(rowData, sectionID, rowID, highlightRow) {

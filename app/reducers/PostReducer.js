@@ -104,7 +104,7 @@ export function post(state = {}, action) {
         (item) => {
           let newItem = {};
           newItem = { ...item };
-          newItem.unReadCount = null;
+          newItem.unReadCount = 0;
           return newItem;
         }
       );

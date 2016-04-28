@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     color: LIST_TITLE_COLOR,
     padding: 2 * PIXEL_RATIO,
     paddingTop: 5.5 * PIXEL_RATIO,
-    fontSize: 8 * PIXEL_RATIO,
+    fontSize: 12,
   },
   commentBody: {
     flex: 1,
-    marginLeft: 8 * PIXEL_RATIO,
+    marginLeft: 5 * PIXEL_RATIO,
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   },
   rightBlock: {
     flex: 1,
+    paddingRight: 2,
     alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
@@ -78,7 +79,7 @@ export default function PostListItem(props) {
           <View style={styles.commentContent}>
             <Image source={{ uri: props.img }} style={styles.itemImg} />
             <View style={styles.commentBody}>
-              <Text style={styles.title}>
+              <Text style={styles.title} numberOfLines={2} >
                 {props.title}
               </Text>
               <Text style={styles.commentText}>
