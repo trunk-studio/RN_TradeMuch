@@ -42,29 +42,53 @@ export default class MessageBoard extends Component {
   }
 
   componentDidMount() {
+    this.onMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.myItems !== this.props.myItems) {
+      this.setListDataFromSource(this.state.selectedIndex, this.props.myItems);
+    }
+  }
+
+  onMount() {
+    let result = {};
     const items = this.props.myItems.map((item) => {
-      return {
+      // if (item.hasChat) {
+      result = {
         ...item,
         pic: `${config.serverDomain}${item.pic}`,
       };
+      // }
+      return { ...result };
     });
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(items),
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.myItems !== this.props.myItems) {
-      let items = [];
-      const selectedSegmentIndex = this.state.selectedIndex;
-      nextProps.myItems.forEach((item) => {
+  onListItemPress = (id) => {
+    // this.handleSearchCancelPress();
+    this.props.receivedReadMessages(id);
+    const item = this.findMyItemById(id);
+    Actions.messenger({
+      title: item.title,
+      postId: item.id,
+    });
+  }
+
+  setListDataFromSource = (selectedSegmentIndex, dataSource) => {
+    const allMessage = selectedSegmentIndex === 0;
+    const read = selectedSegmentIndex === 1;
+    const unread = selectedSegmentIndex === 2;
+    let items = [];
+    items = [];
+    dataSource.forEach((item) => {
+      if (item.hasChat) {
         const data = {
           ...item,
           pic: `${config.serverDomain}${item.pic}`,
         };
-        const allMessage = selectedSegmentIndex === 0;
-        const read = selectedSegmentIndex === 1;
-        const unread = selectedSegmentIndex === 2;
         if (allMessage) {
           items.push(data);
         } else if (read) {
@@ -76,20 +100,10 @@ export default class MessageBoard extends Component {
             items.push(data);
           }
         }
-      });
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(items),
-      });
-    }
-  }
-
-  onListItemPress = (id) => {
-    // this.handleSearchCancelPress();
-    this.props.receivedReadMessages(id);
-    const item = this.findMyItemById(id);
-    Actions.messenger({
-      title: item.title,
-      postId: item.id,
+      }
+    });
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(items),
     });
   }
 
@@ -131,31 +145,7 @@ export default class MessageBoard extends Component {
 
   handleSelectCnahge = (event) => {
     const selectedSegmentIndex = event.nativeEvent.selectedSegmentIndex;
-    const items = [];
-    this.props.myItems.forEach((item) => {
-      const data = {
-        ...item,
-        pic: `${config.serverDomain}${item.pic}`,
-      };
-      const allMessage = selectedSegmentIndex === 0;
-      const read = selectedSegmentIndex === 1;
-      const unread = selectedSegmentIndex === 2;
-      if (allMessage) {
-        items.push(data);
-      } else if (read) {
-        if (!item.unReadCount) {
-          items.push(data);
-        }
-      } else if (unread) {
-        if (item.unReadCount > 0) {
-          items.push(data);
-        }
-      }
-    });
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(items),
-      selectedIndex: selectedSegmentIndex,
-    });
+    this.setListDataFromSource(selectedSegmentIndex, this.props.myItems);
   }
 
   render() {

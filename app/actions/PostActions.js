@@ -2,6 +2,9 @@ import { fetchWithAuth } from '../utils/authFetch';
 import { errorHandle } from '../utils/errorHandle';
 import config from '../config/index';
 import { receivedTakePhoto } from '../actions/TakePhotoActions';
+import {
+  Alert,
+} from 'react-native';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';
 export const RECEIVED_UPLOAD_IMG = 'RECEIVED_UPLOAD_IMG';
@@ -226,9 +229,10 @@ export async function requestUpdateTradeRecordStatus(data = {
   action: '',
 }) {
   try {
-    console.log("data=>",data);
+    // console.log("data=>",data);
 
     const result = await fetchWithAuth(`/rest/trade/${data.postId}`, 'put', data);
+    Alert.alert('給予成功！');
     return (dispatch) => {
       dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, data.userId));
       dispatch(receivedUpdatePostStatus(result.success, data.postId, 'sold'));
