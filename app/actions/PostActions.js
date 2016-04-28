@@ -229,7 +229,7 @@ export async function requestUpdateTradeRecordStatus(data = {
   action: '',
 }) {
   try {
-    console.log("data=>",data);
+    // console.log("data=>",data);
 
     const result = await fetchWithAuth(`/rest/trade/${data.postId}`, 'put', data);
     Alert.alert('給予成功！');
