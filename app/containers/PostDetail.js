@@ -242,8 +242,8 @@ export default class PostDetail extends Component {
   }
 
   openMapButtonHandle = () => {
-    const lon = this.postItem.location.lon;
-    const lat = this.postItem.location.lat;
+    const lon = this.state.postItem.location.lon;
+    const lat = this.state.postItem.location.lat;
     const url = `https://www.google.com.tw/maps/place/${lat},${lon}`;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
@@ -275,17 +275,7 @@ export default class PostDetail extends Component {
     }
 
     let favButton = [];
-    if (isFav === false) {
-      favButton = [
-        <TouchableOpacity
-          key="favButton"
-          style={styles.button}
-          onPress={ this.addItemToFavoriteButtonHandle }
-        >
-          <Text style={styles.buttonText} >追蹤</Text>
-        </TouchableOpacity>,
-      ];
-    } else if (isFav === true) {
+    if (isFav === true) {
       favButton = [
         <TouchableOpacity
           key="favButton"
@@ -293,6 +283,16 @@ export default class PostDetail extends Component {
           onPress={ this.deleteFavoriteItemButtonHandle }
         >
           <Text style={styles.buttonText} >取消追蹤</Text>
+        </TouchableOpacity>,
+      ];
+    } else {
+      favButton = [
+        <TouchableOpacity
+          key="favButton"
+          style={styles.button}
+          onPress={ this.addItemToFavoriteButtonHandle }
+        >
+          <Text style={styles.buttonText} >追蹤</Text>
         </TouchableOpacity>,
       ];
     }
