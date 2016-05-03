@@ -106,6 +106,12 @@ export default class PostList extends Component {
           ),
         },
       ];
+      let rightText = '';
+      if (rowData.status === 'off') {
+        rightText = '已下架';
+      } else if (rowData.status === 'sold') {
+        rightText = '已成交';
+      }
       return (
         <Swipeout
           right={swipeoutBtns}
@@ -119,7 +125,12 @@ export default class PostList extends Component {
             description={desc}
             onItemPress={this.onListItemPress}
             bakColor={bakColor}
-            rightText={rowData.rightText}
+            rightText={rightText}
+            rightTextStyle={{
+              color: color.TEXT_PRIMARY_COLOR,
+              fontWeight: 'bold',
+              fontSize: 12,
+            }}
           />
       </Swipeout>
       );
