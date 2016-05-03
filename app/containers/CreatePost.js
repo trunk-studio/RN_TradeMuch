@@ -8,6 +8,7 @@ import React, {
   TextInput,
   Component,
   Alert,
+  NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -211,11 +212,17 @@ export default class PostDetail extends Component {
       // } else if (response.customButton) {
       //   console.log('User tapped custom button: ', response.customButton);
       // } else {
-        const source = { uri: response.uri.replace('file://', ''), isStatic: true };
-        this.props.requestTakePhoto(source, response);
-        const picExtension = response.uri.split('.').pop();
-        const picBase64 = `data:image/${picExtension};base64,${response.data}`;
-        this.props.requestUploadImg({ picBase64 });
+        NetInfo.isConnected.fetch().done((isConnected) => {
+          if (isConnected) {
+            const source = { uri: response.uri.replace('file://', ''), isStatic: true };
+            this.props.requestTakePhoto(source, response);
+            const picExtension = response.uri.split('.').pop();
+            const picBase64 = `data:image/${picExtension};base64,${response.data}`;
+            this.props.requestUploadImg({ picBase64 });
+          } else {
+            Alert.alert('注意', '需連線至網路');
+          }
+        });
       }
     });
   }
