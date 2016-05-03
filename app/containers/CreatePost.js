@@ -23,6 +23,7 @@ import {
   requestUploadImg,
   requestInputTitle,
   requestInputDescription,
+  requestCleanCreatePostData,
  } from '../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -178,6 +179,7 @@ export default class PostDetail extends Component {
     this.state = {
       title: '',
       description: '',
+      showLoadingIndicator: false,
     };
   }
 
@@ -196,9 +198,16 @@ export default class PostDetail extends Component {
       Actions.createFinish({
         itemTitle: postFinishData.title,
         description: postFinishData.description,
-        pic: `${config.serverDomain}/${postFinishData.pic}`
+        pic: `${config.serverDomain}/${postFinishData.pic}`,
+      });
+      this.setState({
+        showLoadingIndicator: false,
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.props.requestCleanCreatePostData();
   }
 
   selectPhotoButtonHandle() {
@@ -231,6 +240,9 @@ export default class PostDetail extends Component {
         },
         location: this.props.location,
         images: this.props.imgSrc[0].src,
+      });
+      this.setState({
+        showLoadingIndicator: true,
       });
     } else {
       Alert.alert('注意', '照片跟標題是必填喔');
@@ -297,13 +309,14 @@ export default class PostDetail extends Component {
     }
 
     return (
-      <View style={{flex: 1}}>
+      <View style={ { flex: 1 } }>
+        <LoadSpinner
+          key="loadSpinner"
+          visible={this.state.showLoadingIndicator}
+        />
         <View style={styles.imageContainer}>
           {backImg}
           <View style={styles.titleContainer}>
-            {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
-              <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
-            </TouchableOpacity>*/}
             <View style={styles.titlePosition}>
               <Icon
                 name="pencil"
@@ -393,6 +406,7 @@ PostDetail.propTypes = {
   requestInputTitle: React.PropTypes.func,
   requestInputDescription: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
+  requestCleanCreatePostData: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
@@ -415,6 +429,7 @@ const _injectPropsFormActions = {
   requestInputTitle,
   requestInputDescription,
   requestSetLocation,
+  requestCleanCreatePostData,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);

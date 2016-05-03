@@ -66,6 +66,14 @@ function receivedUploadImg(data = [{
   };
 }
 
+export function requestCleanCreatePostData() {
+  return (dispatch) => {
+    dispatch(receivedInputTitle(''));
+    dispatch(receivedInputDescription(''));
+    dispatch(receivedUploadImg());
+    dispatch(receivedTakePhoto({ uri: '' }));
+  };
+}
 
 export async function requestCreate(data = {
   detail: {
@@ -93,10 +101,10 @@ export async function requestCreate(data = {
     return (dispatch) => {
       dispatch(receivedAddToList(response));
       dispatch(receivedCreate(response));
-      dispatch(receivedInputTitle(''));
-      dispatch(receivedInputDescription(''));
-      dispatch(receivedUploadImg());
-      dispatch(receivedTakePhoto({ uri: '' }));
+      // dispatch(receivedInputTitle(''));
+      // dispatch(receivedInputDescription(''));
+      // dispatch(receivedUploadImg());
+      // dispatch(receivedTakePhoto({ uri: '' }));
     };
   } catch (e) {
     errorHandle(e.message);
