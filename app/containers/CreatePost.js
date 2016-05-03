@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
+import NetworkStatusBar from '../components/NetworkNotify/NetworkStatusBar';
 import config from '../config/index';
 import { ImagePickerManager } from 'NativeModules';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -361,6 +362,7 @@ export default class PostDetail extends Component {
             </View>
           </View>
         </View>
+        <NetworkStatusBar top={20} />
         <KeyboardSpacer />
       </View>
     );
