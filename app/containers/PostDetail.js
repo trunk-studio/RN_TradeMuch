@@ -159,37 +159,35 @@ export default class PostDetail extends Component {
     };
   }
 
-  componentDidMount() {
-    this.onMount();
+  componentWillMount() {
+    this.willMount();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.postList !== this.props.postList) {
-      let postItem;
-      for (const item of nextProps.postList) {
-        if (item.id === this.props.id) {
-          postItem = item;
-        }
-      }
+      const postItem = this.findPostItemById();
       this.setState({
         postItem,
       });
     }
   }
 
-  onMount() {
-    const postItem = this.findPostItemById();
-    this.setState({
-      postItem,
-    });
+  componentWillUpdate(nextProps) {
+    if (nextProps.postList !== this.props.postList) {
+      const postItem = this.findPostItemById();
+      this.setState({
+        postItem,
+      });
+    }
   }
+
 
   getItNowButtonHandle = () => {
     if (this.props.isLogin) {
       Actions.messenger({
-        title: this.postItem.title,
+        title: this.state.postItem.title,
         postId: this.props.id,
-        sendMessageInitial: `嗨！我想要${this.postItem.title}`,
+        sendMessageInitial: `嗨！我想要${this.state.postItem.title}`,
       });
       this.props.requestTradeItem({
         id: this.props.id,
@@ -197,6 +195,13 @@ export default class PostDetail extends Component {
     } else {
       this.pleaseLogin();
     }
+  }
+
+  willMount() {
+    const postItem = this.findPostItemById();
+    this.setState({
+      postItem,
+    });
   }
 
   deleteFavoriteItemButtonHandle = () => {
@@ -216,7 +221,7 @@ export default class PostDetail extends Component {
   openChatRoomButtonHandle = () => {
     if (this.props.isLogin) {
       Actions.messenger({
-        title: this.postItem.title,
+        title: this.state.postItem.title,
         postId: this.props.id,
       });
     } else {
