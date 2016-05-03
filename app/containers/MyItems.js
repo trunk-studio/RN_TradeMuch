@@ -26,7 +26,7 @@ const styles = React.StyleSheet.create({
     flex: 1,
     marginTop: 20,
     backgroundColor: color.MAIN_BACKGROUND_COLOR,
-    paddingBottom: windowSize.height * 0.05,
+    // paddingBottom: windowSize.height * 0.05,
   },
   ButtomButton: {
 
