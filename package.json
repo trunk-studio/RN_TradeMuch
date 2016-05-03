@@ -22,7 +22,9 @@
     "react-native-camera": "0.3.8",
     "react-native-cookies": "0.0.5",
     "react-native-drawer": "1.16.7",
-    "react-native-fbsdk": "0.1.0",
+    "react-native-fbsdkcore": "0.0.8",
+    "react-native-fbsdkshare": "0.0.8",
+    "react-native-fbsdklogin": "0.0.8",
     "react-native-gifted-messenger": "0.0.24",
     "react-native-icon-checkbox": "^1.1.1",
     "react-native-image-picker": "0.18.3",
@@ -64,5 +66,9 @@
     "remote-redux-devtools": "0.1.5",
     "remote-redux-devtools-on-debugger": "0.3.4",
     "sinon": "1.17.3"
+  },
+  "engines": {
+    "node": ">=5.0",
+    "npm": ">=3.0"
   }
 }
