@@ -117,42 +117,6 @@ export default class SideDrawerContent extends Component {
     drawer: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      unReadCountSum: 0,
-      requestCount: 0,
-      tradeCount: 0,
-    };
-  }
-
-  onMount() {
-    const { myItems, myTradeRecords } = this.props;
-    let unReadCountSum = 0;
-    myItems.forEach((item) => {
-      if (item.unReadCount && item.unReadCount !== 0) {
-        unReadCountSum += parseInt(item.unReadCount, 10);
-      }
-    });
-    let requestCount = 0;
-    myItems.forEach((item) => {
-      if (item.requests) {
-        requestCount += parseInt(item.requests, 10);
-      }
-    });
-    let tradeCount = 0;
-    myTradeRecords.forEach((record) => {
-      if (record.status !== 'pedding') {
-        if (!record.isConfirmed) tradeCount += 1;
-      }
-    });
-    this.setState({
-      unReadCountSum,
-      requestCount,
-      tradeCount,
-    });
-  }
-
   onItemPress = (id) => {
     this.context.drawer.close();
     const { beforeRoute } = this.props;
