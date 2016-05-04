@@ -70,19 +70,22 @@ export function receivedSearchPostNextPage(postList) {
 }
 
 export async function requestSearchPostNextPage(lastSearchApi, from) {
-  let paramArray = [];
-  paramArray = lastSearchApi.split('&');
-  paramArray.push(`from=${from}`);
-  const param = paramArray.join('&');
-  const searchApi = `/rest/post/search?${param}`;
   try {
-    const postList = await fetchWithAuth(searchApi);
-    return (dispatch) => {
-      if (postList.items.length > 0) {
-        dispatch(receivedSearchLoadMore(true));
-      }
-      dispatch(receivedSearchPostNextPage(postList));
-    };
+    if (lastSearchApi) {
+      let paramArray = [];
+      paramArray = lastSearchApi.split('&');
+      paramArray.push(`from=${from}`);
+      const param = paramArray.join('&');
+      const searchApi = `/rest/post/search?${param}`;
+      const postList = await fetchWithAuth(searchApi);
+      return (dispatch) => {
+        if (postList.items.length > 0) {
+          dispatch(receivedSearchLoadMore(true));
+        }
+        dispatch(receivedSearchPostNextPage(postList));
+      };
+    }
+    return () => {};
   } catch (e) {
     errorHandle(e.message);
     return () => {};
