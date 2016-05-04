@@ -8,11 +8,13 @@ import React, {
   TextInput,
   Component,
   Alert,
+  NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
+import NetworkStatusBar from '../components/NetworkNotify/NetworkStatusBar';
 import config from '../config/index';
 import { ImagePickerManager } from 'NativeModules';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -210,11 +212,17 @@ export default class PostDetail extends Component {
       // } else if (response.customButton) {
       //   console.log('User tapped custom button: ', response.customButton);
       // } else {
-        const source = { uri: response.uri.replace('file://', ''), isStatic: true };
-        this.props.requestTakePhoto(source, response);
-        const picExtension = response.uri.split('.').pop();
-        const picBase64 = `data:image/${picExtension};base64,${response.data}`;
-        this.props.requestUploadImg({ picBase64 });
+        NetInfo.isConnected.fetch().done((isConnected) => {
+          if (isConnected) {
+            const source = { uri: response.uri.replace('file://', ''), isStatic: true };
+            this.props.requestTakePhoto(source, response);
+            const picExtension = response.uri.split('.').pop();
+            const picBase64 = `data:image/${picExtension};base64,${response.data}`;
+            this.props.requestUploadImg({ picBase64 });
+          } else {
+            Alert.alert('注意', '需連線至網路');
+          }
+        });
       }
     });
   }
@@ -361,6 +369,7 @@ export default class PostDetail extends Component {
             </View>
           </View>
         </View>
+        <NetworkStatusBar top={20} />
         <KeyboardSpacer />
       </View>
     );

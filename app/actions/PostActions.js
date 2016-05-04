@@ -4,6 +4,7 @@ import config from '../config/index';
 import { receivedTakePhoto } from '../actions/TakePhotoActions';
 import {
   Alert,
+  NetInfo,
 } from 'react-native';
 export const REQUEST_CREATE_POST = 'REQUEST_CREATE_POST';
 export const RECEIVED_CREATE_POST = 'RECEIVED_CREATE_POST';

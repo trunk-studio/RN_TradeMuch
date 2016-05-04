@@ -3,6 +3,7 @@ import {
 } from '../utils/authFetch';
 import { errorHandle } from '../utils/errorHandle';
 import { Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 export const RECEIVED_SEARCH_POST = 'RECEIVED_SEARCH_POST';
 export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
 
@@ -105,11 +106,21 @@ export async function requestGetItemDataFromAPI(data = {
 // ------------------------------------------------------------------ ask a item
 export async function requestTradeItem(data = {
   id: '',
+  title: '',
 }) {
   const requestItemApi = `/rest/trade/${data.id}`;
   try {
     const response = await fetchWithAuth(requestItemApi, 'POST');
-
+    let toMessengViewData = {
+      title: data.title,
+      postId: data.id,
+    };
+    if (!response.success) {
+      Alert.alert('注意', '您已經索取過瞜～');
+    } else {
+      toMessengViewData.sendMessageInitial = `嗨！我想要${data.title}`;
+    }
+    Actions.messenger(toMessengViewData);
     return () => {};
   } catch (e) {
     errorHandle(e.message);

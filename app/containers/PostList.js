@@ -11,6 +11,7 @@ import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
+import NetworkStatusBar from '../components/NetworkNotify/NetworkStatusBar';
 import ActionButton from './ActionButton';
 import config from '../config/index';
 import SearchBar from 'react-native-search-bar';
@@ -166,6 +167,7 @@ export default class PostList extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
+        <NetworkStatusBar top={44} />
     </View>
     );
   }
@@ -181,6 +183,7 @@ PostList.propTypes = {
   onListItemPress: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
   requestSearchPostNextPage: React.PropTypes.func,
+  networkMode: React.PropTypes.bool,
 };
 
 PostList.defaultProps = {
@@ -198,6 +201,7 @@ function _injectPropsFromStore(state) {
     lastSeachApi: state.search.lastSeachApi,
     canLoadMore: state.search.canLoadMore,
     location: state.geo.location,
+    networkMode: state.uiStatus.networkMode,
   };
 }
 

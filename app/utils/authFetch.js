@@ -1,3 +1,4 @@
+import { NetInfo } from 'react-native';
 import { getItem } from './asyncStorage';
 import config from '../config/';
 const newUser = {
@@ -22,6 +23,10 @@ export async function getAuthToken() {
 }
 
 export async function fetchWithAuth(url, method = 'get', data = null) {
+  const isConnected = await NetInfo.isConnected.fetch();
+  if (!isConnected) {
+    return () => {};
+  }
   const token = await getItem('jwt');
   const requestOption = {
     method,

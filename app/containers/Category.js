@@ -188,17 +188,6 @@ export default class Category extends Component {
   render() {
     return (
       <View style={styles.content}>
-        <SearchBar
-          ref="postSearchBar"
-          onBlur={this.handleSearchCancelPress}
-          onFocus={this.handleSearchBarOnFocus}
-          onChangeText={this.onChangeText}
-          onSearchButtonPress={this.handleSearchButtonPress}
-          onCancelButtonPress={this.handleSearchCancelPress}
-          showsCancelButton={this.state.showsCancelButton}
-          barTintColor={SEARCHBAR_COLOR}
-          searchBarStyle="default"
-        />
         <MultilineRadio
           options={this.categoryArray()}
           onListItemPress={this.categoryItemPress}

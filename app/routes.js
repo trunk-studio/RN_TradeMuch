@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { loginValidation } from './actions/AuthActions';
 import { requestGetMyItems, requestGetTradeRecords } from './actions/PostActions';
-import { closeMinimalUIMode } from './actions/UIStatusActions';
+import { closeMinimalUIMode, openNetworkNotify, closeNetworkNotify } from './actions/UIStatusActions';
 import React, {
   Navigator,
 	StyleSheet,
@@ -10,6 +10,7 @@ import React, {
   PropTypes,
   Text,
   PixelRatio,
+  NetInfo,
  } from 'react-native';
 import RNRF, {
    Route,
@@ -93,6 +94,22 @@ export default class AppRoutes extends Component {
 
   componentWillMount() {
     this.props.loginValidation();
+  }
+
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+      'change',
+      this.handleConnectionInfoChange
+    );
+    NetInfo.isConnected.fetch().done(
+      this.handleConnectionInfoChange
+    );
+  }
+
+  handleConnectionInfoChange = (isConnected) => {
+    isConnected ?
+    this.props.closeNetworkNotify() :
+    this.props.openNetworkNotify();
   }
 
   refSideDrawer = (ref) => {
@@ -266,6 +283,8 @@ AppRoutes.propTypes = {
   requestGetTradeRecords: React.PropTypes.func,
   isLogin: React.PropTypes.bool,
   closeMinimalUIMode: React.PropTypes.func,
+  openNetworkNotify: React.PropTypes.func,
+  closeNetworkNotify: React.PropTypes.func,
 };
 
 
@@ -281,6 +300,8 @@ const _injectPropsFormActions = {
   requestGetMyItems,
   requestGetTradeRecords,
   closeMinimalUIMode,
+  openNetworkNotify,
+  closeNetworkNotify,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(AppRoutes);
