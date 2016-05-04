@@ -9,13 +9,11 @@ import React, {
   Text,
   Image,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { ORANGE, GRAY } from '../../style/color';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
-// import moment from 'moment';
 
 const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
@@ -128,21 +126,6 @@ export default class SideDrawerContent extends Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.onMount();
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.myItems !== this.props.myItems) {
-  //     this.onMount();
-  //   }
-  //
-  //   if (nextProps.myTradeRecords !== this.props.myTradeRecords) {
-  //     this.onMount();
-  //     if (this.state.tradeCount) Alert.alert('提醒', '你索取的物品有新的回應了！\n趕快去『我撿的資源』瞭解一下吧！');
-  //   }
-  // }
-
   onMount() {
     const { myItems, myTradeRecords } = this.props;
     let unReadCountSum = 0;
@@ -188,7 +171,6 @@ export default class SideDrawerContent extends Component {
   }
 
   render() {
-    // const { drawer } = this.context
     const { userInfo, isLogin, myItems, myTradeRecords } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
     let messageBoard;
