@@ -13,15 +13,29 @@ import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
 import ActionButton from './ActionButton';
 import TMListView from './TMListView';
+import {
+  calcDistance,
+  formatDistance,
+} from '../utils/place';
+import Swipeout from 'react-native-swipeout';
+import SwipeOutButton from '../components/SwipeOutButton';
+import * as color from '../style/color';
 
 const {
   RNSearchBarManager,
 } = NativeModules;
+
 import {
   requestSearchLoadMore,
   requestSearchPost,
   requestSearchPostNextPage,
 } from '../actions/SearchPostActions';
+
+import {
+  requestGetFavoriteList,
+  requestDeleteFavorite,
+} from '../actions/FavoriteActions';
+
 import { requestSetLocation } from '../actions/GeoActions';
 
 const styles = React.StyleSheet.create({
@@ -39,53 +53,21 @@ const styles = React.StyleSheet.create({
 export default class PostList extends Component {
   constructor(props) {
     super(props);
-    this.getListItem = this.getListItem.bind(this);
     const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource,
       showsCancelButton: false,
     };
   }
-  componentDidMount() {
-    const tradeRecord = [
-      {
-        id: 1,
-        title: '全新滑鼠',
-        pic: 'http://i.imgur.com/3bE9Zqa.jpg',
-        rightText: '已成交',
-        distance: 0.112,
-      },
-      {
-        id: 2,
-        title: '韓國進口咖啡',
-        pic: 'http://i.imgur.com/qzwm33Q.jpg',
-        rightText: '已下架',
-        distance: 0.200,
-      },
-      {
-        id: 3,
-        title: '韓國咖啡豆巧克力',
-        pic: 'http://www.valois.com.tw/adbanner/02.jpg',
-        rightText: '已成交',
-        distance: 0.232,
-      },
-      {
-        id: 4,
-        title: '自家烘培手作茶包',
-        pic: 'http://i.imgur.com/hLhOug9.jpg',
-        rightText: '',
-        distance: 0.253,
-      },
-    ];
 
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(tradeRecord),
-    });
+  componentWillMount() {
+    this.props.requestGetFavoriteList();
   }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.postList !== this.props.postList) {
+    if (nextProps.favoriteList !== this.props.favoriteList) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.postList),
+        dataSource: this.state.dataSource.cloneWithRows(nextProps.favoriteList),
       });
     }
   }
@@ -101,37 +83,63 @@ export default class PostList extends Component {
 
   onListItemPress = (id) => {
     // this.handleSearchCancelPress();
-    // Actions.postDetail({ id });
-    Alert.alert('測試資料!');
+    Actions.postDetail({ id });
   }
 
-  getListItem(rowData, sectionID, rowID, highlightRow) {
-    let bakColor = {};
-    if (rowID % 2 === 0) {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
-    } else {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
-    }
-    let distance = '';
-    if (rowData.distance !== -1) {
-      if (rowData.distance <= 1) {
-        distance = `${rowData.distance * 1000} m`;
+  getListItem = (rowData, sectionID, rowID) => {
+    if (rowData) {
+      let bakColor = {};
+      if (rowID % 2 === 0) {
+        bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
       } else {
-        distance = `${rowData.distance} km`;
+        bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
       }
+      let desc = '';
+      let distance = calcDistance(this.props.location.latitude, this.props.location.longitude, rowData.place.latitude, rowData.place.longitude).toString();
+      desc = formatDistance(distance);
+      const swipeoutBtns = [
+        {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_3,
+          onPress: this.deleteFavoriteItem.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"刪除"} imgSource={{ uri: 'http://i.imgur.com/cxvFxzn.png' }} />
+          ),
+        },
+      ];
+      let rightText = '';
+      if (rowData.status === 'off') {
+        rightText = '已下架';
+      } else if (rowData.status === 'sold') {
+        rightText = '已成交';
+      }
+      return (
+        <Swipeout
+          right={swipeoutBtns}
+          autoClose
+        >
+          <ListItem
+            id={rowData.id}
+            index={rowData.index}
+            title={rowData.title}
+            img={rowData.pic}
+            description={desc}
+            onItemPress={this.onListItemPress}
+            bakColor={bakColor}
+            rightText={rightText}
+            rightTextStyle={{
+              color: color.TEXT_PRIMARY_COLOR,
+              fontWeight: 'bold',
+              fontSize: 12,
+            }}
+          />
+      </Swipeout>
+      );
     }
-    return (
-      <ListItem
-        id={rowData.id}
-        index={rowData.index}
-        title={rowData.title}
-        img={rowData.pic}
-        description={distance}
-        onItemPress={this.onListItemPress}
-        bakColor={bakColor}
-        rightText={rowData.rightText}
-      />
-    );
+    return (null);
+  }
+
+  deleteFavoriteItem = (id) => {
+    this.props.requestDeleteFavorite(id);
   }
 
   handleSearchButtonPress = () => {
@@ -192,6 +200,9 @@ PostList.propTypes = {
   onListItemPress: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
   requestSearchPostNextPage: React.PropTypes.func,
+  requestGetFavoriteList: React.PropTypes.func,
+  requestDeleteFavorite: React.PropTypes.func,
+  favoriteList: React.PropTypes.array,
 };
 
 PostList.defaultProps = {
@@ -209,6 +220,7 @@ function _injectPropsFromStore(state) {
     lastSeachApi: state.search.lastSeachApi,
     canLoadMore: state.search.canLoadMore,
     location: state.geo.location,
+    favoriteList: state.favorite.list,
   };
 }
 
@@ -217,6 +229,8 @@ const _injectPropsFormActions = {
   requestSearchPost,
   requestSetLocation,
   requestSearchPostNextPage,
+  requestGetFavoriteList,
+  requestDeleteFavorite,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostList);
