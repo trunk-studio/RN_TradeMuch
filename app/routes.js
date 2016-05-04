@@ -262,11 +262,11 @@ export default class AppRoutes extends Component {
               <Route name="profile" component={Profile} schema="interior" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               <Route name="messageBoard" schema="home" component={MessageBoard} title="我的留言板" />
-              <Route name="tradeRecord" component={TradeRecord} schema="interior" title="我撿的資源" />
-              <Route name="favoriteList" component={FavoriteList} schema="interior" title="我追蹤的資源" />
-              <Route name="myItems" component={MyItems} schema="interior" title="我的倉庫" />
-              <Route name="category" component={Category} schema="interior" title="尋寶去" />
-              <Route name="messenger" component={Messenger} schema="interior" title="Messenger" />
+              <Route name="tradeRecord" component={TradeRecord} schema="home" title="我撿的資源" />
+              <Route name="favoriteList" component={FavoriteList} schema="home" title="我追蹤的資源" />
+              <Route name="myItems" component={MyItems} schema="home" title="我的倉庫" />
+              <Route name="category" component={Category} schema="home" title="尋寶去" />
+              <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
               <Route name="givePage" schema="interior" component={GivePage} title="物品名稱" />
             </Router>
           </SideDrawer>

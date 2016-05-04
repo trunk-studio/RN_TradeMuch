@@ -14,6 +14,7 @@ import { ORANGE, GRAY } from '../../style/color';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
+
 const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -134,8 +135,7 @@ export default class SideDrawerContent extends Component {
   }
 
   render() {
-    // const { drawer } = this.context
-    const { userInfo, isLogin, myItems } = this.props;
+    const { userInfo, isLogin, myItems, myTradeRecords } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
     let messageBoard;
     let myItemList;
@@ -148,26 +148,56 @@ export default class SideDrawerContent extends Component {
           unReadCountSum += parseInt(item.unReadCount, 10);
         }
       });
-      messageBoard = (
-        <MenuItem id="messageBoard" title="我的留言板" img="http://i.imgur.com/NBbuVv3.png  " notification={unReadCountSum} onItemPress={this.onItemPress} />
-      );
-
       let requestCount = 0;
       myItems.forEach((item) => {
         if (item.requests) {
           requestCount += parseInt(item.requests, 10);
         }
       });
+      let tradeCount = 0;
+      myTradeRecords.forEach((record) => {
+        if (record.status !== 'pedding') {
+          if (!record.isConfirmed) tradeCount += 1;
+        }
+      });
+      messageBoard = (
+        <MenuItem
+          id="messageBoard"
+          title="我的留言板"
+          img="http://i.imgur.com/NBbuVv3.png"
+          notification={unReadCountSum}
+          onItemPress={this.onItemPress}
+        />
+      );
+
       myItemList = (
-        <MenuItem id="myItems" title="我的倉庫" img="http://i.imgur.com/YHOYSAa.png" notification={requestCount} onItemPress={this.onItemPress} />
+        <MenuItem
+          id="myItems"
+          title="我的倉庫"
+          img="http://i.imgur.com/YHOYSAa.png"
+          notification={requestCount}
+          onItemPress={this.onItemPress}
+        />
       );
 
       favoriteList = (
-        <MenuItem id="favoriteList" title="我追蹤的資源" img="http://i.imgur.com/v8iXJJP.png" notification="" onItemPress={this.onItemPress} />
+        <MenuItem
+          id="favoriteList"
+          title="我追蹤的資源"
+          img="http://i.imgur.com/v8iXJJP.png"
+          notification=""
+          onItemPress={this.onItemPress}
+        />
       );
 
       tradeRecord = (
-        <MenuItem id="tradeRecord" title="我撿的資源" img="http://i.imgur.com/gwzwb5F.png" notification="" onItemPress={this.onItemPress} />
+        <MenuItem
+          id="tradeRecord"
+          title="我撿的資源"
+          img="http://i.imgur.com/gwzwb5F.png"
+          notification={tradeCount}
+          onItemPress={this.onItemPress}
+        />
       );
     }
     return (
@@ -199,12 +229,14 @@ SideDrawerContent.propTypes = {
   beforeRoute: PropTypes.string,
   routeHistory: PropTypes.array,
   myItems: PropTypes.array,
+  myTradeRecords: PropTypes.array,
 };
 
 SideDrawerContent.defaultProps = {
   beforeRoute: 'postList',
   routeHistory: ['postList'],
   myItems: [],
+  myTradeRecords: [],
 };
 
 function _injectPropsFromStore({ auth, router, post }) {
@@ -214,6 +246,7 @@ function _injectPropsFromStore({ auth, router, post }) {
     beforeRoute: router.beforeRoute,
     routeHistory: router.routeHistory,
     myItems: post.myItems,
+    myTradeRecords: post.myTradeRecords,
   };
 }
 

@@ -7,12 +7,13 @@ import {
   RECEIVED_UPDATE_POST_STATUS_SUCCESS,
   RECEIVED_GET_TRADE_RECORDS,
   RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS,
+  RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED,
 } from '../actions/PostActions';
-
 import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
 
 function findObjById(objArray, targetObjKey, targetValue, callback) {
   let newArray = [];
+  newArray = [];
   for (const item of objArray) {
     if (item[targetObjKey] === targetValue) {
       newArray.push(callback(item));
@@ -111,6 +112,23 @@ export function post(state = {}, action) {
       return {
         ...state,
         myItems: newMyItems,
+      };
+    }
+    case RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED: {
+      const newTradeRecords = findObjById(
+        state.myTradeRecords,
+        'id',
+        action.data,
+        (record) => {
+          let newRecord = {};
+          newRecord = { ...record };
+          newRecord.isConfirmed = true;
+          return newRecord;
+        }
+      );
+      return {
+        ...state,
+        myTradeRecords: newTradeRecords,
       };
     }
     default:

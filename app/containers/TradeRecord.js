@@ -1,7 +1,6 @@
 import React, {
   View,
   Component,
-  Dimensions,
   ListView,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
@@ -11,17 +10,19 @@ import ListItem from '../components/PostList/ListItem';
 import ActionButton from './ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
-import {
-  requestGetItemDataFromAPI,
-} from '../actions/PostDetailActions';
 
-const windowSize = Dimensions.get('window');
+import {
+  requestItemisConfirmed,
+  requestUpdateTradeRecordConfirmStatus,
+} from '../actions/PostActions';
+
+// const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: '#fff',
-    paddingBottom: windowSize.height * 0.05,
+    // paddingBottom: windowSize.height * 0.05,
   },
   ButtomButton: {
 
@@ -44,49 +45,21 @@ export default class TradeRecord extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.TradeRecord !== this.props.tradeRecord) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(nextProps.TradeRecord),
-      });
+    if (nextProps.tradeRecord !== this.props.tradeRecord) {
+      this.assembleData(nextProps.tradeRecord);
     }
   }
 
   onMount() {
-    const items = this.props.tradeRecord.map((item) => {
-      let rightText = '';
-      if (item.status === 'accepted') {
-        rightText = '已成交';
-      } else if (item.status === 'refused') {
-        rightText = '已拒絕';
-      }
-      let distance = 0;
-      const userLocation = this.props.location;
-      const itemLocation = item.location;
-      if (userLocation) {
-        distance = this.calcDistance(
-          userLocation.latitude,
-          userLocation.longitude,
-          itemLocation.lat,
-          itemLocation.lon
-        );
-      }
-      return {
-        ...item,
-        pic: `${config.serverDomain}${item.pic}`,
-        rightText,
-        distance,
-      };
-    });
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(items),
-    });
+    this.assembleData(this.props.tradeRecord);
   }
 
   onListItemPress = (id) => {
+    this.setItemisConfirmedFlag(id);
     Actions.postDetail({ id });
   }
 
-  getListItem(rowData, sectionID, rowID, highlightRow) {
+  getListItem(rowData, sectionID, rowID) {
     let bakColor = {};
     if (rowID % 2 === 0) {
       bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
@@ -114,6 +87,50 @@ export default class TradeRecord extends Component {
         rightTextStyle={{ color: color.TEXT_PRIMARY_COLOR, fontWeight: 'bold' }}
       />
     );
+  }
+
+  setItemisConfirmedFlag = (id) => {
+    const myTradeRecords = this.props.tradeRecord;
+    for (const record of myTradeRecords) {
+      if (record.id === id) {
+        this.props.requestUpdateTradeRecordConfirmStatus({
+          postId: id,
+          userId: 3,
+          confirm: true,
+        });
+      }
+    }
+  }
+
+  assembleData = (tradeRecord) => {
+    const items = tradeRecord.map((item) => {
+      let rightText = '';
+      if (item.status === 'accepted') {
+        rightText = '已成交';
+      } else if (item.status === 'refused') {
+        rightText = '已拒絕';
+      }
+      let distance = 0;
+      const userLocation = this.props.location;
+      const itemLocation = item.location;
+      if (userLocation) {
+        distance = this.calcDistance(
+          userLocation.latitude,
+          userLocation.longitude,
+          itemLocation.lat,
+          itemLocation.lon
+        );
+      }
+      return {
+        ...item,
+        pic: `${config.serverDomain}${item.pic}`,
+        rightText,
+        distance,
+      };
+    });
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(items),
+    });
   }
 
   handleActionButtonPress = () => {
@@ -152,6 +169,8 @@ export default class TradeRecord extends Component {
 TradeRecord.propTypes = {
   tradeRecord: React.PropTypes.array,
   location: React.PropTypes.object,
+  requestItemisConfirmed: React.PropTypes.func,
+  requestUpdateTradeRecordConfirmStatus: React.PropTypes.func,
 };
 
 TradeRecord.defaultProps = {
@@ -167,6 +186,8 @@ function _injectPropsFromStore(state) {
 }
 
 const _injectPropsFormActions = {
+  requestItemisConfirmed,
+  requestUpdateTradeRecordConfirmStatus,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(TradeRecord);
