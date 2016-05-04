@@ -102,6 +102,7 @@ export async function requestGetItemDataFromAPI(data = {
     return () => {};
   }
 }
+
 // ------------------------------------------------------------------ ask a item
 export async function requestTradeItem(data = {
   id: '',

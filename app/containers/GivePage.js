@@ -5,6 +5,7 @@ import React, {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import ActionButton from './ActionButton';
 import CheckBox from 'react-native-icon-checkbox';
@@ -73,6 +74,7 @@ export default class GivePage extends React.Component {
       if (!lock) {
         lock = true;
         Actions.pop(2);
+        Alert.alert('給予成功！');
       }
     }
   }

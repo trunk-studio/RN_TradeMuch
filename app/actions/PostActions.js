@@ -19,6 +19,8 @@ export const RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS =
   'RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS';
 export const RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL =
   'RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL';
+export const RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED =
+  'RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED';
 
 
 function receivedCreate(data = {
@@ -237,13 +239,51 @@ export async function requestUpdateTradeRecordStatus(data = {
   action: '',
 }) {
   try {
-    // console.log("data=>",data);
-
     const result = await fetchWithAuth(`/rest/trade/${data.postId}`, 'put', data);
-    Alert.alert('給予成功！');
+    // Alert.alert('給予成功！');
     return (dispatch) => {
       dispatch(receivedUpdateTradeRecordStatus(result.success, result.id, data.userId));
       dispatch(receivedUpdatePostStatus(result.success, data.postId, 'sold'));
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+// --- if the request of item is accepted or refused, set flag isConfirmed to true.
+export function requestItemIsConfirmed(isSuccess, id) {
+  let actionType;
+  if (isSuccess) {
+    actionType = RECEIVED_UPDATE_POST_STATUS_SUCCESS;
+  } else {
+    actionType = RECEIVED_UPDATE_POST_STATUS_FAIL;
+  }
+  return {
+    actionType,
+    type: RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED,
+    data: id,
+  };
+}
+
+// ----------------------------------------------- make a request to ask an item
+export async function requestUpdateTradeRecordConfirmStatus(data = {
+  postId: '',
+  userId: '',
+  confirm: '',
+}) {
+  try {
+    let sendData = {};
+    sendData = {
+      postId: data.postId,
+      userId: data.postId,
+    };
+    if (data.confirm) {
+      sendData.action = 'confirm';
+    } else sendData.action = 'cancelConfirm';
+    const result = await fetchWithAuth(`/rest/trade/${data.postId}`, 'put', sendData);
+    return (dispatch) => {
+      dispatch(requestItemIsConfirmed(result.success, data.postId));
     };
   } catch (e) {
     errorHandle(e.message);

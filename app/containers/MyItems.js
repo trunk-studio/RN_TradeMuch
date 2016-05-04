@@ -1,9 +1,8 @@
 import React, {
   View,
-  Dimensions,
+  // Dimensions,
   Component,
   ListView,
-  Alert,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
 import * as color from '../style/color';
@@ -20,7 +19,7 @@ import {
   requestUpdatePostStatus,
 } from '../actions/PostActions';
 
-const windowSize = Dimensions.get('window');
+// const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
@@ -218,11 +217,13 @@ MyItems.propTypes = {
 
 MyItems.defaultProps = {
   myItems: [],
+  myTradeRecords: [],
 };
 
 function _injectPropsFromStore(state) {
   return {
     myItems: state.post.myItems,
+    myTradeRecords: state.post.myTradeRecords,
   };
 }
 
