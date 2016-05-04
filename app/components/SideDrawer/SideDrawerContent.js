@@ -128,22 +128,20 @@ export default class SideDrawerContent extends Component {
     };
   }
 
-  componentDidMount() {
-    this.onMount();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.myItems !== this.props.myItems) {
-      this.onMount();
-      if (this.state.unReadCountSum) Alert.alert('提醒', '嘿！你有新的留言喔！\n請到『我的留言版』查看。 :)');
-      if (this.state.requestCount) Alert.alert('提醒', '恭喜你！有人對你的物品感興趣了！\n快去『我的倉庫』看看吧！');
-    }
-
-    if (nextProps.myTradeRecords !== this.props.myTradeRecords) {
-      this.onMount();
-      if (this.state.tradeCount) Alert.alert('提醒', '你索取的物品有新的回應了！\n趕快去『我撿的資源』瞭解一下吧！');
-    }
-  }
+  // componentDidMount() {
+  //   this.onMount();
+  // }
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.myItems !== this.props.myItems) {
+  //     this.onMount();
+  //   }
+  //
+  //   if (nextProps.myTradeRecords !== this.props.myTradeRecords) {
+  //     this.onMount();
+  //     if (this.state.tradeCount) Alert.alert('提醒', '你索取的物品有新的回應了！\n趕快去『我撿的資源』瞭解一下吧！');
+  //   }
+  // }
 
   onMount() {
     const { myItems, myTradeRecords } = this.props;
@@ -191,19 +189,37 @@ export default class SideDrawerContent extends Component {
 
   render() {
     // const { drawer } = this.context
-    const { userInfo, isLogin } = this.props;
+    const { userInfo, isLogin, myItems, myTradeRecords } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
     let messageBoard;
     let myItemList;
     let tradeRecord;
     let favoriteList;
     if (isLogin) {
+      let unReadCountSum = 0;
+      myItems.forEach((item) => {
+        if (item.unReadCount && item.unReadCount !== 0) {
+          unReadCountSum += parseInt(item.unReadCount, 10);
+        }
+      });
+      let requestCount = 0;
+      myItems.forEach((item) => {
+        if (item.requests) {
+          requestCount += parseInt(item.requests, 10);
+        }
+      });
+      let tradeCount = 0;
+      myTradeRecords.forEach((record) => {
+        if (record.status !== 'pedding') {
+          if (!record.isConfirmed) tradeCount += 1;
+        }
+      });
       messageBoard = (
         <MenuItem
           id="messageBoard"
           title="我的留言板"
           img="http://i.imgur.com/NBbuVv3.png"
-          notification={this.state.unReadCountSum}
+          notification={unReadCountSum}
           onItemPress={this.onItemPress}
         />
       );
@@ -213,7 +229,7 @@ export default class SideDrawerContent extends Component {
           id="myItems"
           title="我的倉庫"
           img="http://i.imgur.com/YHOYSAa.png"
-          notification={this.state.requestCount}
+          notification={requestCount}
           onItemPress={this.onItemPress}
         />
       );
@@ -233,7 +249,7 @@ export default class SideDrawerContent extends Component {
           id="tradeRecord"
           title="我撿的資源"
           img="http://i.imgur.com/gwzwb5F.png"
-          notification={this.state.tradeCount}
+          notification={tradeCount}
           onItemPress={this.onItemPress}
         />
       );

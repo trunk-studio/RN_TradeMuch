@@ -103,10 +103,6 @@ export async function requestCreate(data = {
     return (dispatch) => {
       dispatch(receivedAddToList(response));
       dispatch(receivedCreate(response));
-      // dispatch(receivedInputTitle(''));
-      // dispatch(receivedInputDescription(''));
-      // dispatch(receivedUploadImg());
-      // dispatch(receivedTakePhoto({ uri: '' }));
     };
   } catch (e) {
     errorHandle(e.message);

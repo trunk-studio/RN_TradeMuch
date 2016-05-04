@@ -1,7 +1,6 @@
 import React, {
   View,
   Component,
-  // Dimensions,
   ListView,
 } from 'react-native';
 import { LIST_ITEM_COLOR1, LIST_ITEM_COLOR2 } from '../style/color';
@@ -11,9 +10,6 @@ import ListItem from '../components/PostList/ListItem';
 import ActionButton from './ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
-import {
-  // requestGetItemDataFromAPI,
-} from '../actions/PostDetailActions';
 
 import {
   requestItemisConfirmed,
