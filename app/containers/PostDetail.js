@@ -184,13 +184,9 @@ export default class PostDetail extends Component {
 
   getItNowButtonHandle = () => {
     if (this.props.isLogin) {
-      Actions.messenger({
-        title: this.state.postItem.title,
-        postId: this.props.id,
-        sendMessageInitial: `嗨！我想要${this.state.postItem.title}`,
-      });
       this.props.requestTradeItem({
         id: this.props.id,
+        title: this.state.postItem.title,
       });
     } else {
       this.pleaseLogin();

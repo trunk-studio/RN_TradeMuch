@@ -6,7 +6,7 @@ export default function NetworkStatusBar(props) {
   return (
     <StatusBarNotification
       top={props.top}
-      message={'需法連線上網'}
+      message={'需要網路連線'}
       show={props.networkMode}
     />
   );
