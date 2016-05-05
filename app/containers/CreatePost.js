@@ -197,7 +197,9 @@ export default class PostDetail extends Component {
   componentWillReceiveProps(nextProps) {
     const { postFinishData } = nextProps;
     if (postFinishData !== this.props.postFinishData) {
+      console.log("!!!!!!!",postFinishData);
       Actions.createFinish({
+        id: postFinishData.id,
         itemTitle: postFinishData.title,
         description: postFinishData.description,
         pic: `${config.serverDomain}/${postFinishData.pic}`,

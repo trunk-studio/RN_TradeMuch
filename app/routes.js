@@ -28,6 +28,7 @@ import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import CreateFinish from './components/CreateFinish';
+import CreateCategory from './containers/CreateCategory';
 import OwnerPostDetail from './components/OwnerPostDetail';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
@@ -256,6 +257,13 @@ export default class AppRoutes extends Component {
                 component={CreateFinish}
                 schema="none"
                 title="完成"
+                hideNavBar={false}
+              />
+              <Route
+                name="createCategory"
+                component={CreateCategory}
+                schema="interior"
+                title="選擇分類"
                 hideNavBar={false}
               />
               <Route schema="none" name="policies" component={Policies} title="服務條款" />
