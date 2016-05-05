@@ -1,5 +1,4 @@
 import React, {
-  Dimensions,
   View,
   Component,
   Alert,
@@ -10,75 +9,65 @@ import {
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ActionButton from './ActionButton';
-import { requestSetLocation } from '../actions/GeoActions';
+import { requestGetFavoriteList } from '../actions/CategoryActions';
 import MultilineRadio from '../components/MultilineRadio';
-
-const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
     backgroundColor: WHITE_COLOR,
-    paddingBottom: windowSize.height * 0.11,
   },
 });
+import { findObjById } from '../utils/immutable';
 
 
 export default class CreateCategory extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      checkboxList: [],
+    };
+  }
+
+  componentDidMount() {
+    this.props.requestGetFavoriteList();
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.list.length === 0 && nextProps.list !== this.props.list) {
+      const list = nextProps.list.map((item) => {
+        return {
+          ...item,
+          isChecked: false,
+        };
+      });
+      this.setState({
+        checkboxList: list,
+      });
+    }
   }
 
   handleActionButtonPress = () => {
     Actions.createPost.call();
   }
 
-  categoryItemPress = () => {
-    Alert.alert('click1');
-  }
-
-  categoryArray() {
-    return [
-      {
-        id: 0,
-        title: 'ALL 都想要',
-      },
-      {
-        id: 1,
-        title: '保養品',
-      },
-      {
-        id: 2,
-        title: '3C 產品',
-      },
-      {
-        id: 3,
-        title: '居家用品',
-      },
-      {
-        id: 4,
-        title: '生活家電',
-      },
-      {
-        id: 5,
-        title: '運動用品',
-      },
-      {
-        id: 6,
-        title: '課本講義',
-      },
-    ];
+  categoryItemPress = (id) => {
+    const list = findObjById(this.state.checkboxList, 'id', id , (item) => {
+      let newItem = {};
+      newItem = { ...item };
+      newItem.isChecked = !item.isChecked;
+      return newItem;
+    });
+    this.setState({
+      checkboxList: list,
+    });
   }
 
   render() {
     return (
       <View style={styles.content}>
         <MultilineRadio
-          options={this.categoryArray()}
+          options={this.state.checkboxList}
           onListItemPress={this.categoryItemPress}
         />
         <ActionButton
@@ -92,15 +81,20 @@ export default class CreateCategory extends Component {
 
 CreateCategory.propTypes = {
   id: React.PropTypes.number,
+  list: React.PropTypes.array,
+  requestGetFavoriteList: React.PropTypes.func,
 };
 
 CreateCategory.defaultProps = {};
 
-function _injectPropsFromStore(state) {
-  return {};
+function _injectPropsFromStore({ category }) {
+  return {
+    list: category.addList
+  };
 }
 
 const _injectPropsFormActions = {
+  requestGetFavoriteList,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(CreateCategory);
