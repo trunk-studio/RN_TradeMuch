@@ -193,7 +193,7 @@ export default class SideDrawerContent extends Component {
       tradeRecord = (
         <MenuItem
           id="tradeRecord"
-          title="我撿的資源"
+          title="交易紀錄"
           img="http://i.imgur.com/gwzwb5F.png"
           notification={tradeCount}
           onItemPress={this.onItemPress}
@@ -210,11 +210,11 @@ export default class SideDrawerContent extends Component {
         </View>
         <ScrollView style={styles.contentBody}>
           <MenuItem id="postList" title="附近的好康物品" img="http://i.imgur.com/OKrJ2m3.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="category" title="尋寶去" img="http://i.imgur.com/dGhdv4x.png" notification="" onItemPress={this.onItemPress} />
           {tradeRecord}
           {favoriteList}
           {messageBoard}
           {myItemList}
-          <MenuItem id="category" title="尋寶去" img="http://i.imgur.com/dGhdv4x.png" notification="" onItemPress={this.onItemPress} />
           <MenuItem id="login" title={loginBtnTitle} img="http://i.imgur.com/UDw6ykK.png" notification="" onItemPress={this.onItemPress} />
         </ScrollView>
       </View>
