@@ -1,21 +1,16 @@
 import React, {
-  Dimensions,
   View,
   Component,
   ListView,
-  Alert,
   SegmentedControlIOS,
 } from 'react-native';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
+import { receivedReadMessages } from '../actions/MessengerActions';
 import ListItem from '../components/PostList/ListItem';
 import config from '../config/index';
-import { receivedReadMessages } from '../actions/MessengerActions';
-// import SearchBar from '../components/SearchBar';
 
-const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   container: {
     flex: 1,
@@ -27,7 +22,6 @@ const styles = React.StyleSheet.create({
     padding: 10,
   },
 });
-
 
 export default class MessageBoard extends Component {
   constructor(props) {
@@ -107,7 +101,7 @@ export default class MessageBoard extends Component {
     });
   }
 
-  getListItem(rowData, sectionID, rowID, highlightRow) {
+  getListItem(rowData, sectionID, rowID) {
     let bakColor = {};
     if (rowID % 2 === 0) {
       bakColor = { backgroundColor: color.LIST_ITEM_COLOR1 };
