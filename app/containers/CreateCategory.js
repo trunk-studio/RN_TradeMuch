@@ -1,15 +1,13 @@
 import React, {
   View,
   Component,
-  Alert,
 } from 'react-native';
 import {
   WHITE_COLOR,
  } from '../style/color';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
 import ActionButton from './ActionButton';
-import { requestGetFavoriteList } from '../actions/CategoryActions';
+import { requestGetCategoryList, requestAddCategory } from '../actions/CategoryActions';
 import MultilineRadio from '../components/MultilineRadio';
 const styles = React.StyleSheet.create({
   content: {
@@ -30,25 +28,40 @@ export default class CreateCategory extends Component {
   }
 
   componentDidMount() {
-    this.props.requestGetFavoriteList();
+    const hasAll = false;
+    this.props.requestGetCategoryList(hasAll);
+    this.loadList(this.props.list);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.list.length === 0 && nextProps.list !== this.props.list) {
-      const list = nextProps.list.map((item) => {
-        return {
-          ...item,
-          isChecked: false,
-        };
-      });
-      this.setState({
-        checkboxList: list,
-      });
+    if (nextProps.list !== this.props.list) {
+      this.loadList(nextProps.list);
     }
   }
 
+  loadList = (originList) => {
+    const list = originList.map((item) => {
+      return {
+        ...item,
+        isChecked: false,
+      };
+    });
+    this.setState({
+      checkboxList: list,
+    });
+  }
+
   handleActionButtonPress = () => {
-    Actions.createPost.call();
+    let categoryIds = [];
+    this.state.checkboxList.forEach((itme) => {
+      if (itme.isChecked) {
+        categoryIds.push(itme.id);
+      }
+    });
+    this.props.requestAddCategory({
+      postId: this.props.id,
+      categoryIds,
+    });
   }
 
   categoryItemPress = (id) => {
@@ -82,19 +95,21 @@ export default class CreateCategory extends Component {
 CreateCategory.propTypes = {
   id: React.PropTypes.number,
   list: React.PropTypes.array,
-  requestGetFavoriteList: React.PropTypes.func,
+  requestGetCategoryList: React.PropTypes.func,
+  requestAddCategory: React.PropTypes.func,
 };
 
 CreateCategory.defaultProps = {};
 
 function _injectPropsFromStore({ category }) {
   return {
-    list: category.addList
+    list: category.addList,
   };
 }
 
 const _injectPropsFormActions = {
-  requestGetFavoriteList,
+  requestGetCategoryList,
+  requestAddCategory,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(CreateCategory);

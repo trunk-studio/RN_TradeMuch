@@ -29,6 +29,7 @@ import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import CreateFinish from './components/CreateFinish';
 import CreateCategory from './containers/CreateCategory';
+import CategoryFilterList from './containers/CategoryFilterList';
 import OwnerPostDetail from './components/OwnerPostDetail';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
@@ -264,6 +265,13 @@ export default class AppRoutes extends Component {
                 component={CreateCategory}
                 schema="interior"
                 title="選擇分類"
+                hideNavBar={false}
+              />
+              <Route
+                name="categoryFilterList"
+                component={CategoryFilterList}
+                schema="interior"
+                title="分類"
                 hideNavBar={false}
               />
               <Route schema="none" name="policies" component={Policies} title="服務條款" />
