@@ -229,7 +229,13 @@ export default class AppRoutes extends Component {
               navigationBarStyle={styles.navBar}
               titleStyle={styles.navTitle}
             >
-              <Route name="postList" schema="home" component={PostList} title="附近的好康物品" />
+              {/* drawer menu*/}
+              <Route name="postList" component={PostList} schema="home" title="附近的好康物品" />
+              <Route name="category" component={Category} schema="home" title="尋寶去" />
+              <Route name="messageBoard" component={MessageBoard} schema="home" title="我的留言板" />
+              <Route name="tradeRecord" component={TradeRecord} schema="home" title="交易紀錄" />
+              <Route name="favoriteList" component={FavoriteList} schema="home" title="我追蹤的資源" />
+              <Route name="myItems" component={MyItems} schema="home" title="我的倉庫" />
               <Route name="login" schema="interior" component={Login} title="登入" />
               <Route
                 name="createPost"
@@ -258,16 +264,11 @@ export default class AppRoutes extends Component {
                 title="完成"
                 hideNavBar={false}
               />
-              <Route schema="none" name="policies" component={Policies} title="服務條款" />
+              <Route name="policies" component={Policies} schema="none" title="服務條款" />
               <Route name="profile" component={Profile} schema="interior" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
-              <Route name="messageBoard" schema="home" component={MessageBoard} title="我的留言板" />
-              <Route name="tradeRecord" component={TradeRecord} schema="home" title="我撿的資源" />
-              <Route name="favoriteList" component={FavoriteList} schema="home" title="我追蹤的資源" />
-              <Route name="myItems" component={MyItems} schema="home" title="我的倉庫" />
-              <Route name="category" component={Category} schema="home" title="尋寶去" />
-              <Route name="messenger" component={Messenger} schema="home" title="Messenger" />
-              <Route name="givePage" schema="interior" component={GivePage} title="物品名稱" />
+              <Route name="messenger" component={Messenger} schema="interior" title="留言版" />
+              <Route name="givePage" component={GivePage} schema="interior" title="物品名稱" />
             </Router>
           </SideDrawer>
         </Route>
