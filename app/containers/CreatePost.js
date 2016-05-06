@@ -237,6 +237,7 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
+    throw new Error(`Ouch`);
     if (this.props.title && this.props.imgSrc[0].src) {
       this.props.requestInputTitle(this.state.title);
       this.props.requestInputDescription(this.state.description);

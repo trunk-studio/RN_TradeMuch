@@ -103,9 +103,6 @@ export default class AppRoutes extends Component {
           ExceptionsManager.handleException(err, isFatal);
         } else {
           // TODO: Error report to server or apple server
-          if (Platform.OS === 'ios') {
-            ExceptionsManager.installConsoleErrorReporter();
-          }
           Actions.postList({
             type: 'reset',
           });
