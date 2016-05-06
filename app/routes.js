@@ -14,6 +14,7 @@ import React, {
  } from 'react-native';
 import ErrorUtils from 'ErrorUtils';
 import ExceptionsManager from 'ExceptionsManager';
+import Platform from 'Platform';
 import RNRF, {
    Route,
    Schema,
@@ -102,6 +103,9 @@ export default class AppRoutes extends Component {
           ExceptionsManager.handleException(err, isFatal);
         } else {
           // TODO: Error report to server or apple server
+          if (Platform.OS === 'ios') {
+            ExceptionsManager.installConsoleErrorReporter();
+          }
           Actions.postList({
             type: 'reset',
           });
