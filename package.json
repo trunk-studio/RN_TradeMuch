@@ -13,8 +13,9 @@
     "test": "mocha test",
     "devtool": "node node_modules/remote-redux-devtools-on-debugger/bin/cli.js --hostname localhost --port 5678 --injectserver",
     "bundle": "node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
-    "deploy-qa": "npm run qaMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
-    "dev-bundle": "npm run devMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
+    "bundle-qa": "npm run qaMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
+    "bundle-prod": "npm run prodMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
+    "bundle-local": "npm run devMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
     "start": "npm run devMode && npm run ios",
     "qa": "npm run qaMode && npm run devtool && npm run start && npm run devtool"
   },
