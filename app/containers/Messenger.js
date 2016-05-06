@@ -86,6 +86,7 @@ export default class Messenger extends Component {
   }
 
   componentWillMount() {
+    this.props.requestClearMessages();
     this.handleInitial();
   }
 
