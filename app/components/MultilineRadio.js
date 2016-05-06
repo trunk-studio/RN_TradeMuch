@@ -76,6 +76,7 @@ export default class MultilineRadio extends Component {
   constructor(props) {
     super(props);
     this.getListItem = this.getListItem.bind(this);
+    this.onListItemPress = this.onListItemPress.bind(this);
     const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       dataSource,
@@ -89,16 +90,16 @@ export default class MultilineRadio extends Component {
     });
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.MultilineRadio !== this.props.MultilineRadio) {
-  //     this.setState({
-  //       dataSource: this.state.dataSource.cloneWithRows(nextProps.MultilineRadio),
-  //     });
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.options !== this.props.options) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(nextProps.options),
+      });
+    }
+  }
 
   onListItemPress = (id) => {
-    Alert.alert(`測試資料!${id}`);
+    this.props.onListItemPress(id);
   }
 
   getListItem(rowData, sectionID, rowID) {
@@ -111,19 +112,19 @@ export default class MultilineRadio extends Component {
     return (
       <TouchableOpacity
         style={[styles.menuItem, bakColor]}
-        onPress={this.onListItemPress}
+        onPress={this.onListItemPress.bind(this, rowData.id)}
       >
         <View style={styles.itemInner}>
           <View style={styles.leftBlock}>
-            <Text>{rowData.title}</Text>
+            <Text>{rowData.name}</Text>
           </View>
           <View style={styles.rightBlock}>
             <CheckBox
               id={rowData.id}
               label=""
               size={30}
-              checked={this.state.isAgreePolicies}
-              onPress={this.handleCheck}
+              checked={rowData.isChecked}
+              onPress={this.onListItemPress.bind(this, rowData.id)}
             />
           </View>
         </View>
