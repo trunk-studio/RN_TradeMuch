@@ -39,13 +39,7 @@ export async function requestAddItemToFavList(data = {
     postList = [...data.postList];
 
     if (response.result) {
-      // const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
-      // Alert.alert('result', '加入我的最愛成功!');
-
       postList = setItemFavStatusById(data.id, postList, true);
-    } else {
-      // const msg = `name:${response.name}\nmessage:${response.message}`;
-      Alert.alert('請先登入！');
     }
 
     return (dispatch) => {
