@@ -12,6 +12,8 @@ import React, {
   PixelRatio,
   NetInfo,
  } from 'react-native';
+import ErrorUtils from 'ErrorUtils';
+import ExceptionsManager from 'ExceptionsManager';
 import RNRF, {
    Route,
    Schema,
@@ -94,6 +96,20 @@ export default class AppRoutes extends Component {
 
   componentWillMount() {
     this.props.loginValidation();
+    ErrorUtils.setGlobalHandler((err, isFatal) => {
+      try {
+        if (__DEV__) {
+          ExceptionsManager.handleException(err, isFatal);
+        } else {
+          // TODO: Error report to server or apple server
+          Actions.postList({
+            type: 'reset',
+          });
+        }
+      } catch (ee) {
+        console.log('Failed to print error: ', ee.message);
+      }
+    });
   }
 
   componentDidMount() {
