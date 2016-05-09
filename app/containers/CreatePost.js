@@ -198,6 +198,7 @@ export default class PostDetail extends Component {
     const { postFinishData } = nextProps;
     if (postFinishData !== this.props.postFinishData) {
       Actions.createFinish({
+        id: postFinishData.id,
         itemTitle: postFinishData.title,
         description: postFinishData.description,
         pic: `${config.serverDomain}/${postFinishData.pic}`,
@@ -237,6 +238,7 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
+    console.log("!!!!!!!!!!!!",b);
     if (this.props.title && this.props.imgSrc[0].src) {
       this.props.requestInputTitle(this.state.title);
       this.props.requestInputDescription(this.state.description);

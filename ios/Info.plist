@@ -27,12 +27,12 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb1011584502234754</string>
+				<string>fb1011584022234802</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>30</string>
+	<string>31</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -48,9 +48,9 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>1011584502234754</string>
+	<string>1011584022234802</string>
 	<key>FacebookDisplayName</key>
-	<string>Trademuch-test</string>
+	<string>Trademuch</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
