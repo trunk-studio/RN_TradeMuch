@@ -12,6 +12,7 @@ import { Actions } from 'react-native-router-flux';
 const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
+  AccessToken,
 } = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import * as color from '../style/color';
@@ -97,14 +98,10 @@ export default class Login extends Component {
       if (result.isCancelled) {
         // alert('Login cancelled.');
       } else {
-        // AccessToken.getCurrentAccessToken(async userIdentities => {
-        //   this.props.registFbToken(userIdentities);
-        //   if (result === null) {
-        //     // alert('Start logging in.');
-        //   } else {
-        //     // alert('Start logging out.');
-        //   }
-        // });
+        AccessToken.getCurrentAccessToken()
+          .then((userIdentities) => {
+            this.props.registFbToken(userIdentities);
+          });
       }
     }
   }
@@ -114,7 +111,6 @@ export default class Login extends Component {
   }
 
   render() {
-    console.log('------- login ====', LoginButton);
     return (
       <View style={styles.container} >
         <Image source={require('./images/fbLogin.png')} style={styles.backImg} />

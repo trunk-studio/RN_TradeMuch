@@ -72,7 +72,7 @@ export async function requestUpdateUserInfo(data = {
 export async function registFbToken(userIdentities) {
   const registData = {
     FBUserID: userIdentities.userID,
-    FBToken: userIdentities.tokenString,
+    FBToken: userIdentities.accessToken,
   };
   const registUrl = '/rest/auth/app/register';
   try {
