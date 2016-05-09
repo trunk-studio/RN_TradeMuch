@@ -103,9 +103,9 @@ export default class AppRoutes extends Component {
           ExceptionsManager.handleException(err, isFatal);
         } else {
           const { userInfo } = this.props;
-          Crashlytics.setUserName(userInfo.userName);
-          Crashlytics.setUserEmail(userInfo.email);
-          Crashlytics.setUserIdentifier(userInfo.userId);
+          Crashlytics.setUserName(userInfo.userName || 'Guest');
+          Crashlytics.setUserEmail(userInfo.email || '');
+          Crashlytics.setUserIdentifier(userInfo.userId || '');
           Crashlytics.recordError({
             domain: err.message,
             stack: err.stack,
@@ -115,6 +115,10 @@ export default class AppRoutes extends Component {
           });
         }
       } catch (ee) {
+        // TODO: error page
+        Actions.postList({
+          type: 'reset',
+        });
         console.log('Failed to print error: ', ee.message);
       }
     });
