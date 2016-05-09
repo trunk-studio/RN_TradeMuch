@@ -103,14 +103,6 @@ export default class AppRoutes extends Component {
       try {
         if (__DEV__) {
           ExceptionsManager.handleException(err, isFatal);
-          const { userInfo } = this.props;
-          Crashlytics.setUserName(userInfo.userName || 'Guest');
-          Crashlytics.setUserEmail(userInfo.email || '');
-          Crashlytics.setUserIdentifier(userInfo.userId || '');
-          Crashlytics.recordError({
-            domain: err.message,
-            stack: err.stack,
-          });
         } else {
           const { userInfo } = this.props;
           Crashlytics.setUserName(userInfo.userName || 'Guest');
