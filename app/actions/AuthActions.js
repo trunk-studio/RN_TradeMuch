@@ -60,7 +60,10 @@ export async function requestUpdateUserInfo(data = {
     }
     return (dispatch) => {
       if (responseJson.success) {
-        dispatch(updateUserInfo({ isFirstLogin: false }));
+        dispatch(updateUserInfo({
+          isFirstLogin: false,
+          email: data.email,
+        }));
       }
     };
   } catch (e) {
