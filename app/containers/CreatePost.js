@@ -238,23 +238,25 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
-    if (this.props.title && this.props.imgSrc[0].src) {
-      this.props.requestInputTitle(this.state.title);
-      this.props.requestInputDescription(this.state.description);
-      this.props.requestCreate({
-        detail: {
-          title: this.state.title,
-          description: this.state.description,
-          startDate: new Date(),
-        },
-        location: this.props.location,
-        images: this.props.imgSrc[0].src,
-      });
-      this.setState({
-        showLoadingIndicator: true,
-      });
-    } else {
-      Alert.alert('注意', '照片跟標題是必填喔');
+    if (!this.state.showLoadingIndicator) {
+      if (this.props.title && this.props.imgSrc[0].src) {
+        this.props.requestInputTitle(this.state.title);
+        this.props.requestInputDescription(this.state.description);
+        this.props.requestCreate({
+          detail: {
+            title: this.state.title,
+            description: this.state.description,
+            startDate: new Date(),
+          },
+          location: this.props.location,
+          images: this.props.imgSrc[0].src,
+        });
+        this.setState({
+          showLoadingIndicator: true,
+        });
+      } else {
+        Alert.alert('注意', '照片跟標題是必填喔');
+      }
     }
   }
 
