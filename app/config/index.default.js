@@ -25,12 +25,12 @@ if (envMode === 'qa') {
 }
 
 // --------------- prod mode -------------
-if (envMode === 'production') {
+if (envMode === 'prod') {
   config = {
     ...defaultConfig,
     envMode,
-    serverDomain: 'http://qa.trademuch.co.uk',
-    socketDomain: 'qa.trademuch.co.uk:1337',
+    serverDomain: 'http://www.trademuch.co.uk',
+    socketDomain: 'www.trademuch.co.uk:1337',
   };
 }
 
