@@ -7,6 +7,7 @@
     "setServerIP": "npm run initConfig && localServerDomain=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1' | head -1) && sed -i config.bak \"s/EDIT_LOCAL_SERVER_DOMAIN/${localServerDomain}/g\" ./app/config/index.js",
     "devMode": "npm run setServerIP && sed -i config.bak \"s/EDIT_ENV_MODE/development/g\" ./app/config/index.js",
     "qaMode": "npm run setServerIP && sed -i config.bak \"s/EDIT_ENV_MODE/qa/g\" ./app/config/index.js",
+    "prodMode": "npm run setServerIP && sed -i config.bak \"s/EDIT_ENV_MODE/prod/g\" ./app/config/index.js",
     "packager": "node ./node_modules/react-native/local-cli/cli.js start",
     "ios": "node node_modules/react-native/local-cli/cli.js run-ios",
     "eslint": "./node_modules/eslint/bin/eslint.js ./app/*",
@@ -15,7 +16,7 @@
     "bundle": "node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
     "bundle-qa": "npm run qaMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
     "bundle-prod": "npm run prodMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
-    "bundle-local": "npm run devMode && node node_modules/react-native/local-cli/cli.js bundle --dev false --entry-file index.ios.js --bundle-output ./main.jsbundle",
+    "bundle-local": "npm run devMode && node node_modules/react-native/local-cli/cli.js bundle --dev true --entry-file index.ios.js --bundle-output ./main.jsbundle",
     "start": "npm run devMode && npm run ios",
     "qa": "npm run qaMode && npm run devtool && npm run start && npm run devtool"
   },
