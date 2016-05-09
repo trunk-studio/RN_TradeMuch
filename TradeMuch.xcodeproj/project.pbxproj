@@ -22,6 +22,9 @@
 		8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B08C5F01CA00E6000961C8F /* libBVLinearGradient.a */; };
 		8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B856BA31CAE55B000FE2959 /* libRCTGeolocation.a */; };
 		8BB48A8B1C9ABA00006D5BA2 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BB48A8A1C9AB9B6006D5BA2 /* libRNSearchBar.a */; };
+		8BE3C64F1CDC85B100B335F9 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE3C64E1CDC85A800B335F9 /* libSMXCrashlytics.a */; };
+		8BE3C6661CDC877300B335F9 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE3C6641CDC877300B335F9 /* Fabric.framework */; };
+		8BE3C6671CDC877300B335F9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE3C6651CDC877300B335F9 /* Crashlytics.framework */; };
 		C87A08251B683A3800075643 /* plutoBack.png in Resources */ = {isa = PBXBuildFile; fileRef = C87A08241B683A3800075643 /* plutoBack.png */; };
 		C88173CE1B6FBBEB001330B7 /* RCTFBSDKShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */; };
 		D5B9DC827F1D454281293ABA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A61B272EAD74DEFB26FFA16 /* Entypo.ttf */; };
@@ -66,6 +69,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNSearchBar;
 		};
+		8BE3C64D1CDC85A800B335F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8BE3C6491CDC85A800B335F9 /* SMXCrashlytics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D8D9DB831C6D03DB009FBC0E;
+			remoteInfo = SMXCrashlytics;
+		};
 		C88173B41B6FBB4E001330B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -99,6 +109,9 @@
 		8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
+		8BE3C6491CDC85A800B335F9 /* SMXCrashlytics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SMXCrashlytics.xcodeproj; path = "node_modules/react-native-fabric/ios/SMXCrashlytics.xcodeproj"; sourceTree = "<group>"; };
+		8BE3C6641CDC877300B335F9 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		8BE3C6651CDC877300B335F9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8F4C4D06AA3D42238E90B110 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		C87A08241B683A3800075643 /* plutoBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plutoBack.png; sourceTree = "<group>"; };
 		C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMuchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,11 +127,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8CF3DE97E6B614A8797B5DA /* libPods.a in Frameworks */,
+				8BE3C6671CDC877300B335F9 /* Crashlytics.framework in Frameworks */,
 				8BB48A8B1C9ABA00006D5BA2 /* libRNSearchBar.a in Frameworks */,
 				565653FC1CB4D7F500436083 /* libRCTLinking.a in Frameworks */,
+				8BE3C6661CDC877300B335F9 /* Fabric.framework in Frameworks */,
 				8B08C5F21CA00E7600961C8F /* libBVLinearGradient.a in Frameworks */,
 				EFDE5E38EF7B424A9D7345CA /* libRNVectorIcons.a in Frameworks */,
 				8B856BA51CAE55C300FE2959 /* libRCTGeolocation.a in Frameworks */,
+				8BE3C64F1CDC85B100B335F9 /* libSMXCrashlytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,6 +214,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8BE3C6641CDC877300B335F9 /* Fabric.framework */,
+				8BE3C6651CDC877300B335F9 /* Crashlytics.framework */,
 				6DA693B41CBF71B500B42EE4 /* RCTOrientation */,
 				8BB48A841C9AB8C9006D5BA2 /* Libraries */,
 				C87A08241B683A3800075643 /* plutoBack.png */,
@@ -240,6 +258,7 @@
 		8BB48A841C9AB8C9006D5BA2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8BE3C6491CDC85A800B335F9 /* SMXCrashlytics.xcodeproj */,
 				565653F21CB4D7EC00436083 /* RCTLinking.xcodeproj */,
 				8B856B9D1CAE55B000FE2959 /* RCTGeolocation.xcodeproj */,
 				8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */,
@@ -253,6 +272,14 @@
 			isa = PBXGroup;
 			children = (
 				8BB48A8A1C9AB9B6006D5BA2 /* libRNSearchBar.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8BE3C64A1CDC85A800B335F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8BE3C64E1CDC85A800B335F9 /* libSMXCrashlytics.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -297,6 +324,7 @@
 				D05715A3477F3E968519F539 /* Copy Pods Resources */,
 				6D6027FA1CCF0D8200ACC613 /* set env */,
 				6D6027EA1CCDC34100ACC613 /* Set IP */,
+				8BE3C6361CDC84C900B335F9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -375,6 +403,10 @@
 					ProductGroup = 6D41A7C31CAE69FB00D35502 /* Products */;
 					ProjectRef = 8F4C4D06AA3D42238E90B110 /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = 8BE3C64A1CDC85A800B335F9 /* Products */;
+					ProjectRef = 8BE3C6491CDC85A800B335F9 /* SMXCrashlytics.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -418,6 +450,13 @@
 			fileType = archive.ar;
 			path = libRNSearchBar.a;
 			remoteRef = 8BB48A891C9AB9B6006D5BA2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8BE3C64E1CDC85A800B335F9 /* libSMXCrashlytics.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSMXCrashlytics.a;
+			remoteRef = 8BE3C64D1CDC85A800B335F9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -478,6 +517,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "";
+		};
+		8BE3C6361CDC84C900B335F9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 96fbfd65047dcfe4168b28dfaeb12813c10ac906 bc7405e926f7f25e87cefcda6ec452c16857a99155406a4e22df724b88d3f3bf";
 		};
 		A298685892000314546A3A49 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -564,6 +616,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -584,6 +640,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = iOS/Info.plist;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

@@ -12,6 +12,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #import "RCTRootView.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -24,6 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+  [Fabric with:@[[Crashlytics class]]];
 
   /**
    * Loading JavaScript code - uncomment the one you want.
