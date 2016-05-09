@@ -48,18 +48,20 @@ export default class PostList extends Component {
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.props.requestSetLocation(position);
-        this.props.requestSearchLoadMore(false);
-        this.props.requestSearchPost(null, '300km', {
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      },
-      (error) => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.props.requestSetLocation(position);
+          this.props.requestSearchLoadMore(false);
+          this.props.requestSearchPost(null, '300km', {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+        },
+        (error) => Alert.alert(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
+    }
   }
 
   componentWillReceiveProps(nextProps) {
