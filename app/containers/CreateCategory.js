@@ -7,7 +7,7 @@ import {
  } from '../style/color';
 import { connect } from 'react-redux';
 import ActionButton from './ActionButton';
-import { requestGetCategoryList, requestFilterCategory } from '../actions/CategoryActions';
+import { requestGetCategoryList, requestAddCategory } from '../actions/CategoryActions';
 import MultilineRadio from '../components/MultilineRadio';
 const styles = React.StyleSheet.create({
   content: {
@@ -19,7 +19,7 @@ const styles = React.StyleSheet.create({
 import { findObjById } from '../utils/immutable';
 
 
-export default class Category extends Component {
+export default class CreateCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,7 @@ export default class Category extends Component {
   }
 
   componentDidMount() {
-    const hasAll = true;
+    const hasAll = false;
     this.props.requestGetCategoryList(hasAll);
     this.loadList(this.props.list);
   }
@@ -58,7 +58,8 @@ export default class Category extends Component {
         categoryIds.push(itme.id);
       }
     });
-    this.props.requestFilterCategory({
+    this.props.requestAddCategory({
+      postId: this.props.id,
       categoryIds,
     });
   }
@@ -91,23 +92,24 @@ export default class Category extends Component {
   }
 }
 
-Category.propTypes = {
+CreateCategory.propTypes = {
+  id: React.PropTypes.number,
   list: React.PropTypes.array,
   requestGetCategoryList: React.PropTypes.func,
-  requestFilterCategory: React.PropTypes.func,
+  requestAddCategory: React.PropTypes.func,
 };
 
-Category.defaultProps = {};
+CreateCategory.defaultProps = {};
 
 function _injectPropsFromStore({ category }) {
   return {
-    list: category.list,
+    list: category.addList,
   };
 }
 
 const _injectPropsFormActions = {
   requestGetCategoryList,
-  requestFilterCategory,
+  requestAddCategory,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(Category);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(CreateCategory);

@@ -12,6 +12,9 @@ import React, {
   PixelRatio,
   NetInfo,
  } from 'react-native';
+import ErrorUtils from 'ErrorUtils';
+import ExceptionsManager from 'ExceptionsManager';
+import Platform from 'Platform';
 import RNRF, {
    Route,
    Schema,
@@ -28,6 +31,8 @@ import SideDrawer from './components/SideDrawer/SideDrawer';
 import PostList from './containers/PostList';
 import CreatePost from './containers/CreatePost';
 import CreateFinish from './components/CreateFinish';
+import CreateCategory from './containers/CreateCategory';
+import CategoryFilterList from './containers/CategoryFilterList';
 import OwnerPostDetail from './components/OwnerPostDetail';
 import PostDetail from './containers/PostDetail';
 import NearByPosts from './containers/NearByPosts';
@@ -94,6 +99,23 @@ export default class AppRoutes extends Component {
 
   componentWillMount() {
     this.props.loginValidation();
+    ErrorUtils.setGlobalHandler((err, isFatal) => {
+      try {
+        if (__DEV__) {
+          ExceptionsManager.handleException(err, isFatal);
+        } else {
+          // TODO: Error report to server or apple server
+          if (Platform.OS === 'ios') {
+            ExceptionsManager.installConsoleErrorReporter();
+          }
+          Actions.postList({
+            type: 'reset',
+          });
+        }
+      } catch (ee) {
+        console.log('Failed to print error: ', ee.message);
+      }
+    });
   }
 
   componentDidMount() {
@@ -262,6 +284,20 @@ export default class AppRoutes extends Component {
                 component={CreateFinish}
                 schema="none"
                 title="完成"
+                hideNavBar={false}
+              />
+              <Route
+                name="createCategory"
+                component={CreateCategory}
+                schema="interior"
+                title="選擇分類"
+                hideNavBar={false}
+              />
+              <Route
+                name="categoryFilterList"
+                component={CategoryFilterList}
+                schema="interior"
+                title="分類"
                 hideNavBar={false}
               />
               <Route name="policies" component={Policies} schema="none" title="服務條款" />

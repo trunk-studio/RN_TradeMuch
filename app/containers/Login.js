@@ -14,6 +14,7 @@ const {
   LoginButton,
 } = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
+import * as color from '../style/color';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
+    backgroundColor: color.MESSENGER_BUBBLE_COLOR,
   },
   backImg: {
     position: 'absolute',
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
   text: {
     fontSize: 20,
