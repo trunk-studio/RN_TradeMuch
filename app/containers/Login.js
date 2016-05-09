@@ -9,8 +9,11 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { FBSDKLoginButton } from 'react-native-fbsdklogin';
-import { FBSDKAccessToken } from 'react-native-fbsdkcore';
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginButton,
+  AccessToken,
+} = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import * as color from '../style/color';
 import Dimensions from 'Dimensions';
@@ -95,14 +98,10 @@ export default class Login extends Component {
       if (result.isCancelled) {
         // alert('Login cancelled.');
       } else {
-        FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-          this.props.registFbToken(userIdentities);
-          if (result === null) {
-            // alert('Start logging in.');
-          } else {
-            // alert('Start logging out.');
-          }
-        });
+        AccessToken.getCurrentAccessToken()
+          .then((userIdentities) => {
+            this.props.registFbToken(userIdentities);
+          });
       }
     }
   }
@@ -120,7 +119,7 @@ export default class Login extends Component {
         </View>
         <View style={styles.loginButtonContainer} >
           <Text style={styles.text}>Log in or sign up with Facebook</Text>
-          <FBSDKLoginButton
+          <LoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}
             onLogoutFinished={this.handleLogoutFinished}

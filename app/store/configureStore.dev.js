@@ -20,6 +20,7 @@ const actionExcludeList = [
 
 const logger = createLogger({
   // options
+  collapsed: true,
   predicate: (getState, action) => actionExcludeList.indexOf(action.type) === -1,
 });
 // const devTools = createDevTools({
