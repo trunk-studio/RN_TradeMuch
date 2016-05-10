@@ -37,6 +37,7 @@ import {
 } from '../actions/FavoriteActions';
 
 import { requestSetLocation } from '../actions/GeoActions';
+import config from '../config/index';
 
 const styles = React.StyleSheet.create({
   content: {
@@ -121,7 +122,7 @@ export default class PostList extends Component {
             id={rowData.id}
             index={rowData.index}
             title={rowData.title}
-            img={rowData.pic}
+            img={`${config.serverDomain}${rowData.coverImage}`}
             description={desc}
             onItemPress={this.onListItemPress}
             bakColor={bakColor}
