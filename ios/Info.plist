@@ -33,10 +33,26 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>31</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>96fbfd65047dcfe4168b28dfaeb12813c10ac906</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>1011584022234802</string>
 	<key>FacebookDisplayName</key>
 	<string>Trademuch</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -72,8 +88,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

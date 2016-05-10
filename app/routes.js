@@ -14,7 +14,7 @@ import React, {
  } from 'react-native';
 import ErrorUtils from 'ErrorUtils';
 import ExceptionsManager from 'ExceptionsManager';
-import Platform from 'Platform';
+import { Crashlytics } from 'react-native-fabric' ;
 import RNRF, {
    Route,
    Schema,
@@ -104,15 +104,23 @@ export default class AppRoutes extends Component {
         if (__DEV__) {
           ExceptionsManager.handleException(err, isFatal);
         } else {
-          // TODO: Error report to server or apple server
-          if (Platform.OS === 'ios') {
-            ExceptionsManager.installConsoleErrorReporter();
-          }
+          const { userInfo } = this.props;
+          Crashlytics.setUserName(userInfo.userName || 'Guest');
+          Crashlytics.setUserEmail(userInfo.email || '');
+          Crashlytics.setUserIdentifier(userInfo.userId || '');
+          Crashlytics.recordError({
+            domain: err.message,
+            stack: err.stack,
+          });
           Actions.postList({
             type: 'reset',
           });
         }
       } catch (ee) {
+        // TODO: error page
+        Actions.postList({
+          type: 'reset',
+        });
         console.log('Failed to print error: ', ee.message);
       }
     });
@@ -320,6 +328,7 @@ AppRoutes.propTypes = {
   requestGetMyItems: React.PropTypes.func,
   requestGetTradeRecords: React.PropTypes.func,
   isLogin: React.PropTypes.bool,
+  userInfo: React.PropTypes.object,
   closeMinimalUIMode: React.PropTypes.func,
   openNetworkNotify: React.PropTypes.func,
   closeNetworkNotify: React.PropTypes.func,
@@ -330,6 +339,7 @@ function _injectPropsFromStore({ auth, router }) {
   return {
     isLogin: auth.isLogin,
     beforeRoute: router.beforeRoute,
+    userInfo: auth.userInfo,
   };
 }
 

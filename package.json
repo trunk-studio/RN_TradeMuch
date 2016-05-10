@@ -26,6 +26,7 @@
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-cookies": "0.0.5",
     "react-native-drawer": "1.16.7",
+    "react-native-fabric": "0.1.0",
     "react-native-fbsdk": "^0.1.0",
     "react-native-gifted-messenger": "0.0.24",
     "react-native-icon-checkbox": "^1.1.1",

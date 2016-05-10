@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		15D9912F0DD14BEFA5F72C29 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD3E2498D9524CBBBE7A7897 /* Ionicons.ttf */; };
+		3966F38C4D994A1EACC361CF /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B9A4096C9E754756927A9E3A /* libSMXCrashlytics.a */; };
 		40E45189B9D14C64BC03B9F8 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6FF10ABDD4C47399D482D3A /* Zocial.ttf */; };
 		4130FBD745514CFCBCC5A4F7 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6C0814D5C4CB4DF38BD717EB /* MaterialIcons.ttf */; };
 		51898EAC8A9E4F79ABD06331 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73505FE73B2F4879A54B9EB4 /* Octicons.ttf */; };
@@ -25,6 +26,8 @@
 		6DD5446A1CE0983000771E57 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD5442B1CE0946600771E57 /* libRCTCamera.a */; };
 		7DD16E341A0E42C8BB666D4A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2271A41F1F4340AEB0EF98B4 /* EvilIcons.ttf */; };
 		84DF14BB79DA652AFD07A466 /* libPods-TradeMuch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C4B705BE9CD44C2DE4C35D /* libPods-TradeMuch.a */; };
+		8BE3C6C91CE18B3E00B335F9 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE3C6C71CE18B3E00B335F9 /* Fabric.framework */; };
+		8BE3C6CA1CE18B3E00B335F9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE3C6C81CE18B3E00B335F9 /* Crashlytics.framework */; };
 		C87A08251B683A3800075643 /* plutoBack.png in Resources */ = {isa = PBXBuildFile; fileRef = C87A08241B683A3800075643 /* plutoBack.png */; };
 		C88173CE1B6FBBEB001330B7 /* RCTFBSDKShareTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C88173CD1B6FBBEB001330B7 /* RCTFBSDKShareTests.m */; };
 		D5B9DC827F1D454281293ABA /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A61B272EAD74DEFB26FFA16 /* Entypo.ttf */; };
@@ -81,6 +84,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTGeolocation;
 		};
+		8BE3C6DC1CE18C6100B335F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1D4C60C619284A0692E9EB4D /* SMXCrashlytics.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D8D9DB831C6D03DB009FBC0E;
+			remoteInfo = SMXCrashlytics;
+		};
 		C88173B41B6FBB4E001330B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -101,6 +111,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		15C4B705BE9CD44C2DE4C35D /* libPods-TradeMuch.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TradeMuch.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		18466B76EA2F45FD9DB88922 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		1D4C60C619284A0692E9EB4D /* SMXCrashlytics.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SMXCrashlytics.xcodeproj; path = "../node_modules/react-native-fabric/ios/SMXCrashlytics.xcodeproj"; sourceTree = "<group>"; };
 		2271A41F1F4340AEB0EF98B4 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = file; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		2497B88BB8F94C859F2F74A4 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		270B96237F85409A983BF4CB /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -115,7 +126,10 @@
 		73505FE73B2F4879A54B9EB4 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		8B08C5EB1CA00E6000961C8F /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		8BB48A851C9AB9B6006D5BA2 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
+		8BE3C6C71CE18B3E00B335F9 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		8BE3C6C81CE18B3E00B335F9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8C13FA0BA79C49B3AB5122CC /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		B9A4096C9E754756927A9E3A /* libSMXCrashlytics.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSMXCrashlytics.a; sourceTree = "<group>"; };
 		C87A08241B683A3800075643 /* plutoBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plutoBack.png; sourceTree = "<group>"; };
 		C88173AE1B6FBB4E001330B7 /* TradeMuchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TradeMuchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C88173B11B6FBB4E001330B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -131,12 +145,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D1A58BF1CE09A7A007F8EA7 /* libBVLinearGradient.a in Frameworks */,
+				8BE3C6CA1CE18B3E00B335F9 /* Crashlytics.framework in Frameworks */,
 				6D1A58BE1CE099A8007F8EA7 /* libRCTLinking.a in Frameworks */,
 				6DD5446A1CE0983000771E57 /* libRCTCamera.a in Frameworks */,
+				8BE3C6C91CE18B3E00B335F9 /* Fabric.framework in Frameworks */,
 				6DD544691CE097FF00771E57 /* libRNVectorIcons.a in Frameworks */,
 				6DD544661CE097C300771E57 /* libRCTGeolocation.a in Frameworks */,
 				6DD544111CE0940000771E57 /* libRNSearchBar.a in Frameworks */,
 				84DF14BB79DA652AFD07A466 /* libPods-TradeMuch.a in Frameworks */,
+				3966F38C4D994A1EACC361CF /* libSMXCrashlytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +264,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				8BE3C6C71CE18B3E00B335F9 /* Fabric.framework */,
+				8BE3C6C81CE18B3E00B335F9 /* Crashlytics.framework */,
 				6DA693B41CBF71B500B42EE4 /* RCTOrientation */,
 				8BB48A841C9AB8C9006D5BA2 /* Libraries */,
 				C87A08241B683A3800075643 /* plutoBack.png */,
@@ -289,8 +308,17 @@
 				8C13FA0BA79C49B3AB5122CC /* RCTCamera.xcodeproj */,
 				D5DA56FB930F4A3AA8D3E090 /* RNImagePicker.xcodeproj */,
 				2497B88BB8F94C859F2F74A4 /* RNVectorIcons.xcodeproj */,
+				1D4C60C619284A0692E9EB4D /* SMXCrashlytics.xcodeproj */,
 			);
 			name = Libraries;
+			sourceTree = "<group>";
+		};
+		8BE3C6D21CE18C6100B335F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8BE3C6DD1CE18C6100B335F9 /* libSMXCrashlytics.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		AD0284517E5D4AA786B3BEF5 /* Frameworks */ = {
@@ -335,6 +363,7 @@
 				AD7939BF285FD047AC833537 /* 📦 Embed Pods Frameworks */,
 				DC4C907CF447B44761FDD522 /* 📦 Copy Pods Resources */,
 				5C2910212D40309EF0D6CC05 /* Embed Pods Frameworks */,
+				8BE3C6BF1CE18A6C00B335F9 /* Fabric */,
 			);
 			buildRules = (
 			);
@@ -421,6 +450,10 @@
 					ProductGroup = 6DD5442C1CE0946600771E57 /* Products */;
 					ProjectRef = 2497B88BB8F94C859F2F74A4 /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = 8BE3C6D21CE18C6100B335F9 /* Products */;
+					ProjectRef = 1D4C60C619284A0692E9EB4D /* SMXCrashlytics.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -478,6 +511,13 @@
 			fileType = archive.ar;
 			path = libRCTGeolocation.a;
 			remoteRef = 6DD5444F1CE096CB00771E57 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8BE3C6DD1CE18C6100B335F9 /* libSMXCrashlytics.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSMXCrashlytics.a;
+			remoteRef = 8BE3C6DC1CE18C6100B335F9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -569,6 +609,20 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		8BE3C6BF1CE18A6C00B335F9 /* Fabric */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Fabric;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 96fbfd65047dcfe4168b28dfaeb12813c10ac906 bc7405e926f7f25e87cefcda6ec452c16857a99155406a4e22df724b88d3f3bf";
+		};
 		AD7939BF285FD047AC833537 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -639,10 +693,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/TradeMuch\"",
 					"\"$(SRCROOT)/TradeMuch\"",
 					"\"$(SRCROOT)/TradeMuch\"",
 					"\"$(SRCROOT)/TradeMuch\"",
@@ -662,10 +721,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/TradeMuch\"",
 					"\"$(SRCROOT)/TradeMuch\"",
 					"\"$(SRCROOT)/TradeMuch\"",
 					"\"$(SRCROOT)/TradeMuch\"",
@@ -774,6 +838,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/core/iOS/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
 				);
 				INFOPLIST_FILE = TradeMuchTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
@@ -799,6 +864,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/core/iOS/**",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics/**",
 				);
 				INFOPLIST_FILE = TradeMuchTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;

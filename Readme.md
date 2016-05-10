@@ -6,20 +6,15 @@ npm install -g npm # if your npm version < 3
 npm install -g rnpm
 npm install
 sudo gem install cocoapods
+cd ios
 pod install
 ```
 # Start
 ```
+npm run bundle
 npm run packager
 npm start
 ```
-
-fix Error
-```
-Error: Could not find Xcode project files in ios folder
-```
-`/trademuch-native/node_modules/react-native/local-cli/runIOS/runIOS.js`
-43行 `ios` -> `./`
 
 # Run Project in dev Mode
 
