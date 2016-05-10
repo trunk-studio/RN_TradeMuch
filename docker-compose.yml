@@ -1,0 +1,7 @@
+build-packager:
+  container_name: trademuch-build-packager
+  image: node:4.4.4
+  command: "/bin/bash -l -c 'npm i | npm run bundle'"
+  working_dir: /trademuch-native
+  volumes:
+    - ./:/trademuch-native
