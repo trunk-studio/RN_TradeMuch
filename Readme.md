@@ -7,11 +7,19 @@ npm install -g rnpm
 npm install
 sudo gem install cocoapods
 pod install
-rnpm link react-native-search-bar
-rnpm link react-native-linear-gradient
 ```
-### edit config.js in config folder
+# Start
+```
+npm run packager
+npm start
+```
 
+fix Error
+```
+Error: Could not find Xcode project files in ios folder
+```
+`/trademuch-native/node_modules/react-native/local-cli/runIOS/runIOS.js`
+43行 `ios` -> `./`
 
 # Run Project in dev Mode
 
