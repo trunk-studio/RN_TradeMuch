@@ -35,15 +35,14 @@ const styles = React.StyleSheet.create({
     width: windowSize.width,
     // marginTop: 20,
     alignItems: 'center',
-    paddingTop: 20,
+    // paddingTop: 20,
   },
   contentInner: {
-    width: windowSize.width * 0.9,
-    borderWidth: 0.5,
-    borderColor: 'rgb(173, 189, 185)',
+    width: windowSize.width,
   },
   menuItem: {
     backgroundColor: 'rgba(0, 0, 0, 0.45)',
+    paddingLeft: 40,
   },
   itemInner: {
     flex: 1,

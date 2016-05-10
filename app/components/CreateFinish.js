@@ -22,6 +22,13 @@ const styles = React.StyleSheet.create({
     fontSize: 25,
     textAlign: 'left',
     height: 30,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   imageContainer: {
     flex: 1,
