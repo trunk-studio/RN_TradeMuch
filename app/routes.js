@@ -260,7 +260,7 @@ export default class AppRoutes extends Component {
               titleStyle={styles.navTitle}
             >
               {/* drawer menu*/}
-              <Route name="postList" component={PostList} schema="home" title="附近的好康物品" />
+              <Route name="postList" component={PostList} schema="home" title="!!!!附近的好康物品" />
               <Route name="category" component={Category} schema="home" title="尋寶去" />
               <Route name="messageBoard" component={MessageBoard} schema="home" title="我的留言板" />
               <Route name="tradeRecord" component={TradeRecord} schema="home" title="交易紀錄" />
