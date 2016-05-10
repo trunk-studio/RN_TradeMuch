@@ -84,9 +84,10 @@ export default class GivePage extends React.Component {
   }
 
   setCheckboxSatue = (index) => {
-    let newCheckboxStatus = [];
-    newCheckboxStatus = [...this.state.checkboxStatus];
-    newCheckboxStatus[index] = true;
+    const newCheckboxStatus =  this.state.checkboxStatus.map((checkbox, i) => {
+      const isTarget = i === index;
+      return isTarget;
+    });
 
     this.setState({
       checkboxStatus: newCheckboxStatus,

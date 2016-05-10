@@ -51,6 +51,8 @@
 	<string>1011584022234802</string>
 	<key>FacebookDisplayName</key>
 	<string>Trademuch</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

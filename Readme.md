@@ -6,12 +6,15 @@ npm install -g npm # if your npm version < 3
 npm install -g rnpm
 npm install
 sudo gem install cocoapods
+cd ios
 pod install
-rnpm link react-native-search-bar
-rnpm link react-native-linear-gradient
 ```
-### edit config.js in config folder
-
+# Start
+```
+npm run bundle
+npm run packager
+npm start
+```
 
 # Run Project in dev Mode
 

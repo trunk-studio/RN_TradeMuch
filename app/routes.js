@@ -310,6 +310,7 @@ export default class AppRoutes extends Component {
               />
               <Route name="policies" component={Policies} schema="none" title="服務條款" />
               <Route name="profile" component={Profile} schema="interior" title="個人資料" />
+              <Route name="firstLoginProfile" component={Profile} schema="none" title="個人資料" />
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               <Route name="messenger" component={Messenger} schema="interior" title="留言版" />
               <Route name="givePage" component={GivePage} schema="interior" title="物品名稱" />
