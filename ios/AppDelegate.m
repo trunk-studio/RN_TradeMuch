@@ -63,10 +63,10 @@
     ReactNativeAutoUpdater* updater = [ReactNativeAutoUpdater sharedInstance];
     [updater setDelegate:self];
     NSURL* defaultMetadataFileLocation = [[NSBundle mainBundle] URLForResource:@"metadata" withExtension:@"json"];
-    [updater initializeWithUpdateMetadataUrl:[NSURL URLWithString:@"https://dl.dropboxusercontent.com/u/23005890/MetaData.json"]
+    [updater initializeWithUpdateMetadataUrl:[NSURL URLWithString:@"https://raw.githubusercontent.com/trunk-studio/trademuch-native/fearture/autoUpdater/ios/metadata.json"]
                      defaultJSCodeLocation:jsCodeLocation
                defaultMetadataFileLocation:defaultMetadataFileLocation ];
-    [updater setHostnameForRelativeDownloadURLs:@"https://dl.dropboxusercontent.com"];
+    [updater setHostnameForRelativeDownloadURLs:@"https://raw.githubusercontent.com/trunk-studio/trademuch-native"];
     [updater checkUpdate];
 
     NSURL* latestJSCodeLocation = [updater latestJSCodeLocation];
