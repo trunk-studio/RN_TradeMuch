@@ -16,7 +16,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "ReactNativeAutoUpdater.h"
 
-@interface AppDelegate() <ReactNativeAutoUpdaterDelegate>
+@interface AppDelegate()
 @end
 
 @implementation AppDelegate
@@ -63,10 +63,10 @@
     ReactNativeAutoUpdater* updater = [ReactNativeAutoUpdater sharedInstance];
     [updater setDelegate:self];
     NSURL* defaultMetadataFileLocation = [[NSBundle mainBundle] URLForResource:@"metadata" withExtension:@"json"];
-    [updater initializeWithUpdateMetadataUrl:[NSURL URLWithString:@"https://raw.githubusercontent.com/trunk-studio/trademuch-native/fearture/autoUpdater/ios/metadata.json"]
+    [updater initializeWithUpdateMetadataUrl:[NSURL URLWithString:@"https://raw.githubusercontent.com/trunk-studio/trademuch-native/master/ios/metadata.json"]
                      defaultJSCodeLocation:jsCodeLocation
                defaultMetadataFileLocation:defaultMetadataFileLocation ];
-    [updater setHostnameForRelativeDownloadURLs:@"https://raw.githubusercontent.com/trunk-studio/trademuch-native"];
+    [updater setHostnameForRelativeDownloadURLs:@"https://raw.githubusercontent.com/trunk-studio/trademuch-native/master"];
     [updater checkUpdate];
 
     NSURL* latestJSCodeLocation = [updater latestJSCodeLocation];
@@ -101,44 +101,6 @@
                                                         openURL:url
                                               sourceApplication:sourceApplication
                                                      annotation:annotation];
-}
-
-#pragma mark - ReactNativeAutoUpdaterDelegate methods
-
-- (void)ReactNativeAutoUpdater_updateDownloadedToURL:(NSURL *)url {
-  UIAlertController *alertController = [UIAlertController
-                                        alertControllerWithTitle:NSLocalizedString(@"Update Downloaded", nil)
-                                        message:NSLocalizedString(@"An update was downloaded. Do you want to apply the update now?", nil)
-                                        preferredStyle:UIAlertControllerStyleAlert];
-
-  UIAlertAction *cancelAction = [UIAlertAction
-                                 actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
-                                 style:UIAlertActionStyleCancel
-                                 handler:^(UIAlertAction *action)
-                                 {
-                                   NSLog(@"Cancel action");
-                                 }];
-
-  UIAlertAction *okAction = [UIAlertAction
-                             actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction *action)
-                             {
-                               [self createReactRootViewFromURL: url];
-                             }];
-
-  [alertController addAction:cancelAction];
-  [alertController addAction:okAction];
-
-  // make sure this runs on main thread. Apple doesn't like if you change UI from background thread.
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
-  });
-
-}
-
-- (void)ReactNativeAutoUpdater_updateDownloadFailed {
-  NSLog(@"Update failed to download");
 }
 
 @end
