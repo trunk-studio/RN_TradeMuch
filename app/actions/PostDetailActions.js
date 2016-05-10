@@ -3,7 +3,9 @@ import {
 } from '../utils/authFetch';
 import { errorHandle } from '../utils/errorHandle';
 import { Alert } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 export const RECEIVED_SEARCH_POST = 'RECEIVED_SEARCH_POST';
+export const RECEIVED_ADD_POSTLIST = 'RECEIVED_ADD_POSTLIST';
 
 // -------------------------------- using the same dispatcher with search action
 export function receivedSearchPost(postList) {
@@ -13,12 +15,12 @@ export function receivedSearchPost(postList) {
   };
 }
 
-function findItemById(id, postList, state) {
+function setItemFavStatusById(id, postList, status) {
   let tPostList = [];
   tPostList = postList;
   for (let i = 0; i < tPostList.length; i++) {
     if (tPostList[i].id === id) {
-      tPostList[i].isFav = state;
+      tPostList[i].isFav = status;
     }
   }
   return tPostList;
@@ -37,13 +39,7 @@ export async function requestAddItemToFavList(data = {
     postList = [...data.postList];
 
     if (response.result) {
-      // const msg = `user_id:${response.item[0].user_id}/post_id:${response.item[0].post_id}`;
-      // Alert.alert('result', '加入我的最愛成功!');
-
-      postList = findItemById(data.id, postList, true);
-    } else {
-      // const msg = `name:${response.name}\nmessage:${response.message}`;
-      Alert.alert('請先登入！');
+      postList = setItemFavStatusById(data.id, postList, true);
     }
 
     return (dispatch) => {
@@ -69,7 +65,7 @@ export async function requestDeleteItemToFavList(data = {
 
     if (response.result) {
       // Alert.alert('result', '刪除我的最愛成功!');
-      postList = findItemById(data.id, postList, false);
+      postList = setItemFavStatusById(data.id, postList, false);
     } else {
       // const msg = `name:${response.name}\nmessage:${response.message}`;
       Alert.alert('result', '請先登入！');
@@ -78,6 +74,49 @@ export async function requestDeleteItemToFavList(data = {
     return (dispatch) => {
       dispatch(receivedSearchPost(postList));
     };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+// ----------------------------------------------- get item data from server api
+export async function requestGetItemDataFromAPI(data = {
+  id: '',
+}) {
+  const getItemDataApi = `/rest/post/${data.id}`;
+  try {
+    const response = await fetchWithAuth(getItemDataApi, 'GET');
+
+    return {
+      type: RECEIVED_ADD_POSTLIST,
+      data: response.post,
+    };
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+// ------------------------------------------------------------------ ask a item
+export async function requestTradeItem(data = {
+  id: '',
+  title: '',
+}) {
+  const requestItemApi = `/rest/trade/${data.id}`;
+  try {
+    const response = await fetchWithAuth(requestItemApi, 'POST');
+    let toMessengViewData = {
+      title: data.title,
+      postId: data.id,
+    };
+    if (!response.success) {
+      Alert.alert('注意', '您已經索取過瞜～');
+    } else {
+      toMessengViewData.sendMessageInitial = `嗨！我想要${data.title}`;
+    }
+    Actions.messenger(toMessengViewData);
+    return () => {};
   } catch (e) {
     errorHandle(e.message);
     return () => {};

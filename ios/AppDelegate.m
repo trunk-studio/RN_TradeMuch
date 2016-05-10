@@ -12,6 +12,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #import "RCTRootView.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -24,6 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+  [Fabric with:@[[Crashlytics class]]];
 
   /**
    * Loading JavaScript code - uncomment the one you want.
@@ -38,10 +41,21 @@
    * `inet` value under `en0:`) and make sure your computer and iOS device are
    * on the same Wi-Fi network.
    */
-
-  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
-
-  //jsCodeLocation = [NSURL URLWithString:@"http://10.0.1.12:8081/index.ios.bundle?platform=ios&dev=true"];
+#if DEBUG
+  #warning "DEV MODE"
+  
+  #if TARGET_OS_SIMULATOR
+    #warning "DEBUG SIMULATOR"
+    jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
+  
+  #else
+    #warning "DEBUG DEVICE"
+    NSString *serverIP = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SERVER_IP"];
+    NSString *jsCodeUrlString = [NSString stringWithFormat:@"http://%@:8081/index.ios.bundle?platform=ios&dev=true", serverIP];
+    NSString *jsBundleUrlString = [jsCodeUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    jsCodeLocation = [NSURL URLWithString:jsBundleUrlString];
+  #endif
+#else
   /**
    * OPTION 2
    * Load from pre-bundled file on disk. To re-generate the static bundle
@@ -51,9 +65,9 @@
    *
    * see http://facebook.github.io/react-native/docs/runningondevice.html
    */
-
-//   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-
+   #warning "PROD MODE"
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+#endif
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"TradeMuch"
                                                initialProperties:nil

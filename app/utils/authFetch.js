@@ -1,3 +1,4 @@
+import { NetInfo } from 'react-native';
 import { getItem } from './asyncStorage';
 import config from '../config/';
 const newUser = {
@@ -22,6 +23,10 @@ export async function getAuthToken() {
 }
 
 export async function fetchWithAuth(url, method = 'get', data = null) {
+  const isConnected = await NetInfo.isConnected.fetch();
+  if (!isConnected) {
+    return () => {};
+  }
   const token = await getItem('jwt');
   const requestOption = {
     method,
@@ -39,6 +44,10 @@ export async function fetchWithAuth(url, method = 'get', data = null) {
     const response = await fetch(config.serverDomain + url, requestOption);
     const responseJson = await response.json();
     if (responseJson.requestStatus !== 200) {
+      if (config.envMode !== 'production') {
+        console.log(' ===== Request Failed =====');
+        console.log(response);
+      }
       throw new Error(JSON.stringify(responseJson));
     }
     return responseJson;

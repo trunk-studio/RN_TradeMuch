@@ -7,7 +7,11 @@ import {
 
 import { RECEIVED_ADD_POSTLIST } from '../actions/PostActions';
 
-export function search(state = {}, action) {
+const searchDefault = {
+  postList: [],
+};
+
+export function search(state = searchDefault, action) {
   switch (action.type) {
     case RECEIVED_SEARCH_POST:
       return {

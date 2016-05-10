@@ -8,11 +8,13 @@ import React, {
   TextInput,
   Component,
   Alert,
+  NetInfo,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import LoadSpinner from 'react-native-loading-spinner-overlay';
+import NetworkStatusBar from '../components/NetworkNotify/NetworkStatusBar';
 import config from '../config/index';
 import { ImagePickerManager } from 'NativeModules';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -23,6 +25,7 @@ import {
   requestUploadImg,
   requestInputTitle,
   requestInputDescription,
+  requestCleanCreatePostData,
  } from '../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
@@ -154,8 +157,14 @@ const styles = React.StyleSheet.create({
   footContainer: {
     flex: 0.21,
   },
-  footBackColor: {
+  footBackColor1: {
     height: windowSize.height / 3,
+    width: windowSize.width,
+    position: 'absolute',
+    bottom: 0,
+  },
+  footBackColor2: {
+    height: windowSize.height,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
@@ -172,6 +181,7 @@ export default class PostDetail extends Component {
     this.state = {
       title: '',
       description: '',
+      showLoadingIndicator: false,
     };
   }
 
@@ -188,11 +198,19 @@ export default class PostDetail extends Component {
     const { postFinishData } = nextProps;
     if (postFinishData !== this.props.postFinishData) {
       Actions.createFinish({
+        id: postFinishData.id,
         itemTitle: postFinishData.title,
         description: postFinishData.description,
-        pic: `${config.serverDomain}/${postFinishData.pic}`
+        pic: `${config.serverDomain}/${postFinishData.pic}`,
+      });
+      this.setState({
+        showLoadingIndicator: false,
       });
     }
+  }
+
+  componentWillUnmount() {
+    this.props.requestCleanCreatePostData();
   }
 
   selectPhotoButtonHandle() {
@@ -204,30 +222,41 @@ export default class PostDetail extends Component {
       // } else if (response.customButton) {
       //   console.log('User tapped custom button: ', response.customButton);
       // } else {
-        const source = { uri: response.uri.replace('file://', ''), isStatic: true };
-        this.props.requestTakePhoto(source, response);
-        const picExtension = response.uri.split('.').pop();
-        const picBase64 = `data:image/${picExtension};base64,${response.data}`;
-        this.props.requestUploadImg({ picBase64 });
+        NetInfo.isConnected.fetch().done((isConnected) => {
+          if (isConnected) {
+            const source = { uri: response.uri.replace('file://', ''), isStatic: true };
+            this.props.requestTakePhoto(source, response);
+            const picExtension = response.uri.split('.').pop();
+            const picBase64 = `data:image/${picExtension};base64,${response.data}`;
+            this.props.requestUploadImg({ picBase64 });
+          } else {
+            Alert.alert('注意', '需連線至網路');
+          }
+        });
       }
     });
   }
 
   postCreateButtonHandle() {
-    if (this.props.title && this.props.imgSrc[0].src) {
-      this.props.requestInputTitle(this.state.title);
-      this.props.requestInputDescription(this.state.description);
-      this.props.requestCreate({
-        detail: {
-          title: this.state.title,
-          description: this.state.description,
-          startDate: new Date(),
-        },
-        location: this.props.location,
-        images: this.props.imgSrc[0].src,
-      });
-    } else {
-      Alert.alert('注意', '照片跟標題是必填喔');
+    if (!this.state.showLoadingIndicator) {
+      if (this.props.title && this.props.imgSrc[0].src) {
+        this.props.requestInputTitle(this.state.title);
+        this.props.requestInputDescription(this.state.description);
+        this.props.requestCreate({
+          detail: {
+            title: this.state.title,
+            description: this.state.description,
+            startDate: new Date(),
+          },
+          location: this.props.location,
+          images: this.props.imgSrc[0].src,
+        });
+        this.setState({
+          showLoadingIndicator: true,
+        });
+      } else {
+        Alert.alert('注意', '照片跟標題是必填喔');
+      }
     }
   }
 
@@ -264,7 +293,7 @@ export default class PostDetail extends Component {
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
-          style={styles.footBackColor}
+          style={styles.footBackColor1}
         />,
       ];
     } else {
@@ -272,7 +301,7 @@ export default class PostDetail extends Component {
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
-          style={styles.footBackColor}
+          style={styles.footBackColor2}
         />,
       ];
       noneImg = [
@@ -291,13 +320,14 @@ export default class PostDetail extends Component {
     }
 
     return (
-      <View style={{flex: 1}}>
+      <View style={ { flex: 1 } }>
+        <LoadSpinner
+          key="loadSpinner"
+          visible={this.state.showLoadingIndicator}
+        />
         <View style={styles.imageContainer}>
           {backImg}
           <View style={styles.titleContainer}>
-            {/*<TouchableOpacity onPress={ this.selectPhotoButtonHandle } >
-              <Image source={{uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM'}} style={styles.cameraButton}/>
-            </TouchableOpacity>*/}
             <View style={styles.titlePosition}>
               <Icon
                 name="pencil"
@@ -355,6 +385,7 @@ export default class PostDetail extends Component {
             </View>
           </View>
         </View>
+        <NetworkStatusBar top={20} />
         <KeyboardSpacer />
       </View>
     );
@@ -387,6 +418,7 @@ PostDetail.propTypes = {
   requestInputTitle: React.PropTypes.func,
   requestInputDescription: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
+  requestCleanCreatePostData: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
@@ -409,6 +441,7 @@ const _injectPropsFormActions = {
   requestInputTitle,
   requestInputDescription,
   requestSetLocation,
+  requestCleanCreatePostData,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);

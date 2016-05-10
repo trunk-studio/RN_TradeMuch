@@ -22,6 +22,13 @@ const styles = React.StyleSheet.create({
     fontSize: 25,
     textAlign: 'left',
     height: 30,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   imageContainer: {
     flex: 1,
@@ -53,7 +60,7 @@ const styles = React.StyleSheet.create({
   },
   button: {
     flex: 1,
-    margin: 100,
+    margin: 20,
     height: 50,
     backgroundColor: 'rgba(74, 74, 74, 0.3)',
     borderRadius: 9,
@@ -70,7 +77,7 @@ const styles = React.StyleSheet.create({
     flex: 0.21,
   },
   footBackColor: {
-    height: windowSize.height,
+    height: windowSize.height / 3,
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
@@ -79,11 +86,14 @@ const styles = React.StyleSheet.create({
 
 
 export default function CreateFinish(props) {
-  const { pic, itemTitle, description } = props;
+  const { pic, itemTitle, description, id } = props;
   function finishBtn() {
     Actions.postList({
       type: 'reset',
     });
+  }
+  function selectCategoryBtn() {
+    Actions.createCategory({ id });
   }
   return (
     <View style={styles.imageContainer}>
@@ -103,6 +113,12 @@ export default function CreateFinish(props) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
+            onPress={ selectCategoryBtn }
+          >
+            <Text style={styles.buttonText} >新增分類</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
             onPress={ finishBtn }
           >
             <Text style={styles.buttonText} >完成</Text>
@@ -114,6 +130,7 @@ export default function CreateFinish(props) {
 }
 
 CreateFinish.propTypes = {
+  id: React.PropTypes.number.isRequired,
   itemTitle: React.PropTypes.string,
   description: React.PropTypes.string,
   pic: React.PropTypes.string,

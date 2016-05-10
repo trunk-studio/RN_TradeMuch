@@ -6,12 +6,20 @@ export const LIST_ITEM_COLOR1 = 'rgb(255, 255, 255)';
 export const LIST_ITEM_COLOR2 = 'rgb(246, 246, 246)';
 export const NAVBAR_BACKGROUND_COLOR = 'rgb(60, 180, 190)';
 export const WHITE_COLOR = 'rgb(255, 255, 255)';
+export const BLACK_COLOR = 'rgb(0, 0, 0)';
 export const SEARCHBAR_COLOR = 'rgb(219, 236, 232)';
 export const TRADEMUCH_MAIN_COLOR_1 = 'rgb(69, 135, 119)';
 export const PROFILE_BACKGROUND_COLOR = 'rgb(246, 246, 246)';
 export const PROFILE_INFO_BLOCK_BACKGROUND_EDITABLE_COLOR = 'rgb(252, 238, 187)';
 export const PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR = 'rgb(227, 227, 227)';
-// export const
-// export const
-// export const
-// export const
+export const MAIN_BACKGROUND_COLOR = 'rgb(236,244,242)';
+export const SEGMENTED_CONTROL_SELECTED = 'rgb(95,162,146)';
+export const LIST_BACKGROUND_COLOR_1 = 'rgb(213, 226, 223)';
+export const MESSENGER_BUBBLE_COLOR = 'rgb(244, 227, 213)';
+export const LIST_BORDER = 'rgb(173, 189, 185)';
+export const SWIPE_BUTTON_COLOR_1 = 'rgb(248, 151, 151)';
+export const SWIPE_BUTTON_COLOR_2 = 'rgb(121, 183, 255)';
+export const SWIPE_BUTTON_COLOR_3 = 'rgb(245, 183, 80)';
+export const SIDE_DRAWER_CONTENT_BACKGROUND_COLOR = '#500505';
+export const TEXT_PRIMARY_COLOR = 'rgb(95,162,146)';
+export const ACTION_BUTTON = 'rgb(95,162,146)';

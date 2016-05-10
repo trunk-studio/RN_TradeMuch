@@ -8,7 +8,7 @@ import React, {
 } from 'react-native';
 const PIXEL_RATIO = PixelRatio.get();
 import { LIST_TITLE_COLOR } from '../../style/color';
-
+import NotificationCircle from '../NotificationCount';
 const styles = StyleSheet.create({
   commentContent: {
     height: 42 * PIXEL_RATIO,
@@ -23,11 +23,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: LIST_TITLE_COLOR,
     padding: 2 * PIXEL_RATIO,
-    fontSize: 8 * PIXEL_RATIO,
+    paddingTop: 5.5 * PIXEL_RATIO,
+    fontSize: 12,
   },
   commentBody: {
     flex: 1,
-    marginLeft: 8 * PIXEL_RATIO,
+    marginLeft: 5 * PIXEL_RATIO,
     flexDirection: 'column',
     justifyContent: 'center',
   },
@@ -35,6 +36,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     padding: 2 * PIXEL_RATIO,
+    paddingTop: 3 * PIXEL_RATIO,
+    fontWeight: '500',
   },
   itemImg: {
     borderRadius: 3,
@@ -43,6 +46,7 @@ const styles = StyleSheet.create({
   },
   rightBlock: {
     flex: 1,
+    paddingRight: 2,
     alignSelf: 'stretch',
     justifyContent: 'center',
     alignItems: 'center',
@@ -58,7 +62,13 @@ export default function PostListItem(props) {
   if (props.rightText) {
     rightBlock = (
       <View style={styles.rightBlock}>
-        <Text>{props.rightText}</Text>
+        <Text style={props.rightTextStyle}>{props.rightText}</Text>
+      </View>
+    );
+  } else if (props.notificationCount) {
+    rightBlock = (
+      <View style={styles.rightBlock}>
+        <NotificationCircle count={props.notificationCount} />
       </View>
     );
   }
@@ -69,7 +79,7 @@ export default function PostListItem(props) {
           <View style={styles.commentContent}>
             <Image source={{ uri: props.img }} style={styles.itemImg} />
             <View style={styles.commentBody}>
-              <Text style={styles.title}>
+              <Text style={styles.title} numberOfLines={2} >
                 {props.title}
               </Text>
               <Text style={styles.commentText}>
@@ -92,6 +102,8 @@ PostListItem.propTypes = {
   onItemPress: React.PropTypes.func,
   bakColor: React.PropTypes.object,
   rightText: React.PropTypes.string,
+  rightTextStyle: React.PropTypes.object,
+  notificationCount: React.PropTypes.number,
 };
 
 PostListItem.defaultProps = {

@@ -60,7 +60,10 @@ export async function requestUpdateUserInfo(data = {
     }
     return (dispatch) => {
       if (responseJson.success) {
-        dispatch(updateUserInfo({ isFirstLogin: false }));
+        dispatch(updateUserInfo({
+          isFirstLogin: false,
+          email: data.email,
+        }));
       }
     };
   } catch (e) {
@@ -72,7 +75,7 @@ export async function requestUpdateUserInfo(data = {
 export async function registFbToken(userIdentities) {
   const registData = {
     FBUserID: userIdentities.userID,
-    FBToken: userIdentities.tokenString,
+    FBToken: userIdentities.accessToken,
   };
   const registUrl = '/rest/auth/app/register';
   try {

@@ -5,7 +5,6 @@ import React, {
   Text,
   Component,
   Linking,
-  PixelRatio,
   Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -15,6 +14,8 @@ import Dimensions from 'Dimensions';
 import {
   requestAddItemToFavList,
   requestDeleteItemToFavList,
+  requestTradeItem,
+  requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
 
@@ -153,19 +154,50 @@ export default class PostDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.postItem = this.findPostItemById();
+    this.state = {
+      postItem: {},
+    };
   }
+
+  componentWillMount() {
+    this.willMount();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.postList !== this.props.postList) {
+      const postItem = this.findPostItemById();
+      this.setState({
+        postItem,
+      });
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.postList !== this.props.postList) {
+      const postItem = this.findPostItemById();
+      this.setState({
+        postItem,
+      });
+    }
+  }
+
 
   getItNowButtonHandle = () => {
     if (this.props.isLogin) {
-      Actions.messenger({
-        title: this.postItem.title,
-        postId: this.props.id,
-        sendMessageInitial: `嗨！我想要${this.postItem.title}`,
+      this.props.requestTradeItem({
+        id: this.props.id,
+        title: this.state.postItem.title,
       });
     } else {
       this.pleaseLogin();
     }
+  }
+
+  willMount() {
+    const postItem = this.findPostItemById();
+    this.setState({
+      postItem,
+    });
   }
 
   deleteFavoriteItemButtonHandle = () => {
@@ -185,7 +217,7 @@ export default class PostDetail extends Component {
   openChatRoomButtonHandle = () => {
     if (this.props.isLogin) {
       Actions.messenger({
-        title: this.postItem.title,
+        title: this.state.postItem.title,
         postId: this.props.id,
       });
     } else {
@@ -206,8 +238,8 @@ export default class PostDetail extends Component {
   }
 
   openMapButtonHandle = () => {
-    const lon = this.postItem.location.lon;
-    const lat = this.postItem.location.lat;
+    const lon = this.state.postItem.location.lon;
+    const lat = this.state.postItem.location.lat;
     const url = `https://www.google.com.tw/maps/place/${lat},${lon}`;
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
@@ -224,28 +256,22 @@ export default class PostDetail extends Component {
         postItem = postList[i];
       }
     }
+    if (!postItem.id) {
+      this.props.requestGetItemDataFromAPI({
+        id: this.props.id,
+      });
+    }
     return postItem;
   }
 
   render() {
-    // console.log("this.postItem=>",this.postItem);
-    const { title, description, pic, isFav } = this.postItem;
+    const { title, description, pic, isFav } = this.state.postItem;
     if (title === null) {
       Actions.postList.call();
     }
 
     let favButton = [];
-    if (isFav === false) {
-      favButton = [
-        <TouchableOpacity
-          key="favButton"
-          style={styles.button}
-          onPress={ this.addItemToFavoriteButtonHandle }
-        >
-          <Text style={styles.buttonText} >追蹤</Text>
-        </TouchableOpacity>,
-      ];
-    } else if (isFav === true) {
+    if (isFav === true) {
       favButton = [
         <TouchableOpacity
           key="favButton"
@@ -253,6 +279,16 @@ export default class PostDetail extends Component {
           onPress={ this.deleteFavoriteItemButtonHandle }
         >
           <Text style={styles.buttonText} >取消追蹤</Text>
+        </TouchableOpacity>,
+      ];
+    } else {
+      favButton = [
+        <TouchableOpacity
+          key="favButton"
+          style={styles.button}
+          onPress={ this.addItemToFavoriteButtonHandle }
+        >
+          <Text style={styles.buttonText} >追蹤</Text>
         </TouchableOpacity>,
       ];
     }
@@ -309,6 +345,8 @@ PostDetail.propTypes = {
   isLogin: React.PropTypes.bool,
   requestAddItemToFavList: React.PropTypes.func,
   requestDeleteItemToFavList: React.PropTypes.func,
+  requestTradeItem: React.PropTypes.func,
+  requestGetItemDataFromAPI: React.PropTypes.func,
 };
 
 PostDetail.defaultProps = {
@@ -326,6 +364,8 @@ function _injectPropsFromStore(state) {
 const _injectPropsFormActions = {
   requestAddItemToFavList,
   requestDeleteItemToFavList,
+  requestTradeItem,
+  requestGetItemDataFromAPI,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);

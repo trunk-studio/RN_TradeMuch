@@ -9,9 +9,13 @@ import React, {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { FBSDKLoginButton } from 'react-native-fbsdklogin';
-import { FBSDKAccessToken } from 'react-native-fbsdkcore';
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginButton,
+  AccessToken,
+} = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
+import * as color from '../style/color';
 import Dimensions from 'Dimensions';
 const windowSize = Dimensions.get('window');
 
@@ -19,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
+    backgroundColor: color.MESSENGER_BUBBLE_COLOR,
   },
   backImg: {
     position: 'absolute',
@@ -29,8 +34,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 100,
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
   },
   header: {
     justifyContent: 'center',
@@ -42,11 +47,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
   text: {
     fontSize: 20,
     marginBottom: 20,
     color: '#fff',
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
 });
 
@@ -71,7 +84,7 @@ export default class Login extends Component {
       if (isAgreePolicies === false) {
         Actions.policies();
       } else if (isAgreePolicies === true) {
-        Actions.profile({ action: 'confirm' });
+        Actions.firstLoginProfile({ action: 'confirm' });
       }
     } else if (isLogin && isFirstLogin === false && isAgreePolicies === true) {
       Actions.postList();
@@ -85,14 +98,10 @@ export default class Login extends Component {
       if (result.isCancelled) {
         // alert('Login cancelled.');
       } else {
-        FBSDKAccessToken.getCurrentAccessToken(async userIdentities => {
-          this.props.registFbToken(userIdentities);
-          if (result === null) {
-            // alert('Start logging in.');
-          } else {
-            // alert('Start logging out.');
-          }
-        });
+        AccessToken.getCurrentAccessToken()
+          .then((userIdentities) => {
+            this.props.registFbToken(userIdentities);
+          });
       }
     }
   }
@@ -109,8 +118,8 @@ export default class Login extends Component {
           <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
         <View style={styles.loginButtonContainer} >
-          <Text style={styles.text}>使用 Facebook 登入</Text>
-          <FBSDKLoginButton
+          <Text style={styles.text}>Log in or sign up with Facebook</Text>
+          <LoginButton
             style={styles.loginButton}
             onLoginFinished={this.handleLoginFinished}
             onLogoutFinished={this.handleLogoutFinished}

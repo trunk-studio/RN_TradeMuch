@@ -5,3 +5,6 @@ export * from './MessengerReducers';
 export * from './TakePhotoReducer';
 export * from './PostReducer';
 export * from './GeoReducer';
+export * from './UIStatusReducer';
+export * from './FavoriteReducer';
+export * from './CategoryReducer';

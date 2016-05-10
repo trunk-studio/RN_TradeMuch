@@ -6,25 +6,31 @@ npm install -g npm # if your npm version < 3
 npm install -g rnpm
 npm install
 sudo gem install cocoapods
+cd ios
 pod install
-rnpm link react-native-search-bar
-rnpm link react-native-linear-gradient
 ```
-### edit config.js in config folder
+# Start
+```
+npm run bundle
+npm run packager
+npm start
+```
 
+# Run Project in dev Mode
 
-# Run Project （dev）
+npm run start
 
+or
 
-npm run dev
+open `Counter.xcworkspace` in Xcode and run `TradeMuch` Scheme
 
-open `Counter.xcworkspace` in Xcode and run
+# Run in QA Mode
+
+npm run qa
 
 ##Production Mode
 
-1. edit /config/index.js  envMode = 'production'
-2. run project
-
+open `Counter.xcworkspace` in Xcode and run `TradeMuch Production` Scheme
 
 # 實體 iPhone 開發
 

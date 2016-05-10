@@ -3,22 +3,17 @@ import React, {
   Dimensions,
   View,
   Component,
-  ListView,
   Alert,
+  ListView,
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import {
-  LIST_ITEM_COLOR1,
-  LIST_ITEM_COLOR2,
-  SEARCHBAR_COLOR,
-  WHITE_COLOR,
- } from '../style/color';
+import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/PostList/ListItem';
-import ActionButton from '../components/ActionButton';
+import NetworkStatusBar from '../components/NetworkNotify/NetworkStatusBar';
+import ActionButton from './ActionButton';
 import config from '../config/index';
-// import SearchBar from '../components/SearchBar';
 import SearchBar from 'react-native-search-bar';
 const {
   RNSearchBarManager,
@@ -29,14 +24,14 @@ import {
   requestSearchPostNextPage,
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
-
+import TMListView from './TMListView';
 const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
     marginTop: 20,
-    backgroundColor: WHITE_COLOR,
-    paddingBottom: windowSize.height * 0.11,
+    backgroundColor: color.WHITE_COLOR,
+    // paddingBottom: windowSize.height * 0.05,
   },
 });
 
@@ -51,20 +46,24 @@ export default class PostList extends Component {
       showsCancelButton: false,
     };
   }
+
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.props.requestSetLocation(position);
-        this.props.requestSearchLoadMore(false);
-        this.props.requestSearchPost(null, '300km', {
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      },
-      (error) => Alert.alert(error.message),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.props.requestSetLocation(position);
+          this.props.requestSearchLoadMore(false);
+          this.props.requestSearchPost(null, '300km', {
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          });
+        },
+        (error) => Alert.alert(error.message),
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      );
+    }
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.postList !== this.props.postList) {
       this.setState({
@@ -87,12 +86,12 @@ export default class PostList extends Component {
     Actions.postDetail({ id });
   }
 
-  getListItem(rowData, sectionID, rowID, highlightRow) {
+  getListItem(rowData, sectionID, rowID) {
     let bakColor = {};
     if (rowID % 2 === 0) {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR1 };
+      bakColor = { backgroundColor: color.LIST_ITEM_COLOR1 };
     } else {
-      bakColor = { backgroundColor: LIST_ITEM_COLOR2 };
+      bakColor = { backgroundColor: color.LIST_ITEM_COLOR2 };
     }
     let distance = '';
     if (rowData.distance !== -1) {
@@ -154,10 +153,10 @@ export default class PostList extends Component {
           onSearchButtonPress={this.handleSearchButtonPress}
           onCancelButtonPress={this.handleSearchCancelPress}
           showsCancelButton={this.state.showsCancelButton}
-          barTintColor={SEARCHBAR_COLOR}
+          barTintColor={color.SEARCHBAR_COLOR}
           searchBarStyle="default"
         />
-        <ListView
+        <TMListView
           keyboardDismissMode="on-drag"
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
@@ -170,6 +169,7 @@ export default class PostList extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
+        <NetworkStatusBar top={44} />
     </View>
     );
   }
@@ -185,6 +185,7 @@ PostList.propTypes = {
   onListItemPress: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
   requestSearchPostNextPage: React.PropTypes.func,
+  networkMode: React.PropTypes.bool,
 };
 
 PostList.defaultProps = {
@@ -202,6 +203,7 @@ function _injectPropsFromStore(state) {
     lastSeachApi: state.search.lastSeachApi,
     canLoadMore: state.search.canLoadMore,
     location: state.geo.location,
+    networkMode: state.uiStatus.networkMode,
   };
 }
 
