@@ -13,6 +13,7 @@ const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
   AccessToken,
+  LoginManager,
 } = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import * as color from '../style/color';
