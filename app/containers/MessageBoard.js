@@ -46,15 +46,15 @@ export default class MessageBoard extends Component {
   }
 
   onMount() {
-    let result = {};
-    const items = this.props.myItems.map((item) => {
-      // if (item.hasChat) {
-      result = {
-        ...item,
-        pic: `${config.serverDomain}${item.pic}`,
-      };
-      // }
-      return { ...result };
+    let items = [];
+    this.props.myItems.forEach((item) => {
+      if (item.hasChat) {
+        const data = {
+          ...item,
+          pic: `${config.serverDomain}${item.pic}`,
+        };
+        items.push(data);
+      }
     });
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(items),
