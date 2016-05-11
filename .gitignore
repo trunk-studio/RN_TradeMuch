@@ -6,5 +6,6 @@ npm-debug.log
 xcuserdata
 build/
 main.jsbundle
+sourcemap.js
 app/config/index.js
 app/config/index.jsconfig.bak
