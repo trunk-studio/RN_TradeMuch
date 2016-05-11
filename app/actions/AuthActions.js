@@ -2,6 +2,7 @@ import { fetchWithAuth } from '../utils/authFetch';
 import { errorHandle } from '../utils/errorHandle';
 import * as asyncStorage from '../utils/asyncStorage';
 import { Alert } from 'react-native';
+import { LoginManager } from 'react-native-fbsdk';
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO';
 export const RECEIVED_USER_INFO = 'RECEIVED_USER_INFO';
 export const UPDATE_LOGIN_STATUS = 'UPDATE_LOGIN_STATUS';
@@ -92,6 +93,7 @@ export async function registFbToken(userIdentities) {
 }
 
 export async function logout() {
+  LoginManager.logOut();
   await Promise.all([
     asyncStorage.removeItem('userId'),
     asyncStorage.setItem('userName', '請登入'),
