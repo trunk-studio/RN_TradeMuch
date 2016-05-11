@@ -14,6 +14,7 @@ import { ORANGE, GRAY } from '../../style/color';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
+import { logout } from '../../actions/AuthActions';
 
 const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
@@ -134,6 +135,13 @@ export default class SideDrawerContent extends Component {
     }
   }
 
+  handleLogoutFinished = () => {
+    this.props.logout();
+    setTimeout(() => {
+      this.context.drawer.close();
+    }, 500);
+  }
+
   render() {
     const { userInfo, isLogin, myItems, myTradeRecords } = this.props;
     const loginBtnTitle = isLogin ? '登出' : '登入';
@@ -215,7 +223,7 @@ export default class SideDrawerContent extends Component {
           {favoriteList}
           {messageBoard}
           {myItemList}
-          <MenuItem id="login" title={loginBtnTitle} img="http://i.imgur.com/UDw6ykK.png" notification="" onItemPress={this.onItemPress} />
+          <MenuItem id="login" title={loginBtnTitle} img="http://i.imgur.com/UDw6ykK.png" notification="" onItemPress={isLogin ? this.handleLogoutFinished : this.onItemPress} />
         </ScrollView>
       </View>
 		);
@@ -230,6 +238,7 @@ SideDrawerContent.propTypes = {
   routeHistory: PropTypes.array,
   myItems: PropTypes.array,
   myTradeRecords: PropTypes.array,
+  logout: React.PropTypes.func,
 };
 
 SideDrawerContent.defaultProps = {
@@ -250,4 +259,8 @@ function _injectPropsFromStore({ auth, router, post }) {
   };
 }
 
-export default connect(_injectPropsFromStore, {})(SideDrawerContent);
+const _injectPropsFormActions = {
+  logout,
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(SideDrawerContent);
