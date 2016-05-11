@@ -14,6 +14,10 @@
 #import "RCTRootView.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "ReactNativeAutoUpdater.h"
+
+@interface AppDelegate()
+@end
 
 @implementation AppDelegate
 
@@ -27,27 +31,13 @@
 {
   NSURL *jsCodeLocation;
   [Fabric with:@[[Crashlytics class]]];
-
-  /**
-   * Loading JavaScript code - uncomment the one you want.
-   *
-   * OPTION 1
-   * Load from development server. Start the server from the repository root:
-   *
-   * $ npm start
-   *
-   * To run on device, change `localhost` to the IP address of your computer
-   * (you can get this by typing `ifconfig` into the terminal and selecting the
-   * `inet` value under `en0:`) and make sure your computer and iOS device are
-   * on the same Wi-Fi network.
-   */
 #if DEBUG
   #warning "DEV MODE"
-  
+
   #if TARGET_OS_SIMULATOR
     #warning "DEBUG SIMULATOR"
     jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios"];
-  
+
   #else
     #warning "DEBUG DEVICE"
     NSString *serverIP = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SERVER_IP"];
@@ -55,19 +45,7 @@
     NSString *jsBundleUrlString = [jsCodeUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     jsCodeLocation = [NSURL URLWithString:jsBundleUrlString];
   #endif
-#else
-  /**
-   * OPTION 2
-   * Load from pre-bundled file on disk. To re-generate the static bundle
-   * from the root of your project directory, run
-   *
-   * $ react-native bundle --minify
-   *
-   * see http://facebook.github.io/react-native/docs/runningondevice.html
-   */
-   #warning "PROD MODE"
-  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-#endif
+
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"TradeMuch"
                                                initialProperties:nil
@@ -79,8 +57,39 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
+#else
+  #warning "PROD MODE"
+    jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+    ReactNativeAutoUpdater* updater = [ReactNativeAutoUpdater sharedInstance];
+    [updater setDelegate:self];
+    NSURL* defaultMetadataFileLocation = [[NSBundle mainBundle] URLForResource:@"metadata" withExtension:@"json"];
+    [updater initializeWithUpdateMetadataUrl:[NSURL URLWithString:@"https://s3-ap-northeast-1.amazonaws.com/s3.trunksys.com/trademuch/qa/packager/metadata.json"]
+                     defaultJSCodeLocation:jsCodeLocation
+               defaultMetadataFileLocation:defaultMetadataFileLocation ];
+    [updater setHostnameForRelativeDownloadURLs:@"https://s3-ap-northeast-1.amazonaws.com/s3.trunksys.com/trademuch"];
+    [updater checkUpdate];
+
+    NSURL* latestJSCodeLocation = [updater latestJSCodeLocation];
+
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIViewController *rootViewController = [UIViewController new];
+    self.window.rootViewController = rootViewController;
+    [self createReactRootViewFromURL:latestJSCodeLocation];
+    [self.window makeKeyAndVisible];
+
+#endif
+
   return [[FBSDKApplicationDelegate sharedInstance] application:application
                                   didFinishLaunchingWithOptions:launchOptions];
+}
+
+- (void)createReactRootViewFromURL:(NSURL*)url {
+  // Make sure this runs on main thread. Apple does not want you to change the UI from background thread.
+  dispatch_async(dispatch_get_main_queue(), ^{
+    RCTBridge* bridge = [[RCTBridge alloc] initWithBundleURL:url moduleProvider:nil launchOptions:nil];
+    RCTRootView* rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"TradeMuch" initialProperties:nil];
+    self.window.rootViewController.view = rootView;
+  });
 }
 
 - (BOOL)application:(UIApplication *)application
