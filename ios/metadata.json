@@ -1,8 +1,8 @@
 {
-    "version": "1.0.0",
-    "minContainerVersion": "1.0",
+    "version": "2.0.0",
+    "minContainerVersion": "2.0",
     "url": {
-      "url": "/ios/main.jsbundle",
+      "url": "/qa/packager/main.jsbundle",
       "isRelative": true
     }
 }
