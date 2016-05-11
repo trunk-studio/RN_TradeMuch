@@ -73,7 +73,8 @@ export async function requestSearchPostNextPage(lastSearchApi, from) {
   try {
     if (lastSearchApi) {
       let paramArray = [];
-      paramArray = lastSearchApi.split('&');
+      const last = lastSearchApi.replace('/rest/post/search?', '');
+      paramArray = last.split('&');
       paramArray.push(`from=${from}`);
       const param = paramArray.join('&');
       const searchApi = `/rest/post/search?${param}`;
