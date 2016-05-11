@@ -13,10 +13,10 @@ export async function receivedMessages(srcMessages) {
       text: message.content,
       name: message.user.username,
       image: {
-        uri: 'https://facebook.github.io/react/img/logo_og.png',
+        uri: message.avatar,
       },
       position: (message.user.id.toString() === userId) ? 'right' : 'left',
-      date: new Date(2015, 0, 16, 19, 0),
+      date: new Date(message.datetime),
     });
   }
   return (dispatch) => {
@@ -34,10 +34,10 @@ export async function receivedNewMessage(srcMessage) {
     text: srcMessage.content,
     name: srcMessage.user.username,
     image: {
-      uri: 'https://facebook.github.io/react/img/logo_og.png',
+      uri: srcMessage.avatar,
     },
     position: (srcMessage.user.id.toString() === userId) ? 'right' : 'left',
-    date: new Date(2015, 0, 16, 19, 0),
+    date: new Date(srcMessage.datetime),
   };
   return (dispatch) => {
     dispatch({
