@@ -7,16 +7,15 @@ import { getItem } from '../utils/asyncStorage';
 export async function receivedMessages(srcMessages) {
   const storeMessages = [];
   const userId = await getItem('userId');
-
   for (const message of srcMessages) {
     storeMessages.push({
       text: message.content,
       name: message.user.username,
       image: {
-        uri: message.avatar,
+        uri: message.user.avatar,
       },
       position: (message.user.id.toString() === userId) ? 'right' : 'left',
-      date: new Date(message.datetime),
+      date: new Date(message.dateTime),
     });
   }
   return (dispatch) => {
@@ -29,15 +28,14 @@ export async function receivedMessages(srcMessages) {
 
 export async function receivedNewMessage(srcMessage) {
   const userId = await getItem('userId');
-
   const newMessage = {
     text: srcMessage.content,
     name: srcMessage.user.username,
     image: {
-      uri: srcMessage.avatar,
+      uri: srcMessage.user.avatar,
     },
     position: (srcMessage.user.id.toString() === userId) ? 'right' : 'left',
-    date: new Date(srcMessage.datetime),
+    date: new Date(srcMessage.dateTime),
   };
   return (dispatch) => {
     dispatch({
