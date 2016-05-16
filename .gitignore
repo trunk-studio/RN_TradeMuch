@@ -9,3 +9,4 @@ main.jsbundle
 sourcemap.js
 app/config/index.js
 app/config/index.jsconfig.bak
+*.apk
