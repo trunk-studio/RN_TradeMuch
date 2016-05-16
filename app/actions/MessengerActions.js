@@ -7,16 +7,15 @@ import { getItem } from '../utils/asyncStorage';
 export async function receivedMessages(srcMessages) {
   const storeMessages = [];
   const userId = await getItem('userId');
-
   for (const message of srcMessages) {
     storeMessages.push({
       text: message.content,
       name: message.user.username,
       image: {
-        uri: 'https://facebook.github.io/react/img/logo_og.png',
+        uri: message.user.avatar,
       },
       position: (message.user.id.toString() === userId) ? 'right' : 'left',
-      date: new Date(2015, 0, 16, 19, 0),
+      date: new Date(message.dateTime),
     });
   }
   return (dispatch) => {
@@ -29,15 +28,14 @@ export async function receivedMessages(srcMessages) {
 
 export async function receivedNewMessage(srcMessage) {
   const userId = await getItem('userId');
-
   const newMessage = {
     text: srcMessage.content,
     name: srcMessage.user.username,
     image: {
-      uri: 'https://facebook.github.io/react/img/logo_og.png',
+      uri: srcMessage.user.avatar,
     },
     position: (srcMessage.user.id.toString() === userId) ? 'right' : 'left',
-    date: new Date(2015, 0, 16, 19, 0),
+    date: new Date(srcMessage.dateTime),
   };
   return (dispatch) => {
     dispatch({

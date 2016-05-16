@@ -11,7 +11,6 @@ import {
 import { getItem } from '../utils/asyncStorage';
 import config from '../config/index';
 import * as color from '../style/color';
-const socket = io(`ws://${config.socketDomain}?__sails_io_sdk_version=0.13.5`, { jsonp: false, transports: ['websocket'] });
 
 async function composeRequestWithAuthToken(url, data) {
   const token = await getItem('jwt');
@@ -26,7 +25,7 @@ async function composeRequestWithAuthToken(url, data) {
   };
 }
 
-async function joinRoom(chatRoomId) {
+async function joinRoom(socket, chatRoomId) {
   try {
     const url = `/rest/room/${chatRoomId}/users`;
     const request = await composeRequestWithAuthToken(url);
@@ -40,7 +39,7 @@ async function joinRoom(chatRoomId) {
   }
 }
 
-async function sendMessage(chatRoomId, message) {
+async function sendMessage(socket, chatRoomId, message) {
   try {
     const url = `/rest/chat/${chatRoomId}/public`;
     const request = await composeRequestWithAuthToken(url, message);
@@ -54,7 +53,7 @@ async function sendMessage(chatRoomId, message) {
   }
 }
 
-async function getChatHistory(chatRoomId) {
+async function getChatHistory(socket, chatRoomId) {
   try {
     const url = `/rest/chat/${chatRoomId}/history`;
     const request = await composeRequestWithAuthToken(url);
@@ -83,6 +82,7 @@ export default class Messenger extends Component {
     super(props);
     this.handleSend = this.handleSend.bind(this);
     this.handleInitial = this.handleInitial.bind(this);
+    this.socket = io(`ws://${config.socketDomain}?__sails_io_sdk_version=0.13.5`, { jsonp: false, transports: ['websocket'] });
   }
 
   componentWillMount() {
@@ -92,34 +92,39 @@ export default class Messenger extends Component {
 
   componentWillUnmount() {
     this.props.requestClearMessages();
+    this.socket.disconnect();
   }
 
   async handleInitial() {
-    const messageHistory = await getChatHistory(this.props.postId);
+    const messageHistory = await getChatHistory(this.socket, this.props.postId);
     if (messageHistory) {
       this.props.receivedMessages(messageHistory);
     }
-    await joinRoom(this.props.postId);
-    socket.on('public', (response) => {
+    await joinRoom(this.socket, this.props.postId);
+    this.socket.on('public', (response) => {
       this.props.receivedNewMessage(response);
     });
     if (this.props.sendMessageInitial) {
       const message = {
         text: this.props.sendMessageInitial,
       };
-      this.handleSend(message);
+      this.handleSend(this.socket, message);
     }
   }
 
   async handleSend(message = {}, /* rowID = null*/) {
-    const newMessage = await sendMessage(this.props.postId, {
-      content: message.text,
-    });
-    this.props.receivedNewMessage({
-      content: newMessage.body.chat.content,
-      user: newMessage.body.user,
-    });
+    if (!!message.text) {
+      const newMessage = await sendMessage(this.socket, this.props.postId, {
+        content: message.text,
+      });
+      this.props.receivedNewMessage({
+        content: newMessage.body.content,
+        user: newMessage.body.user,
+      });
+    }
   }
+
+
 
   messengerRef(c) {
     this._GiftedMessenger = c;
