@@ -11,6 +11,7 @@ import React, {
   Text,
   PixelRatio,
   NetInfo,
+  Alert,
  } from 'react-native';
 import ErrorUtils from 'ErrorUtils';
 import ExceptionsManager from 'ExceptionsManager';
@@ -192,6 +193,24 @@ export default class AppRoutes extends Component {
     return loginButton;
   }
 
+  renderReportButton = () => {
+    const reportButton = (
+      <TouchableOpacity
+        style={styles.leftButtonContainer}
+        onPress={() => {
+          Alert.alert('檢舉', '是否要檢舉此物品？',
+            [
+              { text: '確認', onPress: () => Alert.alert('已成功送出') },
+              { text: '取消', onPress: () => {} },
+            ]);
+        }}
+      >
+        <Text style={styles.navTitle}>檢舉</Text>
+      </TouchableOpacity>,
+    );
+    return reportButton;
+  }
+
   renderBackButton() {
     return (
       <TouchableOpacity
@@ -280,6 +299,7 @@ export default class AppRoutes extends Component {
                 schema="interior"
                 title="物品檢視"
                 hideNavBar={false}
+                renderRightButton={this.renderReportButton}
               />
               <Route
                 name="ownerPostDetail"

@@ -18,7 +18,7 @@ import {
   requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
-
+import { ShareDialog } from 'react-native-fbsdk';
 const windowSize = Dimensions.get('window');
 // const PIXEL_RATIO = PixelRatio.get();
 const PIXEL_RATIO = 3;
@@ -112,7 +112,7 @@ const styles = React.StyleSheet.create({
   },
   buttonText: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 18,
+    fontSize: 14,
   },
   footContainer: {
     flex: 1,
@@ -248,6 +248,33 @@ export default class PostDetail extends Component {
     });
   }
 
+  openShareButtonHandle = () => {
+    const { postItem } = this.state;
+    const shareInfo = {
+      contentType: 'link',
+      contentUrl: `http://qa.trademuch.co.uk/app/post/${postItem.id}`,
+      contentDescription: `我在 TradeMuch 發現了一個${postItem.title}感覺還不錯耶`,
+    };
+    ShareDialog.canShow(shareInfo).then(
+      function(canShow) {
+        if (canShow) {
+          return ShareDialog.show(shareInfo);
+        }
+      }
+    ).then(
+      function(result) {
+        if (result.isCancelled) {
+          Alert.alert('Share cancelled');
+        } else {
+          Alert.alert('Share success with postId:');
+        }
+      },
+      function(error) {
+        alert('Share fail with error: ' + error);
+      }
+    );
+  }
+
   findPostItemById = () => {
     const postList = this.props.postList;
     let postItem = {};
@@ -332,6 +359,12 @@ export default class PostDetail extends Component {
               <Text style={styles.buttonText} >地圖</Text>
             </TouchableOpacity>
             {favButton}
+            <TouchableOpacity
+              style={styles.button}
+              onPress={ this.openShareButtonHandle }
+            >
+              <Text style={styles.buttonText} >分享</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
