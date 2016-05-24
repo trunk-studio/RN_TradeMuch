@@ -75,7 +75,7 @@ const styles = React.StyleSheet.create({
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 23,
+    fontSize: 18,
     marginBottom: 5 * PIXEL_RATIO,
     textAlign: 'left',
     shadowColor: '#000000',
@@ -306,7 +306,7 @@ export default class PostDetail extends Component {
             <Text style={styles.title}>{title}</Text>
           </View>
           <View style={styles.descriptionContainer}>
-            <Text style={styles.description}>{description}</Text>
+            <Text numberOfLines={3} style={styles.description}>{description}</Text>
           </View>
         </View>
         <View style={styles.buttonChatContainer}>
