@@ -9,6 +9,7 @@ import React, {
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import { Actions } from 'react-native-router-flux';
+import { ShareDialog } from 'react-native-fbsdk';
 const windowSize = Dimensions.get('window');
 
 const styles = React.StyleSheet.create({
@@ -95,6 +96,32 @@ export default function CreateFinish(props) {
   function selectCategoryBtn() {
     Actions.createCategory({ id });
   }
+  function openShareButtonHandle() {
+    const shareInfo = {
+      contentType: 'link',
+      contentUrl: `http://qa.trademuch.co.uk/app/post/${id}`,
+      contentDescription: `我在 TradeMuch 發佈了一個${itemTitle}不錯喔!!`,
+    };
+    ShareDialog.canShow(shareInfo).then(
+      function(canShow) {
+        if (canShow) {
+          return ShareDialog.show(shareInfo);
+        }
+      }
+    ).then(
+      function(result) {
+        if (result.isCancelled) {
+          Alert.alert('Share cancelled');
+        } else {
+          Alert.alert('Share success with postId:');
+        }
+      },
+      function(error) {
+        alert('Share fail with error: ' + error);
+      }
+    );
+  }
+
   return (
     <View style={styles.imageContainer}>
       <Image key="img" source={{ uri: pic }} style={styles.itemImg} />
@@ -122,6 +149,12 @@ export default function CreateFinish(props) {
             onPress={ finishBtn }
           >
             <Text style={styles.buttonText} >完成</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={ openShareButtonHandle }
+          >
+            <Text style={styles.buttonText} >分享</Text>
           </TouchableOpacity>
         </View>
       </View>

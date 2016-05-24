@@ -249,9 +249,8 @@ export default class PostDetail extends Component {
   }
 
   openShareButtonHandle = () => {
-    var tmp = this;
     const { postItem } = this.state;
-    let shareInfo = {
+    const shareInfo = {
       contentType: 'link',
       contentUrl: `http://qa.trademuch.co.uk/app/post/${postItem.id}`,
       contentDescription: `我在 TradeMuch 發現了一個${postItem.title}感覺還不錯耶`,
