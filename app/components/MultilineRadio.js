@@ -32,15 +32,12 @@ const styles = React.StyleSheet.create({
   content: {
     backgroundColor: color.LIST_BACKGROUND_COLOR_1,
     flex: 1,
-    width: windowSize.width,
     // marginTop: 20,
     alignItems: 'center',
     // paddingTop: 20,
   },
-  contentInner: {
-    width: windowSize.width,
-  },
   menuItem: {
+    flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.45)',
     paddingLeft: 40,
   },
@@ -134,15 +131,14 @@ export default class MultilineRadio extends Component {
   render() {
     return (
       <View style={styles.content}>
-        <View style={styles.contentInner}>
-          <ListView
-            keyboardDismissMode="on-drag"
-            dataSource={this.state.dataSource}
-            renderRow={this.getListItem}
-            onPress={this.onListItemPress}
-          />
-        </View>
-    </View>
+        <ListView
+          keyboardDismissMode="on-drag"
+          dataSource={this.state.dataSource}
+          renderRow={this.getListItem}
+          onPress={this.onListItemPress}
+          style={{alignSelf: 'stretch'}}
+        />
+      </View>
     );
   }
 }
