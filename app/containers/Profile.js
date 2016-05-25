@@ -22,8 +22,7 @@ import {
   PROFILE_BACKGROUND_COLOR,
   WHITE_COLOR,
   PROFILE_INFO_BLOCK_BACKGROUND_EDITABLE_COLOR,
-  PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR
-
+  PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR,
 } from '../style/color';
 
 const windowSize = Dimensions.get('window');
@@ -156,7 +155,7 @@ export default class Profile extends Component {
       return {
         borderStyle: 'dashed',
         backgroundColor: 'white',
-        width: 180,
+        width: 210,
       };
     }
     return {
@@ -192,7 +191,7 @@ export default class Profile extends Component {
           </View>
           <View style={[styles.bodyInner, { backgroundColor: this.bodyColor() }]} >
             <View style={styles.row} >
-              <Text style={styles.rowText}>Email： </Text>
+              <Text style={styles.rowText}>Email：</Text>
               <TextInput
                 editable={this.inputEditable()}
                 style={[styles.input, this.inputStyle()]}
@@ -201,6 +200,8 @@ export default class Profile extends Component {
                 value={this.state.email}
                 onChangeText= { this.inputEmailHandle }
                 returnKeyType={'done'}
+                autoCapitalize={'none'}
+                keyboardType={'email-address'}
                 maxLength={25}
               />
             </View>

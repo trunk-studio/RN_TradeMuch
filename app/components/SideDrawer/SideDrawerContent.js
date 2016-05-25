@@ -15,6 +15,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
 import { logout } from '../../actions/AuthActions';
+import ReactNativeAutoUpdater from 'react-native-auto-updater';
 
 const PIXEL_RATIO = PixelRatio.get();
 const windowSize = Dimensions.get('window');
@@ -47,6 +48,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: '700',
     fontSize: 9 * PIXEL_RATIO,
+  },
+  version: {
+    top: 25,
+    left: 140,
+    color: 'rgba(100, 100, 100, 0.5)',
+    fontSize: 10,
   },
   textNotification: {
     color: '#fff',
@@ -208,6 +215,12 @@ export default class SideDrawerContent extends Component {
         />
       );
     }
+    let version;
+    try {
+      version = ReactNativeAutoUpdater.jsCodeVersion();
+    } catch (e) {
+      version = '0.0.0';
+    }
     return (
       <View style={styles.contentWrapper}>
         <View style={styles.contentAvatar}>
@@ -215,6 +228,7 @@ export default class SideDrawerContent extends Component {
             <Image source={{ uri: userInfo.avatar }} style={styles.avatarImage} />
           </TouchableOpacity>
           <Text style={styles.textUserName}>{userInfo.userName}</Text>
+          <Text style={styles.version}>{version}</Text>
         </View>
         <ScrollView style={styles.contentBody}>
           <MenuItem id="postList" title="附近的好康物品" img="http://i.imgur.com/OKrJ2m3.png" notification="" onItemPress={this.onItemPress} />
