@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { loginValidation } from './actions/AuthActions';
 import { requestGetMyItems, requestGetTradeRecords } from './actions/PostActions';
-import { closeMinimalUIMode, openNetworkNotify, closeNetworkNotify } from './actions/UIStatusActions';
+import { openMaskView, hideMaskView, closeMinimalUIMode, openNetworkNotify, closeNetworkNotify } from './actions/UIStatusActions';
 import React, {
   Navigator,
 	StyleSheet,
@@ -136,11 +136,17 @@ export default class AppRoutes extends Component {
     );
   }
 
+  onSideDrawerOpen = () => {
+    this.props.openMaskView();
+    this.props.closeMinimalUIMode();
+  }
+
   handleConnectionInfoChange = (isConnected) => {
     isConnected ?
     this.props.closeNetworkNotify() :
     this.props.openNetworkNotify();
   }
+
 
   refSideDrawer = (ref) => {
     if (ref) {
@@ -213,7 +219,6 @@ export default class AppRoutes extends Component {
     return [];
   }
 
-
   render() {
     // const isLoginPage = this.props.beforeRoute === 'login';
     // const sceneStyle = isLoginPage ? styles.transparentScene : styles.routerScene;
@@ -252,7 +257,7 @@ export default class AppRoutes extends Component {
 
         {/* ------------------- SideDrawer Router -------------------------- */}
         <Route name="drawer" hideNavBar type="switch" initial>
-          <SideDrawer ref={this.refSideDrawer} onOpen={this.props.closeMinimalUIMode} >
+          <SideDrawer ref={this.refSideDrawer} onOpen={this.onSideDrawerOpen} onClose={this.props.hideMaskView}>
             <Router
               name="drawerRoot"
               sceneStyle={styles.routerScene}
@@ -332,6 +337,8 @@ AppRoutes.propTypes = {
   closeMinimalUIMode: React.PropTypes.func,
   openNetworkNotify: React.PropTypes.func,
   closeNetworkNotify: React.PropTypes.func,
+  onSideDrawerOpen: React.PropTypes.func,
+  openMaskView: React.PropTypes.func,
 };
 
 
@@ -350,6 +357,8 @@ const _injectPropsFormActions = {
   closeMinimalUIMode,
   openNetworkNotify,
   closeNetworkNotify,
+  openMaskView,
+  hideMaskView,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(AppRoutes);
