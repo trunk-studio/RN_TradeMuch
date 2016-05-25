@@ -139,7 +139,7 @@ export default class Messenger extends Component {
         // </View>
         */}
         <GiftedMessenger
-          autoScroll
+          submitOnReturn
           ref={this.messengerRef}
           style={{ marginTop: 20 }}
           messages={this.props.messages}
