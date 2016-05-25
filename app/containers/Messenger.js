@@ -59,7 +59,8 @@ async function getChatHistory(socket, chatRoomId) {
     const request = await composeRequestWithAuthToken(url);
     return new Promise((resolve) => {
       socket.emit('get', request, (response) => {
-        resolve(response.body.result);
+        const result = response.body.result;
+        resolve(result);
       });
     });
   } catch (e) {
@@ -123,8 +124,6 @@ export default class Messenger extends Component {
       });
     }
   }
-
-
 
   messengerRef(c) {
     this._GiftedMessenger = c;
