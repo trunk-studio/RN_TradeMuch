@@ -1,4 +1,4 @@
-import React, { Component, Dimensions, View } from 'react-native';
+import React, { Component, Dimensions, View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 window.navigator.userAgent = 'react-native';
 const io = require('socket.io-client/socket.io');
@@ -139,12 +139,22 @@ export default class Messenger extends Component {
         // </View>
         */}
         <GiftedMessenger
-          autoScroll
+          submitOnReturn
           ref={this.messengerRef}
           style={{ marginTop: 20 }}
           messages={this.props.messages}
           handleSend={this.handleSend}
           maxHeight={Dimensions.get('window').height - 45} // 64 for the navBar
+          onImagePress={(rowData, rowID) => {
+            if (rowData.position !== 'right') {
+              Alert.alert('檢舉', '是否要檢舉此人？',
+                [
+                  { text: '確認', onPress: () => Alert.alert('已成功送出') },
+                  { text: '取消', onPress: () => {} },
+                ]
+              );
+            }
+          }}
           styles={{
             textLeft: {
               color: '#000',

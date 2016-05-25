@@ -23,7 +23,7 @@
   "dependencies": {
     "react": "0.14.7",
     "react-native": "0.22.0",
-    "react-native-auto-updater": "0.2.5",
+    "react-native-auto-updater": "https://github.com/FuYaoDe/react-native-auto-updater.git",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-cookies": "0.0.5",
     "react-native-drawer": "1.16.7",
