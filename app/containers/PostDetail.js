@@ -18,6 +18,7 @@ import {
   requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
+import MaskView from './MaskView';
 import { ShareDialog } from 'react-native-fbsdk';
 const windowSize = Dimensions.get('window');
 // const PIXEL_RATIO = PixelRatio.get();
@@ -367,6 +368,7 @@ export default class PostDetail extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        <MaskView />
       </View>
     );
   }

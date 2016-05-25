@@ -5,7 +5,7 @@ import List from '../components/PostList/List';
 import SearchBar from '../components/SearchBar';
 import { requestSearchPost } from '../actions/SearchPostActions';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import MaskView from './MaskView';
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
@@ -53,6 +53,7 @@ function NearByPosts(props) {
       <SearchBar onChangeText={onChangeText} />
       <List listData={postList} />
       <TouchableOpacity onPress={Actions.PostDetail} />
+      <MaskView />
     </View>
   );
 }

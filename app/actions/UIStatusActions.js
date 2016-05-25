@@ -1,5 +1,6 @@
 export const SWITCH_MINIMAL_UI_MODE = 'SWITCH_MINIMAL_UI_MODE';
 export const SWITCH_NETWORK_NOTIFY_MODE = 'SWITCH_NETWORK_NOTIFY_MODE';
+export const TOGGLE_MASK_VIEW = 'TOGGLE_MASK_VIEW';
 
 function updateMinimalUIMode(data) {
   return {
@@ -36,5 +37,25 @@ export function openNetworkNotify() {
 export function closeNetworkNotify() {
   return dispatch => {
     dispatch(updateNetworkNotifyMode(false));
+  };
+}
+
+
+function toggleMaskView(data) {
+  return {
+    type: TOGGLE_MASK_VIEW,
+    data,
+  };
+}
+
+export function openMaskView() {
+  return dispatch => {
+    dispatch(toggleMaskView(true));
+  };
+}
+
+export function hideMaskView() {
+  return dispatch => {
+    dispatch(toggleMaskView(false));
   };
 }
