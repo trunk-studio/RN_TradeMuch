@@ -242,6 +242,12 @@ export default class PostDetail extends Component {
 
   postCreateButtonHandle() {
     if (!this.state.showLoadingIndicator) {
+      let closeLoading;
+      closeLoading = setTimeout(() => {
+        this.setState({
+          showLoadingIndicator: true,
+        });
+      }, 5000);
       if (this.props.title && this.props.imgSrc[0].src) {
         this.props.requestInputTitle(this.state.title);
         this.props.requestInputDescription(this.state.description);
@@ -254,6 +260,7 @@ export default class PostDetail extends Component {
           location: this.props.location,
           images: this.props.imgSrc[0].src,
         });
+        clearTimeout(closeLoading);
         this.setState({
           showLoadingIndicator: true,
         });
