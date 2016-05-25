@@ -21,6 +21,7 @@ import { Actions } from 'react-native-router-flux';
 import { ShareDialog } from 'react-native-fbsdk';
 import { BlurView, VibrancyView } from 'react-native-blur';
 const windowSize = Dimensions.get('window');
+import LightBox from 'react-native-lightbox';
 // const PIXEL_RATIO = PixelRatio.get();
 const PIXEL_RATIO = 3;
 const styles = React.StyleSheet.create({
@@ -320,9 +321,6 @@ export default class PostDetail extends Component {
       ];
     }
     const itemImg = {
-      position: 'absolute',
-      left: 0,
-      top: windowSize.height / 4 - 60,
       width: windowSize.width - 60,
       height: parseInt(windowSize.width / 16.0 * 9.0),
     };
@@ -332,13 +330,6 @@ export default class PostDetail extends Component {
         <Image source={{ uri: `${config.serverDomain}/${pic}` }} style={styles.itemImg} >
           <BlurView blurType="light" style={styles.itemImg} />
         </Image>
-        <View style={{ margin: 30 }}>
-          <Image
-            resizeMode="contain"
-            source={{ uri: `${config.serverDomain}/${pic}` }}
-            style={itemImg}
-          />
-        </View>
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -360,6 +351,15 @@ export default class PostDetail extends Component {
             <Text style={styles.openChatRoomText} >對話</Text>
           </TouchableOpacity>
         </View>
+        <LightBox>
+          <View style={{ margin: 30 }}>
+              <Image
+                resizeMode="contain"
+                source={{ uri: `${config.serverDomain}/${pic}` }}
+                style={itemImg}
+              />
+          </View>
+        </LightBox>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
