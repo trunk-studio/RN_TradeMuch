@@ -19,8 +19,8 @@ import {
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
 import { ShareDialog } from 'react-native-fbsdk';
-import { BlurView, VibrancyView } from 'react-native-blur';
 const windowSize = Dimensions.get('window');
+import { BlurView, VibrancyView } from 'react-native-blur';
 import LightBox from 'react-native-lightbox';
 // const PIXEL_RATIO = PixelRatio.get();
 const PIXEL_RATIO = 3;
@@ -321,7 +321,8 @@ export default class PostDetail extends Component {
       ];
     }
     const itemImg = {
-      width: windowSize.width - 60,
+      flex: 1,
+      width: windowSize.width,
       height: parseInt(windowSize.width / 16.0 * 9.0),
     };
 
@@ -351,15 +352,15 @@ export default class PostDetail extends Component {
             <Text style={styles.openChatRoomText} >對話</Text>
           </TouchableOpacity>
         </View>
-        <LightBox>
-          <View style={{ margin: 30 }}>
+        <View>
+          <LightBox>
               <Image
                 resizeMode="contain"
                 source={{ uri: `${config.serverDomain}/${pic}` }}
                 style={itemImg}
               />
-          </View>
-        </LightBox>
+          </LightBox>
+        </View>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity

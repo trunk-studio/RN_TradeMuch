@@ -12,10 +12,12 @@ import Dimensions from 'Dimensions';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 const windowSize = Dimensions.get('window');
+import { BlurView, VibrancyView } from 'react-native-blur';
+import LightBox from 'react-native-lightbox';
 
 const styles = React.StyleSheet.create({
   titleContainer: {
-    flex: 0.69,
+    flex: 0.2,
   },
   title: {
     marginTop: 65,
@@ -44,6 +46,7 @@ const styles = React.StyleSheet.create({
     height: windowSize.height,
   },
   itemDescriptionContainer: {
+    flex: 0.1,
     marginLeft: 20,
     marginBottom: 15,
   },
@@ -163,9 +166,16 @@ export default class OwnerPostDetail extends React.Component {
 
   render() {
     const { pic, itemTitle, description } = this.props;
+    const itemImg = {
+      flex: 1,
+      width: windowSize.width,
+      height: parseInt(windowSize.width / 16.0 * 9.0),
+    };
     return (
       <View style={styles.imageContainer}>
-        <Image key="img" source={{ uri: pic }} style={styles.itemImg} />
+        <Image key="img" source={{ uri: pic }} style={styles.itemImg}>
+          <BlurView blurType="light" style={styles.itemImg} />
+        </Image>
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -173,6 +183,15 @@ export default class OwnerPostDetail extends React.Component {
         />
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{itemTitle}</Text>
+        </View>
+        <View style={{flex: 0.3}}>
+          <LightBox>
+            <Image
+              resizeMode="contain"
+              source={{ uri: `${pic}` }}
+              style={itemImg}
+            />
+          </LightBox>
         </View>
         <View style={styles.itemDescriptionContainer}>
           <Text style={styles.description}>{description}</Text>
