@@ -15,9 +15,7 @@ const {
   AccessToken,
 } = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
-import * as color from '../style/color';
 import Dimensions from 'Dimensions';
-import loginBackground from './images/fbLogin.jpg';
 
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
