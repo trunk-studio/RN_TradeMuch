@@ -10,7 +10,7 @@ import ListItem from '../components/PostList/ListItem';
 import ActionButton from './ActionButton';
 import config from '../config/index';
 import * as color from '../style/color';
-
+import MaskView from './MaskView';
 import {
   requestItemisConfirmed,
   requestUpdateTradeRecordConfirmStatus,
@@ -161,6 +161,7 @@ export default class TradeRecord extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
+        <MaskView />
     </View>
     );
   }

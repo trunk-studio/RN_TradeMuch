@@ -15,6 +15,7 @@ import { Actions } from 'react-native-router-flux';
 import {
   requestUpdateTradeRecordStatus,
 } from '../actions/PostActions';
+import MaskView from './MaskView';
 
 const styles = StyleSheet.create({
   container: {
@@ -208,6 +209,7 @@ export default class GivePage extends React.Component {
           text="確定"
           onPress={this.handleActionButtonPress}
         />
+        <MaskView />
       </View>
     );
   }

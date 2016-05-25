@@ -18,7 +18,7 @@ import {
   requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
-
+import MaskView from './MaskView';
 const windowSize = Dimensions.get('window');
 // const PIXEL_RATIO = PixelRatio.get();
 const PIXEL_RATIO = 3;
@@ -334,6 +334,7 @@ export default class PostDetail extends Component {
             {favButton}
           </View>
         </View>
+        <MaskView />
       </View>
     );
   }

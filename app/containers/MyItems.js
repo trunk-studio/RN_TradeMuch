@@ -13,7 +13,7 @@ import config from '../config/index';
 import Swipeout from 'react-native-swipeout';
 import SwipeOutButton from '../components/SwipeOutButton';
 import TMListView from './TMListView';
-
+import MaskView from './MaskView';
 import {
   requestUpdatePostStatus,
 } from '../actions/PostActions';
@@ -202,6 +202,7 @@ export default class MyItems extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
+        <MaskView />
       </View>
     );
   }

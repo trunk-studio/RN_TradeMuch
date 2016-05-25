@@ -16,6 +16,7 @@ import {
 } from '../actions/AuthActions';
 // import Dimensions from 'Dimensions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import MaskView from './MaskView.js';
 import ActionButton from './ActionButton';
 import {
   TRADEMUCH_MAIN_COLOR_1,
@@ -213,6 +214,7 @@ export default class Profile extends Component {
           text={this.buttonText()}
           onPress={this.handleActionButtonPress}
         />
+        <MaskView />
       </View>
     );
   }

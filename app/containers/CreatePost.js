@@ -29,6 +29,7 @@ import {
  } from '../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import MaskView from './MaskView';
 
 const windowSize = Dimensions.get('window');
 
@@ -399,7 +400,8 @@ export default class PostDetail extends Component {
           </View>
         </View>
         <NetworkStatusBar top={20} />
-        <KeyboardSpacer onToggle={this.onKeyboardToggle}/>
+        <KeyboardSpacer onToggle={this.onKeyboardToggle} />
+        <MaskView />
       </View>
     );
   }
