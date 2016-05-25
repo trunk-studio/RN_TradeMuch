@@ -20,10 +20,11 @@ import {
 import { Actions } from 'react-native-router-flux';
 import MaskView from './MaskView';
 import { ShareDialog } from 'react-native-fbsdk';
+import { BlurView, VibrancyView } from 'react-native-blur';
 const windowSize = Dimensions.get('window');
+import LightBox from 'react-native-lightbox';
 // const PIXEL_RATIO = PixelRatio.get();
 const PIXEL_RATIO = 3;
-
 const styles = React.StyleSheet.create({
   imageContainer: {
     flex: 1,
@@ -253,8 +254,8 @@ export default class PostDetail extends Component {
     const { postItem } = this.state;
     const shareInfo = {
       contentType: 'link',
-      contentUrl: `http://qa.trademuch.co.uk/app/post/${postItem.id}`,
-      contentDescription: `我在 TradeMuch 發現了一個${postItem.title}感覺還不錯耶`,
+      contentUrl: `http://qa.trademuch.co.uk/sns/post/${postItem.id}`,
+      contentDescription: `我在 TradeMuch 發現了一個『${postItem.title}』感覺還不錯耶！一起來看看吧 :)`,
     };
     ShareDialog.canShow(shareInfo).then(
       function(canShow) {
@@ -320,10 +321,16 @@ export default class PostDetail extends Component {
         </TouchableOpacity>,
       ];
     }
+    const itemImg = {
+      width: windowSize.width - 60,
+      height: parseInt(windowSize.width / 16.0 * 9.0),
+    };
 
     return (
       <View style={styles.imageContainer}>
-        <Image source={{ uri: `${config.serverDomain}/${pic}` }} style={styles.itemImg} />
+        <Image source={{ uri: `${config.serverDomain}/${pic}` }} style={styles.itemImg} >
+          <BlurView blurType="light" style={styles.itemImg} />
+        </Image>
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -345,6 +352,15 @@ export default class PostDetail extends Component {
             <Text style={styles.openChatRoomText} >對話</Text>
           </TouchableOpacity>
         </View>
+        <LightBox>
+          <View style={{ margin: 30 }}>
+              <Image
+                resizeMode="contain"
+                source={{ uri: `${config.serverDomain}/${pic}` }}
+                style={itemImg}
+              />
+          </View>
+        </LightBox>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity

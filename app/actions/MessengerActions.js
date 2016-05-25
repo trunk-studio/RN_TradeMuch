@@ -8,6 +8,12 @@ export async function receivedMessages(srcMessages) {
   const storeMessages = [];
   const userId = await getItem('userId');
   for (const message of srcMessages) {
+    let date = new Date(message.dateTime);
+    if (!date) {
+      const today = new Date();
+      const now = `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}`;
+      date = now;
+    }
     storeMessages.push({
       text: message.content,
       name: message.user.username,
@@ -15,7 +21,7 @@ export async function receivedMessages(srcMessages) {
         uri: message.user.avatar,
       },
       position: (message.user.id.toString() === userId) ? 'right' : 'left',
-      date: new Date(message.dateTime),
+      date,
     });
   }
   return (dispatch) => {
@@ -28,6 +34,12 @@ export async function receivedMessages(srcMessages) {
 
 export async function receivedNewMessage(srcMessage) {
   const userId = await getItem('userId');
+  let date = new Date(srcMessage.dateTime);
+  if (!srcMessage.dateTime) {
+    const today = new Date();
+    const now = `${today.getFullYear()}-${(today.getMonth() + 1)}-${today.getDate()}`;
+    date = now;
+  }
   const newMessage = {
     text: srcMessage.content,
     name: srcMessage.user.username,
@@ -35,7 +47,7 @@ export async function receivedNewMessage(srcMessage) {
       uri: srcMessage.user.avatar,
     },
     position: (srcMessage.user.id.toString() === userId) ? 'right' : 'left',
-    date: new Date(srcMessage.dateTime),
+    date,
   };
   return (dispatch) => {
     dispatch({

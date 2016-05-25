@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
     fontSize: 9 * PIXEL_RATIO,
   },
   version: {
-    top: 25,
-    left: 140,
-    color: 'rgba(100, 100, 100, 0.5)',
-    fontSize: 10,
+    top: 0,
+    left: 0,
+    color: 'rgba(100, 100, 100, 0.2)',
+    fontSize: 8,
   },
   textNotification: {
     color: '#fff',
