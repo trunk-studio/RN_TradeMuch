@@ -6,6 +6,7 @@ import React, {
   Component,
   Linking,
   Alert,
+  ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import config from '../config/index';
@@ -56,6 +57,9 @@ const styles = React.StyleSheet.create({
   titleContainer: {
     justifyContent: 'flex-start',
     flex: 0.5,
+    paddingTop: 60,
+    paddingLeft: 20,
+    flexDirection: 'row',
   },
   title: {
     color: 'rgba(255, 255, 255, 1)',
@@ -71,8 +75,9 @@ const styles = React.StyleSheet.create({
     textShadowRadius: 3,
   },
   descriptionContainer: {
-    justifyContent: 'flex-end',
-    flex: 0.5,
+    // justifyContent: 'flex-end',
+    flex: 1,
+    padding: 40,
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
@@ -125,15 +130,18 @@ const styles = React.StyleSheet.create({
     bottom: 0,
   },
   buttonChatContainer: {
-    flex: 0.5,
-    flexDirection: 'row',
+    backgroundColor: 'rgba(102, 102, 102, 0.5)',
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderWidth: 2,
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    height: 30,
   },
   openChatRoomText: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 5 * PIXEL_RATIO,
-    shadowColor: '#000000',
-    shadowOpacity: 0.8,
-    shadowRadius: 3 * PIXEL_RATIO,
+    fontSize: 14,
   },
   openChatRoomButton: {
     backgroundColor: 'rgba(102, 102, 102, 0.5)',
@@ -336,31 +344,29 @@ export default class PostDetail extends Component {
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />
-        <View style={styles.textContainer}>
-          <View style={styles.titleContainer}>
+        <View style={styles.titleContainer}>
+          <View style={{flex: 1}}>
             <Text style={styles.title}>{title}</Text>
           </View>
-          <View style={styles.descriptionContainer}>
-            <Text numberOfLines={3} style={styles.description}>{description}</Text>
+          <View style={{ flex: 1, paddingLeft: 150, paddingTop: 5, }}>
+            <TouchableOpacity
+              style={styles.buttonChatContainer}
+              onPress={ this.openChatRoomButtonHandle }
+            >
+              <Text style={styles.openChatRoomText} >對話</Text>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.buttonChatContainer}>
-          <TouchableOpacity
-            style={styles.openChatRoomButton}
-            onPress={ this.openChatRoomButtonHandle }
-          >
-            <Text style={styles.openChatRoomText} >對話</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <LightBox>
-              <Image
-                resizeMode="contain"
-                source={{ uri: `${config.serverDomain}/${pic}` }}
-                style={itemImg}
-              />
-          </LightBox>
-        </View>
+        <LightBox>
+            <Image
+              resizeMode="contain"
+              source={{ uri: `${config.serverDomain}/${pic}` }}
+              style={itemImg}
+            />
+        </LightBox>
+        <ScrollView style={styles.descriptionContainer}>
+          <Text style={styles.description}>{description}</Text>
+        </ScrollView>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity

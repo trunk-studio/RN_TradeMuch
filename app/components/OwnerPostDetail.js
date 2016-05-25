@@ -6,6 +6,7 @@ import React, {
   TouchableOpacity,
   Text,
   Alert,
+  ScrollView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
@@ -47,15 +48,20 @@ const styles = React.StyleSheet.create({
   },
   itemDescriptionContainer: {
     flex: 0.1,
-    marginLeft: 20,
-    marginBottom: 15,
+    padding: 40,
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 25,
+    fontSize: 18,
     marginBottom: 5,
     textAlign: 'left',
-    height: 30,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   buttonContainer: {
     flex: 1,
@@ -193,9 +199,9 @@ export default class OwnerPostDetail extends React.Component {
             />
           </LightBox>
         </View>
-        <View style={styles.itemDescriptionContainer}>
+        <ScrollView style={styles.itemDescriptionContainer}>
           <Text style={styles.description}>{description}</Text>
-        </View>
+        </ScrollView>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
