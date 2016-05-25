@@ -113,10 +113,11 @@ const styles = React.StyleSheet.create({
   description: {
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
+    marginTop: -8,
     marginLeft: 10,
     marginBottom: 5,
     textAlign: 'left',
-    height: 30,
+    // height: 30,
     width: windowSize.width - 40,
     shadowColor: '#000000',
     shadowOpacity: 0.25,
@@ -125,6 +126,7 @@ const styles = React.StyleSheet.create({
     textShadowColor: '#000000',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
+    height: 90,
   },
   price: {
     color: 'rgba(255, 255, 255, 1)',
@@ -182,6 +184,7 @@ export default class PostDetail extends Component {
       title: '',
       description: '',
       showLoadingIndicator: false,
+      showNonImage: true,
     };
   }
 
@@ -279,6 +282,12 @@ export default class PostDetail extends Component {
     this.props.requestInputDescription(this.state.description);
   }
 
+  onKeyboardToggle = (willOpen, height) => {
+    this.setState({
+      showNonImage: !willOpen,
+    });
+  }
+
   render() {
     const { photo, title, description, postFinishData } = this.props;
     let backImg;
@@ -304,19 +313,23 @@ export default class PostDetail extends Component {
           style={styles.footBackColor2}
         />,
       ];
-      noneImg = [
-        <TouchableOpacity
-          key="cameraBtn"
-          style={styles.noneImgContainer}
-          onPress={ this.selectPhotoButtonHandle }
-        >
-          <Image
-            key="img"
-            source={{ uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM' }}
-            style={styles.noneImg}
-          />
-        </TouchableOpacity>,
-      ];
+      if (this.state.showNonImage) {
+        noneImg = (
+          <TouchableOpacity
+            key="cameraBtn"
+            style={styles.noneImgContainer}
+            onPress={ this.selectPhotoButtonHandle }
+          >
+            <Image
+              key="img"
+              source={{ uri: 'https://googledrive.com/host/0B-XkApzKpJ7QWHZNeFRXRzNZcHM' }}
+              style={styles.noneImg}
+            />
+          </TouchableOpacity>
+        );
+      } else {
+        noneImg = null;
+      }
     }
 
     return (
@@ -352,13 +365,13 @@ export default class PostDetail extends Component {
               color={'rgba(255, 255, 255, 0.8)'}
             />
             <TextInput
+              multiline
               style={styles.description}
               placeholder="點擊輸入描述"
               placeholderTextColor="#FFF"
               defaultValue={description}
               onChangeText= { this.inputDescriptionHandle }
               onEndEditing= { this.inputDescriptionOnEndHandle }
-              returnKeyType={'done'}
             />
           </View>
           {noneImg}
@@ -386,7 +399,7 @@ export default class PostDetail extends Component {
           </View>
         </View>
         <NetworkStatusBar top={20} />
-        <KeyboardSpacer />
+        <KeyboardSpacer onToggle={this.onKeyboardToggle}/>
       </View>
     );
   }

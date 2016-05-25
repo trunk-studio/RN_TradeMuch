@@ -64,12 +64,22 @@ export default class Category extends Component {
   }
 
   categoryItemPress = (id) => {
-    const list = findObjById(this.state.checkboxList, 'id', id , (item) => {
-      let newItem = {};
-      newItem = { ...item };
-      newItem.isChecked = !item.isChecked;
-      return newItem;
-    });
+    const list = this.state.checkboxList;
+    if (id === 1) {
+      const state = list[0].isChecked;
+      list.map((item) => {
+        const newItem = item;
+        newItem.isChecked = !state;
+        return newItem;
+      });
+    } else {
+      list.map((item) => {
+        const newItem = item;
+        if (newItem.id === id) newItem.isChecked = !item.isChecked;
+        if (id !== 1 && newItem.id === 1) newItem.isChecked = false;
+        return newItem;
+      });
+    }
     this.setState({
       checkboxList: list,
     });
