@@ -10,7 +10,7 @@ import { Actions } from 'react-native-router-flux';
 import { receivedReadMessages } from '../actions/MessengerActions';
 import ListItem from '../components/PostList/ListItem';
 import config from '../config/index';
-
+import MaskView from './MaskView';
 const styles = React.StyleSheet.create({
   container: {
     flex: 1,
@@ -158,6 +158,7 @@ export default class MessageBoard extends Component {
           dataSource={this.state.dataSource}
           renderRow={this.getListItem}
         />
+        <MaskView />
     </View>
     );
   }

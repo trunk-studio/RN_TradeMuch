@@ -19,6 +19,7 @@ import {
 } from '../utils/place';
 import Swipeout from 'react-native-swipeout';
 import SwipeOutButton from '../components/SwipeOutButton';
+import MaskView from './MaskView';
 import * as color from '../style/color';
 
 const {
@@ -186,6 +187,7 @@ export default class PostList extends Component {
           img="http://qa.trademuch.co.uk/img/add.png"
           onPress={this.handleActionButtonPress}
         />
+        <MaskView />
     </View>
     );
   }

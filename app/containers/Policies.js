@@ -14,6 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import Dimensions from 'Dimensions';
 import { requestAgreePolicies } from '../actions/AuthActions';
 import CheckBox from 'react-native-icon-checkbox';
+import MaskView from './MaskView';
 const windowSize = Dimensions.get('window');
 const PIXEL_RATIO = PixelRatio.get();
 const styles = StyleSheet.create({
@@ -143,6 +144,7 @@ export default class Policies extends Component {
             <Text style={styles.buttonTextAgree}>同意</Text>
           </TouchableOpacity>
         </View>
+        <MaskView />
       </View>
     );
   }

@@ -17,6 +17,7 @@ const styles = React.StyleSheet.create({
   },
 });
 import { findObjById } from '../utils/immutable';
+import MaskView from './MaskView';
 
 
 export default class Category extends Component {
@@ -96,7 +97,8 @@ export default class Category extends Component {
           text="確定"
           onPress={this.handleActionButtonPress}
         />
-    </View>
+        <MaskView />
+      </View>
     );
   }
 }

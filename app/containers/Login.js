@@ -16,6 +16,7 @@ const {
 } = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
+import MaskView from './MaskView';
 
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -130,6 +131,7 @@ export default class Login extends Component {
             publishPermissions={[]}
           />
         </View>
+        <MaskView />
       </View>
     );
   }

@@ -11,7 +11,7 @@ import {
 import { getItem } from '../utils/asyncStorage';
 import config from '../config/index';
 import * as color from '../style/color';
-
+import MaskView from './MaskView';
 async function composeRequestWithAuthToken(url, data) {
   const token = await getItem('jwt');
   return {
@@ -171,6 +171,7 @@ export default class Messenger extends Component {
             },
           }}
         />
+        <MaskView />
       </View>
     );
   }
