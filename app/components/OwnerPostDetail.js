@@ -6,16 +6,19 @@ import React, {
   TouchableOpacity,
   Text,
   Alert,
+  ScrollView,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 const windowSize = Dimensions.get('window');
+import { BlurView, VibrancyView } from 'react-native-blur';
+import LightBox from 'react-native-lightbox';
 
 const styles = React.StyleSheet.create({
   titleContainer: {
-    flex: 0.69,
+    flex: 0.2,
   },
   title: {
     marginTop: 65,
@@ -44,15 +47,21 @@ const styles = React.StyleSheet.create({
     height: windowSize.height,
   },
   itemDescriptionContainer: {
-    marginLeft: 20,
-    marginBottom: 15,
+    flex: 0.1,
+    padding: 40,
   },
   description: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 25,
+    fontSize: 18,
     marginBottom: 5,
     textAlign: 'left',
-    height: 30,
+    shadowColor: '#000000',
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+    shadowOffset: { width: 1, height: 1 },
+    textShadowColor: '#000000',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   buttonContainer: {
     flex: 1,
@@ -163,9 +172,16 @@ export default class OwnerPostDetail extends React.Component {
 
   render() {
     const { pic, itemTitle, description } = this.props;
+    const itemImg = {
+      flex: 1,
+      width: windowSize.width,
+      height: parseInt(windowSize.width / 16.0 * 9.0),
+    };
     return (
       <View style={styles.imageContainer}>
-        <Image key="img" source={{ uri: pic }} style={styles.itemImg} />
+        <Image key="img" source={{ uri: pic }} style={styles.itemImg}>
+          <BlurView blurType="light" style={styles.itemImg} />
+        </Image>
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -174,9 +190,18 @@ export default class OwnerPostDetail extends React.Component {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{itemTitle}</Text>
         </View>
-        <View style={styles.itemDescriptionContainer}>
-          <Text style={styles.description}>{description}</Text>
+        <View style={{flex: 0.3}}>
+          <LightBox>
+            <Image
+              resizeMode="contain"
+              source={{ uri: `${pic}` }}
+              style={itemImg}
+            />
+          </LightBox>
         </View>
+        <ScrollView style={styles.itemDescriptionContainer}>
+          <Text style={styles.description}>{description}</Text>
+        </ScrollView>
         <View style={styles.footContainer}>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
