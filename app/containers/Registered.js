@@ -108,7 +108,7 @@ export default class Registered extends Component {
               Alert.alert('警告', '邀請碼錯誤，請再次確認!!');
             }}
           >
-            <Text style={styles.buttonText}>使用邀請碼註冊</Text>
+            <Text style={styles.buttonText}>註冊</Text>
           </TouchableOpacity>
         </View>
         <MaskView />
