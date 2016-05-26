@@ -18,7 +18,7 @@
     "bundle-prod": "npm run prodMode && npm run bundle",
     "bundle-local": "npm run devMode && node node_modules/react-native/local-cli/cli.js bundle --dev true --entry-file index.ios.js --bundle-output ./ios/main.jsbundle",
     "start": "npm run devMode && npm run ios",
-    "qa": "npm run qaMode && npm run devtool && npm run start && npm run devtool"
+    "qa": "npm run qaMode && npm run devtool && npm run packager"
   },
   "dependencies": {
     "react": "0.14.7",

@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 3,
   },
   button: {
-    margin: 20,
+    marginTop: 20,
     height: 30,
     width: 180,
     backgroundColor: color.ACTION_BUTTON,
@@ -128,6 +128,10 @@ export default class Login extends Component {
     this.props.logout();
   }
 
+  handleLoginByUsernameAndPwd() {
+    Actions.loginView.call();
+  }
+
   render() {
     return (
       <View style={styles.container} >
@@ -149,8 +153,14 @@ export default class Login extends Component {
           <TouchableOpacity
             style={styles.button}
             onPress={Actions.registered}
-            >
+          >
             <Text style={styles.buttonText}>使用邀請碼註冊</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.handleLoginByUsernameAndPwd}
+          >
+            <Text style={styles.buttonText}>以帳號密碼登入</Text>
           </TouchableOpacity>
         </View>
         <MaskView />

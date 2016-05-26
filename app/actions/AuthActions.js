@@ -81,6 +81,7 @@ export async function registFbToken(userIdentities) {
   const registUrl = '/rest/auth/app/register';
   try {
     const loginInfo = await fetchWithAuth(registUrl, 'post', registData);
+    console.log("loginInfo=>",loginInfo);
     await setAsyncStorageLoginInfo(loginInfo);
     return dispatch => {
       dispatch(updateLoginStatus(true));
@@ -151,6 +152,29 @@ export async function requestAgreePolicies() {
       };
     }
     return () => {};
+  } catch (e) {
+    errorHandle(e.message);
+    return () => {};
+  }
+}
+
+export async function requestLoginByBuildinAccouunt() {
+  try {
+    console.log("requestLoginByBuildinAccouunt");
+    const loginInfo = {
+      avatar: '',
+      isAgreePolicies: false,
+      isFirstLogin: true,
+      jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIyLCJGQlVzZXJJRCI6IjEzOTI5NzE0OTgxNjY4NiIsImlhdCI6MTQ2NDI0OTY2MH0.ZsyM4ZM7jW5k2LqWRAInVY3gOFcR67bQCjx6YLJuN78',
+      requestStatus: 200,
+      userId: 22,
+      userName: 'Tess Lin',
+    };
+    await setAsyncStorageLoginInfo(loginInfo);
+    return dispatch => {
+      dispatch(updateLoginStatus(true));
+      dispatch(receivedUserInfo(loginInfo));
+    };
   } catch (e) {
     errorHandle(e.message);
     return () => {};
