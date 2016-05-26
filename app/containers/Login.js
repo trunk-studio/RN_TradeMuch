@@ -148,9 +148,9 @@ export default class Login extends Component {
           />
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {}}
+            onPress={Actions.registered}
             >
-            <Text style={styles.buttonText}>註冊</Text>
+            <Text style={styles.buttonText}>使用邀請碼註冊</Text>
           </TouchableOpacity>
         </View>
         <MaskView />
