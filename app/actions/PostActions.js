@@ -23,6 +23,7 @@ export const RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL =
 export const RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED =
   'RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED';
 export const DELETE_POST_ITEM = 'DELETE_POST_ITEM';
+export const RECEIVED_CREATE_POST_FINISH = 'RECEIVED_CREATE_POST_FINISH';
 
 
 function receivedCreate(data = {
@@ -79,6 +80,19 @@ export function requestCleanCreatePostData() {
   };
 }
 
+function receivedCreateFinish(data) {
+  return {
+    type: RECEIVED_CREATE_POST_FINISH,
+    data,
+  };
+}
+
+export async function requestShowCreateLoad(data) {
+  return (dispatch) => {
+    dispatch(receivedCreateFinish(data));
+  };
+}
+
 export async function requestCreate(data = {
   detail: {
     title: '',
@@ -105,9 +119,10 @@ export async function requestCreate(data = {
     return (dispatch) => {
       dispatch(receivedAddToList(response));
       dispatch(receivedCreate(response));
+      dispatch(receivedCreateFinish(true));
     };
   } catch (e) {
-    errorHandle(e.message);
+    // errorHandle(e.message);
     return () => {};
   }
 }

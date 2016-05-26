@@ -105,7 +105,9 @@ export default class Login extends Component {
         Actions.firstLoginProfile({ action: 'confirm' });
       }
     } else if (isLogin && isFirstLogin === false && isAgreePolicies === true) {
-      Actions.postList();
+      Actions.postList({
+        type: 'reset'
+      });
     }
   }
 
