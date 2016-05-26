@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: 160,
     height: 20,
+    fontSize: 10,
     backgroundColor: 'rgba(88,88,88,0.5)',
     color: '#fff',
   },
@@ -140,6 +141,7 @@ export default class LoginView extends Component {
             <Text style={styles.text}>帳　號：</Text>
             <TextInput
               style={styles.textInput}
+              autoCapitalize={'none'}
               onChangeText= {this.inputUsernameHandle}
             />
           </View>
@@ -147,6 +149,8 @@ export default class LoginView extends Component {
             <Text style={styles.text}>密　碼：</Text>
             <TextInput
               style={styles.textInput}
+              secureTextEntry={true}
+              autoCapitalize={'none'}
               onChangeText= {this.inputPwdHandle}
             />
           </View>

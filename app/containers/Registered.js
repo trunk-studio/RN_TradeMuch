@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: 160,
     height: 20,
+    fontSize: 10,
     backgroundColor: 'rgba(88,88,88,0.5)',
     color: '#fff',
   },
@@ -92,15 +93,25 @@ export default class Registered extends Component {
         <View style={styles.formContainer} >
           <View style={styles.inputBox}>
             <Text style={styles.text}>帳　號：</Text>
-            <TextInput style={styles.textInput} />
+            <TextInput
+              style={styles.textInput}
+              autoCapitalize={'none'}
+            />
           </View>
           <View style={styles.inputBox}>
             <Text style={styles.text}>密　碼：</Text>
-            <TextInput style={styles.textInput} />
+            <TextInput
+              style={styles.textInput}
+              secureTextEntry={true}
+              autoCapitalize={'none'}
+            />
           </View>
           <View style={styles.inputBox}>
             <Text style={styles.text}>邀請碼：</Text>
-            <TextInput style={styles.textInput} />
+            <TextInput
+              style={styles.textInput}
+              autoCapitalize={'none'}
+            />
           </View>
           <TouchableOpacity
             style={styles.button}
