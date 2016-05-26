@@ -103,9 +103,13 @@ export default class LoginView extends Component {
       const checkUsr = username === fUsr;
       const checkPwd = pwd === fPwd;
       if (checkUsr && checkPwd) {
-        this.props.requestLoginByBuildinAccouunt();
+        setTimeout(() => {
+          this.props.requestLoginByBuildinAccouunt();
+        }, 776);
       } else {
-        Alert.alert('登入失敗！帳號或密碼錯誤！');
+        setTimeout(() => {
+          Alert.alert('登入失敗！帳號或密碼錯誤！');
+        }, 776);
       }
     }
   }
