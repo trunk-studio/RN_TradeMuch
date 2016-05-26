@@ -5,16 +5,17 @@ import React, {
   Component,
   Image,
   Text,
-  Alert,
-  TouchableOpacity,
   TextInput,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import * as color from '../style/color';
-import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 import MaskView from './MaskView';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import * as color from '../style/color';
+import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { requestLoginByBuildinAccouunt } from '../actions/AuthActions';
 
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -43,26 +44,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
-  text: {
-    fontSize: 20,
-    marginBottom: 20,
-    color: '#fff',
-    shadowColor: '#000000',
-    shadowOpacity: 0.25,
-    shadowRadius: 5,
-    shadowOffset: { width: 1, height: 1 },
-    textShadowColor: '#000000',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  },
-  loginButtonContainer: {
+  formContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0)',
   },
-  buttonLogin: {
-    marginTop: -20,
+  inputBox: {
+    flexDirection: 'row',
+  },
+  text: {
+    fontSize: 20,
+    marginBottom: 20,
+    color: '#fff',
+  },
+  textInput: {
+    width: 200,
+    height: 20,
+    backgroundColor: 'rgba(88,88,88,0.5)',
+    color: '#fff',
+  },
+  button: {
+    margin: 20,
     height: 30,
     width: 180,
     backgroundColor: color.ACTION_BUTTON,
@@ -75,79 +78,48 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
-  inputContainer: {
-    marginTop: -20,
-    flex: 0.2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputUsername: {
-    color: color.TRADEMUCH_MAIN_COLOR_1,
-    width: 300,
-    backgroundColor: '#fff',
-    textAlign: 'left',
-    fontSize: 15,
-    height: 20,
-  },
 });
 
-export default class Login extends Component {
-
-  static propTypes = {
-    requestUserInfo: React.PropTypes.func,
-    registFbToken: React.PropTypes.func,
-    logout: React.PropTypes.func,
-    isLogin: React.PropTypes.bool,
-  };
+export default class LoginView extends Component {
 
   constructor(props) {
     super(props);
-    this.handleLoginFinished = this.handleLoginFinished.bind(this);
-    this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
-    this.inputEmailHandle = this.inputEmailHandle.bind(this);
+    this.handleLoginButtonClick = this.handleLoginButtonClick.bind(this);
+    this.inputUsernameHandle = this.inputUsernameHandle.bind(this);
+    this.inputPwdHandle = this.inputPwdHandle.bind(this);
+    this.state = {
+      username: '',
+      pwd: '',
+    };
   }
 
-  componentWillUpdate(nextProps) {
-    const { isLogin, isFirstLogin, isAgreePolicies } = nextProps;
-    if (isLogin && isFirstLogin) {
-      if (isAgreePolicies === false) {
-        Actions.policies();
-      } else if (isAgreePolicies === true) {
-        Actions.firstLoginProfile({ action: 'confirm' });
-      }
-    } else if (isLogin && isFirstLogin === false && isAgreePolicies === true) {
-      Actions.postList();
-    }
-  }
-
-  handleLoginFinished(error, result) {
-    if (error) {
-      Alert.alert('登入失敗', '請再試試看');
-    } else {
-      if (result.isCancelled) {
-        // alert('Login cancelled.');
+  handleLoginButtonClick() {
+    const username = this.state.username;
+    const pwd = this.state.pwd;
+    // const fUsr = 'office@trunk-studio.com';
+    const fUsr = 'A';
+    const fPwd = 'B';
+    if (username && pwd) {
+      const checkUsr = username === fUsr;
+      const checkPwd = pwd === fPwd;
+      if (checkUsr && checkPwd) {
+        this.props.requestLoginByBuildinAccouunt();
       } else {
-        AccessToken.getCurrentAccessToken()
-          .then((userIdentities) => {
-            this.props.registFbToken(userIdentities);
-          });
+        Alert.alert('登入失敗！帳號或密碼錯誤！');
       }
     }
   }
 
-  handleLogoutFinished() {
-    this.props.logout();
+  inputUsernameHandle(username) {
+    this.setState({
+      username,
+    });
   }
 
-  inputEditable = () => {
-    if (this.state.isConfirm === true) {
-      return true;
-    }
-    return false;
-  }
-
-  inputEmailHandle(email) {
-
+  inputPwdHandle(pwd) {
+    this.setState({
+      pwd,
+    });
   }
 
   render() {
@@ -159,58 +131,45 @@ export default class Login extends Component {
         <View style={styles.header}>
           <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
-        <View style={styles.inputContainer} >
-          <TextInput
-            editable={true}
-            style={[styles.inputUsername]}
-            placeholder="尚未輸入Email"
-            placeholderTextColor={color.TRADEMUCH_MAIN_COLOR_1}
-            value={111}
-            onChangeText= {this.inputEmailHandle}
-            returnKeyType={'done'}
-            autoCapitalize={'none'}
-            keyboardType={'email-address'}
-            maxLength={25}
-          />
-          <TextInput
-            editable={true}
-            style={[styles.inputUsername]}
-            placeholder="尚未輸入Email"
-            placeholderTextColor={color.TRADEMUCH_MAIN_COLOR_1}
-            value={111}
-            onChangeText= {this.inputEmailHandle}
-            returnKeyType={'done'}
-            autoCapitalize={'none'}
-            keyboardType={'default'}
-            maxLength={25}
-          />
-        </View>
-        <View style={styles.loginButtonContainer} >
+        <View style={styles.formContainer} >
+          <View style={styles.inputBox}>
+            <Text style={styles.text}>帳　號：</Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText= {this.inputUsernameHandle}
+            />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.text}>密　碼：</Text>
+            <TextInput
+              style={styles.textInput}
+              onChangeText= {this.inputPwdHandle}
+            />
+          </View>
           <TouchableOpacity
-            style={styles.buttonLogin}
-            onPress={() => {}}
+            style={styles.button}
+            onPress={this.handleLoginButtonClick}
           >
             <Text style={styles.buttonText}>登入</Text>
           </TouchableOpacity>
         </View>
         <MaskView />
+        <KeyboardSpacer />
       </View>
     );
   }
 }
 
+LoginView.propTypes = {
+  requestLoginByBuildinAccouunt: React.PropTypes.func,
+};
+
 function _injectPropsFromStore({ auth }) {
-  return {
-    isLogin: auth.isLogin,
-    isFirstLogin: auth.userInfo.isFirstLogin,
-    isAgreePolicies: auth.userInfo.isAgreePolicies,
-  };
+  return {};
 }
 
 const _injectPropsFormActions = {
-  requestUserInfo,
-  registFbToken,
-  logout,
+  requestLoginByBuildinAccouunt,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(Login);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(LoginView);

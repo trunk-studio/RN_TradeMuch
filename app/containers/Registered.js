@@ -5,10 +5,15 @@ import React, {
   Component,
   Image,
   Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import Dimensions from 'Dimensions';
 import MaskView from './MaskView';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import * as color from '../style/color';
+import { Actions } from 'react-native-router-flux';
 
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -27,7 +32,7 @@ const styles = StyleSheet.create({
     height: windowSize.height,
   },
   logo: {
-    marginTop: 100,
+    marginTop: 50,
     width: 180,
     height: 180,
   },
@@ -37,23 +42,39 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'transparent',
   },
-  loginButtonContainer: {
+  formContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0)',
   },
+  inputBox: {
+    flexDirection: 'row',
+  },
   text: {
     fontSize: 20,
     marginBottom: 20,
     color: '#fff',
-    shadowColor: '#000000',
-    shadowOpacity: 0.25,
-    shadowRadius: 5,
-    shadowOffset: { width: 1, height: 1 },
-    textShadowColor: '#000000',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
+  },
+  textInput: {
+    width: 100,
+    height: 20,
+    backgroundColor: 'rgba(88,88,88,0.5)',
+    color: '#fff',
+  },
+  button: {
+    margin: 20,
+    height: 30,
+    width: 180,
+    backgroundColor: color.ACTION_BUTTON,
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
@@ -68,10 +89,30 @@ export default class Registered extends Component {
         <View style={styles.header}>
           <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
-        <View style={styles.loginButtonContainer} >
-          <Text style={styles.text}>Log in or sign up with Facebook</Text>
+        <View style={styles.formContainer} >
+          <View style={styles.inputBox}>
+            <Text style={styles.text}>帳　號：</Text>
+            <TextInput style={styles.textInput} />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.text}>密　碼：</Text>
+            <TextInput style={styles.textInput} />
+          </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.text}>邀請碼：</Text>
+            <TextInput style={styles.textInput} />
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              Alert.alert('警告', '邀請碼錯誤，請再次確認!!');
+            }}
+          >
+            <Text style={styles.buttonText}>註冊</Text>
+          </TouchableOpacity>
         </View>
         <MaskView />
+        <KeyboardSpacer />
       </View>
     );
   }
