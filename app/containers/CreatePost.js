@@ -21,6 +21,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import { requestSetLocation } from '../actions/GeoActions';
 import {
+  requestShowCreateLoad,
   requestCreate,
   requestUploadImg,
   requestInputTitle,
@@ -30,6 +31,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import MaskView from './MaskView';
+import { errorHandle } from '../utils/errorHandle';
 
 const windowSize = Dimensions.get('window');
 
@@ -197,6 +199,7 @@ export default class PostDetail extends Component {
       (error) => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+    this.props.requestShowCreateLoad(true);
   }
   componentWillReceiveProps(nextProps) {
     const { postFinishData } = nextProps;
@@ -242,13 +245,8 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
-    if (!this.state.showLoadingIndicator) {
-      let closeLoading;
-      closeLoading = setTimeout(() => {
-        this.setState({
-          showLoadingIndicator: true,
-        });
-      }, 5000);
+    if (this.props.isLogin) {
+      this.props.requestShowCreateLoad(false);
       if (this.props.title && this.props.imgSrc[0].src) {
         this.props.requestInputTitle(this.state.title);
         this.props.requestInputDescription(this.state.description);
@@ -261,13 +259,11 @@ export default class PostDetail extends Component {
           location: this.props.location,
           images: this.props.imgSrc[0].src,
         });
-        clearTimeout(closeLoading);
-        this.setState({
-          showLoadingIndicator: true,
-        });
       } else {
         Alert.alert('注意', '照片跟標題是必填喔');
       }
+    } else {
+      errorHandle('{ "requestStatus": 403 }');
     }
   }
 
@@ -344,7 +340,7 @@ export default class PostDetail extends Component {
       <View style={ { flex: 1 } }>
         <LoadSpinner
           key="loadSpinner"
-          visible={this.state.showLoadingIndicator}
+          visible={!this.props.showLoadingIndicator}
         />
         <View style={styles.imageContainer}>
           {backImg}
@@ -416,6 +412,8 @@ export default class PostDetail extends Component {
 
 function _injectPropsFromStore(state) {
   return {
+    isLogin: state.auth.isLogin,
+    showLoadingIndicator: state.post.createFinish,
     title: state.post.title,
     description: state.post.description,
     photo: state.takePhoto.photoSource,
@@ -427,6 +425,8 @@ function _injectPropsFromStore(state) {
 }
 
 PostDetail.propTypes = {
+  isLogin: React.PropTypes.bool,
+  showLoadingIndicator: React.PropTypes.bool,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
   photo: React.PropTypes.object,
@@ -435,6 +435,7 @@ PostDetail.propTypes = {
   postFinishData: React.PropTypes.object,
   location: React.PropTypes.object,
   requestTakePhoto: React.PropTypes.func,
+  requestShowCreateLoad: React.PropTypes.func,
   requestCreate: React.PropTypes.func,
   requestUploadImg: React.PropTypes.func,
   requestInputTitle: React.PropTypes.func,
@@ -444,6 +445,7 @@ PostDetail.propTypes = {
 };
 
 PostDetail.defaultProps = {
+  showLoadingIndicator: true,
   title: '',
   description: '',
   photo: {},
@@ -458,6 +460,7 @@ PostDetail.defaultProps = {
 
 const _injectPropsFormActions = {
   requestTakePhoto,
+  requestShowCreateLoad,
   requestCreate,
   requestUploadImg,
   requestInputTitle,
