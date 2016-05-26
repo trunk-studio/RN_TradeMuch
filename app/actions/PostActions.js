@@ -22,6 +22,7 @@ export const RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL =
   'RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL';
 export const RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED =
   'RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED';
+export const DELETE_POST_ITEM = 'DELETE_POST_ITEM';
 
 
 function receivedCreate(data = {
@@ -189,6 +190,28 @@ export async function requestUpdatePostStatus(postId, status) {
     };
   } catch (e) {
     errorHandle(e.message);
+    return () => {};
+  }
+}
+
+function deletePostItem(postId) {
+  return {
+    type: DELETE_POST_ITEM,
+    data: postId,
+  };
+}
+
+export async function requestDeletePost(postId) {
+  try {
+    const result = await fetchWithAuth(`/rest/post/${postId}`, 'delete');
+    if (result.success === 'ok') {
+      return (dispatch) => {
+        dispatch(deletePostItem(postId));
+      };
+    }
+    return () => {};
+  } catch (err) {
+    errorHandle(err.message);
     return () => {};
   }
 }

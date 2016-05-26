@@ -8,6 +8,7 @@ import {
   RECEIVED_GET_TRADE_RECORDS,
   RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS,
   RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED,
+  DELETE_POST_ITEM,
 } from '../actions/PostActions';
 import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
 
@@ -16,7 +17,10 @@ function findObjById(objArray, targetObjKey, targetValue, callback) {
   newArray = [];
   for (const item of objArray) {
     if (item[targetObjKey] === targetValue) {
-      newArray.push(callback(item));
+      const newItem = callback(item);
+      if (newItem !== null) {
+        newArray.push(newItem);
+      }
     } else {
       newArray.push(item);
     }
@@ -129,6 +133,15 @@ export function post(state = {}, action) {
       return {
         ...state,
         myTradeRecords: newTradeRecords,
+      };
+    }
+    case DELETE_POST_ITEM: {
+      const newMyItems = findObjById(state.myItems, 'id', action.data, () => {
+        return null;
+      });
+      return {
+        ...state,
+        myItems: newMyItems,
       };
     }
     default:

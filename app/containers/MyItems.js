@@ -16,6 +16,7 @@ import TMListView from './TMListView';
 import MaskView from './MaskView';
 import {
   requestUpdatePostStatus,
+  requestDeletePost,
 } from '../actions/PostActions';
 
 const styles = React.StyleSheet.create({
@@ -128,10 +129,16 @@ export default class MyItems extends Component {
     if (rowData.status === 'on') {
       const swipeoutBtns = [
         {
-          backgroundColor: color.SWIPE_BUTTON_COLOR_1,
+          backgroundColor: '#F5B750',
           onPress: this.takeOffPost.bind(this, rowData.id),
           component: (
             <SwipeOutButton label={"下架"} imgSource={{ uri: 'http://i.imgur.com/z83iW6N.png' }} />
+          ),
+        }, {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_1,
+          onPress: this.deletePost.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"刪除"} imgSource={{ uri: 'http://i.imgur.com/OPPaNUe.png' }} />
           ),
         },
       ];
@@ -169,6 +176,10 @@ export default class MyItems extends Component {
 
   takeOffPost = (postId) => {
     this.props.requestUpdatePostStatus(postId, 'off');
+  }
+
+  deletePost = (postId) => {
+    this.props.requestDeletePost(postId);
   }
 
   putOnPost = (postId) => {
@@ -211,6 +222,7 @@ export default class MyItems extends Component {
 MyItems.propTypes = {
   myItems: React.PropTypes.array,
   requestUpdatePostStatus: React.PropTypes.func,
+  requestDeletePost: React.PropTypes.func,
 };
 
 MyItems.defaultProps = {
@@ -227,6 +239,7 @@ function _injectPropsFromStore(state) {
 
 const _injectPropsFormActions = {
   requestUpdatePostStatus,
+  requestDeletePost,
 };
 
 export default connect(_injectPropsFromStore, _injectPropsFormActions)(MyItems);
