@@ -6,7 +6,9 @@ import React, {
   Image,
   Text,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
+import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 const FBSDK = require('react-native-fbsdk');
@@ -62,6 +64,20 @@ const styles = StyleSheet.create({
     textShadowColor: '#000000',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
+  },
+  button: {
+    margin: 20,
+    height: 30,
+    width: 180,
+    backgroundColor: color.ACTION_BUTTON,
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
@@ -130,6 +146,12 @@ export default class Login extends Component {
             readPermissions={[]}
             publishPermissions={[]}
           />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {}}
+            >
+            <Text style={styles.buttonText}>註冊</Text>
+          </TouchableOpacity>
         </View>
         <MaskView />
       </View>
