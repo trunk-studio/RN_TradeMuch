@@ -16,14 +16,14 @@ import {
 } from '../actions/AuthActions';
 // import Dimensions from 'Dimensions';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
+import MaskView from './MaskView.js';
 import ActionButton from './ActionButton';
 import {
   TRADEMUCH_MAIN_COLOR_1,
   PROFILE_BACKGROUND_COLOR,
   WHITE_COLOR,
   PROFILE_INFO_BLOCK_BACKGROUND_EDITABLE_COLOR,
-  PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR
-
+  PROFILE_INFO_BLOCK_BACKGROUND_NO_EDITABLE_COLOR,
 } from '../style/color';
 
 const windowSize = Dimensions.get('window');
@@ -213,6 +213,7 @@ export default class Profile extends Component {
           text={this.buttonText()}
           onPress={this.handleActionButtonPress}
         />
+        <MaskView />
       </View>
     );
   }

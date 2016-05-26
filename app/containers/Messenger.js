@@ -11,7 +11,7 @@ import {
 import { getItem } from '../utils/asyncStorage';
 import config from '../config/index';
 import * as color from '../style/color';
-
+import MaskView from './MaskView';
 async function composeRequestWithAuthToken(url, data) {
   const token = await getItem('jwt');
   return {
@@ -59,7 +59,8 @@ async function getChatHistory(socket, chatRoomId) {
     const request = await composeRequestWithAuthToken(url);
     return new Promise((resolve) => {
       socket.emit('get', request, (response) => {
-        resolve(response.body.result);
+        const result = response.body.result;
+        resolve(result);
       });
     });
   } catch (e) {
@@ -124,8 +125,6 @@ export default class Messenger extends Component {
     }
   }
 
-
-
   messengerRef(c) {
     this._GiftedMessenger = c;
   }
@@ -172,6 +171,7 @@ export default class Messenger extends Component {
             },
           }}
         />
+        <MaskView />
       </View>
     );
   }

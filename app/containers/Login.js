@@ -13,23 +13,24 @@ const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
   AccessToken,
-  LoginManager,
 } = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
-import * as color from '../style/color';
 import Dimensions from 'Dimensions';
-const windowSize = Dimensions.get('window');
+import MaskView from './MaskView';
 
+const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'stretch',
-    backgroundColor: color.MESSENGER_BUBBLE_COLOR,
+  },
+  bgContainer: {
+    flex: 1,
+    top: 0,
+    left: 0,
+    position: 'absolute',
   },
   backImg: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
     width: windowSize.width,
     height: windowSize.height,
   },
@@ -114,7 +115,9 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container} >
-        <Image source={require('./images/fbLogin.png')} style={styles.backImg} />
+        <View style={styles.bgContainer}>
+          <Image source={{ uri: 'login' }} style={styles.backImg} />
+        </View>
         <View style={styles.header}>
           <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
@@ -128,6 +131,7 @@ export default class Login extends Component {
             publishPermissions={[]}
           />
         </View>
+        <MaskView />
       </View>
     );
   }

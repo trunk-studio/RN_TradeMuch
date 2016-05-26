@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import ActionButton from './ActionButton';
 import { requestGetCategoryList, requestAddCategory } from '../actions/CategoryActions';
 import MultilineRadio from '../components/MultilineRadio';
+import MaskView from './MaskView';
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
@@ -87,7 +88,8 @@ export default class CreateCategory extends Component {
           text="確定"
           onPress={this.handleActionButtonPress}
         />
-    </View>
+        <MaskView />
+      </View>
     );
   }
 }

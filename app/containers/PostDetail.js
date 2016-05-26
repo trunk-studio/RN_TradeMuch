@@ -19,6 +19,7 @@ import {
   requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
 import { Actions } from 'react-native-router-flux';
+import MaskView from './MaskView';
 import { ShareDialog } from 'react-native-fbsdk';
 const windowSize = Dimensions.get('window');
 import { BlurView, VibrancyView } from 'react-native-blur';
@@ -261,8 +262,8 @@ export default class PostDetail extends Component {
     const { postItem } = this.state;
     const shareInfo = {
       contentType: 'link',
-      contentUrl: `http://qa.trademuch.co.uk/app/post/${postItem.id}`,
-      contentDescription: `我在 TradeMuch 發現了一個${postItem.title}感覺還不錯耶`,
+      contentUrl: `http://qa.trademuch.co.uk/sns/post/${postItem.id}`,
+      contentDescription: `我在 TradeMuch 發現了一個『${postItem.title}』感覺還不錯耶！一起來看看吧 :)`,
     };
     ShareDialog.canShow(shareInfo).then(
       function(canShow) {
@@ -390,6 +391,7 @@ export default class PostDetail extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        <MaskView />
       </View>
     );
   }

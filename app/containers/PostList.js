@@ -15,6 +15,7 @@ import NetworkStatusBar from '../components/NetworkNotify/NetworkStatusBar';
 import ActionButton from './ActionButton';
 import config from '../config/index';
 import SearchBar from 'react-native-search-bar';
+import MaskView from './MaskView';
 const {
   RNSearchBarManager,
 } = NativeModules;
@@ -25,7 +26,6 @@ import {
 } from '../actions/SearchPostActions';
 import { requestSetLocation } from '../actions/GeoActions';
 import TMListView from './TMListView';
-const windowSize = Dimensions.get('window');
 const styles = React.StyleSheet.create({
   content: {
     flex: 1,
@@ -170,6 +170,7 @@ export default class PostList extends Component {
           onPress={this.handleActionButtonPress}
         />
         <NetworkStatusBar top={44} />
+        <MaskView />
     </View>
     );
   }
