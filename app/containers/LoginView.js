@@ -7,15 +7,11 @@ import React, {
   Text,
   Alert,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import * as color from '../style/color';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-const FBSDK = require('react-native-fbsdk');
-const {
-  LoginButton,
-  AccessToken,
-} = FBSDK;
 import { registFbToken, requestUserInfo, logout } from '../actions/AuthActions';
 import Dimensions from 'Dimensions';
 import MaskView from './MaskView';
@@ -37,7 +33,7 @@ const styles = StyleSheet.create({
     height: windowSize.height,
   },
   logo: {
-    marginTop: 100,
+    marginTop: 50,
     width: 180,
     height: 180,
   },
@@ -46,12 +42,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     backgroundColor: 'transparent',
-  },
-  loginButtonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
   text: {
     fontSize: 20,
@@ -65,8 +55,14 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3,
   },
-  button: {
-    marginTop: 20,
+  loginButtonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
+  buttonLogin: {
+    marginTop: -20,
     height: 30,
     width: 180,
     backgroundColor: color.ACTION_BUTTON,
@@ -78,6 +74,20 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  inputContainer: {
+    marginTop: -20,
+    flex: 0.2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputUsername: {
+    color: color.TRADEMUCH_MAIN_COLOR_1,
+    width: 300,
+    backgroundColor: '#fff',
+    textAlign: 'left',
+    fontSize: 15,
+    height: 20,
   },
 });
 
@@ -94,6 +104,7 @@ export default class Login extends Component {
     super(props);
     this.handleLoginFinished = this.handleLoginFinished.bind(this);
     this.handleLogoutFinished = this.handleLogoutFinished.bind(this);
+    this.inputEmailHandle = this.inputEmailHandle.bind(this);
   }
 
   componentWillUpdate(nextProps) {
@@ -128,8 +139,15 @@ export default class Login extends Component {
     this.props.logout();
   }
 
-  handleLoginByUsernameAndPwd() {
-    Actions.loginView.call();
+  inputEditable = () => {
+    if (this.state.isConfirm === true) {
+      return true;
+    }
+    return false;
+  }
+
+  inputEmailHandle(email) {
+
   }
 
   render() {
@@ -141,26 +159,38 @@ export default class Login extends Component {
         <View style={styles.header}>
           <Image style={styles.logo} source={{ uri: 'http://i.imgur.com/4VdrFFQ.png' }} />
         </View>
-        <View style={styles.loginButtonContainer} >
-          <Text style={styles.text}>Log in or sign up with Facebook</Text>
-          <LoginButton
-            style={styles.loginButton}
-            onLoginFinished={this.handleLoginFinished}
-            onLogoutFinished={this.handleLogoutFinished}
-            readPermissions={[]}
-            publishPermissions={[]}
+        <View style={styles.inputContainer} >
+          <TextInput
+            editable={true}
+            style={[styles.inputUsername]}
+            placeholder="尚未輸入Email"
+            placeholderTextColor={color.TRADEMUCH_MAIN_COLOR_1}
+            value={111}
+            onChangeText= {this.inputEmailHandle}
+            returnKeyType={'done'}
+            autoCapitalize={'none'}
+            keyboardType={'email-address'}
+            maxLength={25}
           />
+          <TextInput
+            editable={true}
+            style={[styles.inputUsername]}
+            placeholder="尚未輸入Email"
+            placeholderTextColor={color.TRADEMUCH_MAIN_COLOR_1}
+            value={111}
+            onChangeText= {this.inputEmailHandle}
+            returnKeyType={'done'}
+            autoCapitalize={'none'}
+            keyboardType={'default'}
+            maxLength={25}
+          />
+        </View>
+        <View style={styles.loginButtonContainer} >
           <TouchableOpacity
-            style={styles.button}
+            style={styles.buttonLogin}
             onPress={() => {}}
           >
-            <Text style={styles.buttonText}>註冊</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={this.handleLoginByUsernameAndPwd}
-          >
-            <Text style={styles.buttonText}>以帳號密碼登入</Text>
+            <Text style={styles.buttonText}>登入</Text>
           </TouchableOpacity>
         </View>
         <MaskView />
