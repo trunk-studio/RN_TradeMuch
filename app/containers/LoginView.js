@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   textInput: {
-    width: 200,
+    width: 160,
     height: 20,
     backgroundColor: 'rgba(88,88,88,0.5)',
     color: '#fff',
@@ -97,8 +97,8 @@ export default class LoginView extends Component {
     const username = this.state.username;
     const pwd = this.state.pwd;
     // const fUsr = 'office@trunk-studio.com';
-    const fUsr = 'A';
-    const fPwd = 'B';
+    const fUsr = 'office@trunk-studio.com';
+    const fPwd = 'test-account';
     if (username && pwd) {
       const checkUsr = username === fUsr;
       const checkPwd = pwd === fPwd;

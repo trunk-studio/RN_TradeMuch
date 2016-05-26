@@ -341,7 +341,7 @@ export default class AppRoutes extends Component {
               <Route name="nearByPosts" component={NearByPosts} schema="interior" title="附近好康" />
               <Route name="messenger" component={Messenger} schema="interior" title="留言版" />
               <Route name="givePage" component={GivePage} schema="interior" title="物品名稱" />
-              <Route name="loginView" component={LoginView} schema="interior" title="登入" />
+              <Route name="loginView" component={LoginView} schema="interior" title="以帳號密碼登入" />
               <Route name="registered" component={Registered} schema="interior" title="註冊" />
             </Router>
           </SideDrawer>

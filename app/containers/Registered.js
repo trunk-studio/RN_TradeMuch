@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   textInput: {
-    width: 100,
+    width: 160,
     height: 20,
     backgroundColor: 'rgba(88,88,88,0.5)',
     color: '#fff',
