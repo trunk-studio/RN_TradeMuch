@@ -24,7 +24,7 @@ import { BlurView } from 'react-native-blur';
 import {
   requestGetItemDataFromAPI,
 } from '../actions/PostDetailActions';
-
+import * as color from '../style/color';
 import {
   requestEdit,
   requestUploadImg,
@@ -77,7 +77,7 @@ const styles = React.StyleSheet.create({
   },
   title: {
     backgroundColor: 'rgba(0,0,0,0)',
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     marginLeft: 10,
     fontSize: 25,
     textAlign: 'left',
@@ -115,7 +115,7 @@ const styles = React.StyleSheet.create({
   noneImg: {
     width: 100,
     height: 100,
-    borderColor: 'rgba(255, 255, 255, 1)',
+    borderColor: color.WHITE_COLOR,
   },
   itemDescriptionContainer: {
     marginLeft: 20,
@@ -124,7 +124,7 @@ const styles = React.StyleSheet.create({
   },
   description: {
     backgroundColor: 'rgba(0,0,0,0)',
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     fontSize: 25,
     marginTop: -8,
     marginLeft: 10,
@@ -142,7 +142,7 @@ const styles = React.StyleSheet.create({
     height: 90,
   },
   price: {
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     fontSize: 25,
     textAlign: 'right',
     marginRight: 10,
@@ -166,7 +166,7 @@ const styles = React.StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     fontSize: 18,
   },
   footContainer: {
