@@ -359,11 +359,11 @@ export default class PostDetail extends Component {
           </View>
         </View>
         <LightBox>
-            <Image
-              resizeMode="contain"
-              source={{ uri: `${config.serverDomain}/${pic}` }}
-              style={itemImg}
-            />
+          <Image
+            resizeMode="contain"
+            source={{ uri: `${config.serverDomain}/${pic}` }}
+            style={itemImg}
+          />
         </LightBox>
         <ScrollView style={styles.descriptionContainer}>
           <Text style={styles.description}>{description}</Text>
