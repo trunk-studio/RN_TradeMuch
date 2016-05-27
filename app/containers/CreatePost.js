@@ -20,6 +20,9 @@ import { ImagePickerManager } from 'NativeModules';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import { requestSetLocation } from '../actions/GeoActions';
+import { BlurView, VibrancyView } from 'react-native-blur';
+import LightBox from 'react-native-lightbox';
+
 import {
   requestCreate,
   requestUploadImg,
@@ -61,7 +64,8 @@ const options = {
 
 const styles = React.StyleSheet.create({
   titleContainer: {
-    flex: 0.69,
+    flex: 0.1,
+    marginBottom: 60,
   },
   titlePosition: {
     marginTop: 65,
@@ -69,6 +73,7 @@ const styles = React.StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
+    backgroundColor: 'rgba(0,0,0,0)',
     color: 'rgba(255, 255, 255, 1)',
     marginLeft: 10,
     fontSize: 25,
@@ -85,7 +90,7 @@ const styles = React.StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    alignItems: 'stretch',
+    alignItems: 'center',
   },
   itemImg: {
     position: 'absolute',
@@ -95,9 +100,12 @@ const styles = React.StyleSheet.create({
     height: windowSize.height,
   },
   noneImgContainer: {
-    position: 'absolute',
-    left: windowSize.width / 2 - 50,
-    top: windowSize.width / 2,
+    // position: 'absolute',
+    // left: windowSize.width / 2 - 50,
+    // top: windowSize.width / 2,
+    flex: 0.2,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 100,
     height: 100,
   },
@@ -112,6 +120,7 @@ const styles = React.StyleSheet.create({
     flexDirection: 'row',
   },
   description: {
+    backgroundColor: 'rgba(0,0,0,0)',
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
     marginTop: -8,
@@ -159,6 +168,7 @@ const styles = React.StyleSheet.create({
   },
   footContainer: {
     flex: 0.21,
+    alignSelf: 'stretch',
   },
   footBackColor1: {
     height: windowSize.height / 3,
@@ -171,6 +181,12 @@ const styles = React.StyleSheet.create({
     width: windowSize.width,
     position: 'absolute',
     bottom: 0,
+  },
+  mainItemImg: {
+    flex: 1,
+    width: windowSize.width,
+    height: parseInt(windowSize.width / 16.0 * 9.0),
+    marginBottom: 40,
   },
 });
 
@@ -216,6 +232,7 @@ export default class PostDetail extends Component {
   componentWillUnmount() {
     this.props.requestCleanCreatePostData();
   }
+
 
   selectPhotoButtonHandle() {
     ImagePickerManager.showImagePicker(options, (response) => {
@@ -299,20 +316,35 @@ export default class PostDetail extends Component {
   render() {
     const { photo, title, description, postFinishData } = this.props;
     let backImg;
-    let noneImg;
+    let noneImg = null;
     if (photo.uri) {
       backImg = [
         <LoadSpinner
           key="loadSpinner"
           visible={this.props.imgSrc[0].src === '' && postFinishData.id === null }
         />,
-        <Image key="img" source={this.props.photo} style={styles.itemImg} />,
+        <Image key="img" source={this.props.photo} style={styles.itemImg} >
+          <BlurView blurType="light" style={styles.itemImg} />
+        </Image>,
         <LinearGradient
           key="backGround"
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor1}
         />,
       ];
+      if (this.state.showNonImage) {
+        noneImg = (
+          <TouchableOpacity
+            onPress={ this.selectPhotoButtonHandle }
+          >
+            <Image
+              resizeMode="contain"
+              source={this.props.photo}
+              style={styles.mainItemImg}
+            />
+          </TouchableOpacity>
+        );
+      }
     } else {
       backImg = [
         <LinearGradient
@@ -366,9 +398,10 @@ export default class PostDetail extends Component {
               />
             </View>
           </View>
+          {noneImg}
           <View style={styles.itemDescriptionContainer}>
             <Icon
-              name="pencil"
+              name="file-text-o"
               size={25}
               color={'rgba(255, 255, 255, 0.8)'}
             />
@@ -382,7 +415,6 @@ export default class PostDetail extends Component {
               onEndEditing= { this.inputDescriptionOnEndHandle }
             />
           </View>
-          {noneImg}
           <View style={styles.footContainer}>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
