@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   version: {
     top: 0,
     left: 0,
-    color: 'rgba(100, 100, 100, 0.2)',
-    fontSize: 8,
+    color: 'rgba(100, 100, 100, 0.5)',
+    fontSize: 10,
   },
   textNotification: {
     color: '#fff',
