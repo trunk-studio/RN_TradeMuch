@@ -129,7 +129,7 @@ export default class MyItems extends Component {
     if (rowData.status === 'on') {
       const swipeoutBtns = [
         {
-          backgroundColor: 'rgb(72, 205, 165)',
+          backgroundColor: color.SWIPE_BUTTON_COLOR_4,
           onPress: this.editPost.bind(this, rowData.id),
           component: (
             <SwipeOutButton label={"編輯"} iconClass="fa" iconName="pencil-square-o" iconSize={27} />
@@ -159,7 +159,7 @@ export default class MyItems extends Component {
     } else if (rowData.status === 'off') {
       const swipeoutBtns = [
         {
-          backgroundColor: 'rgb(72, 205, 165)',
+          backgroundColor: color.SWIPE_BUTTON_COLOR_4,
           onPress: this.editPost.bind(this, rowData.id),
           component: (
             <SwipeOutButton label={"編輯"} iconClass="fa" iconName="pencil-square-o" iconSize={27} />
