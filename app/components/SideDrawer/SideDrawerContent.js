@@ -10,7 +10,7 @@ import React, {
   Image,
   ScrollView,
 } from 'react-native';
-import { ORANGE, GRAY } from '../../style/color';
+import { ORANGE, GRAY, VERSION } from '../../style/color';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import MenuItem from '../Menu/MenuItem';
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   version: {
     top: 0,
     left: 0,
-    color: 'rgba(100, 100, 100, 0.2)',
-    fontSize: 8,
+    color: VERSION,
+    fontSize: 10,
   },
   textNotification: {
     color: '#fff',

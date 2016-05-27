@@ -18,15 +18,16 @@ import LightBox from 'react-native-lightbox';
 
 const styles = React.StyleSheet.create({
   titleContainer: {
-    flex: 0.2,
+    justifyContent: 'flex-start',
+    position: 'absolute',
+    top: 30,
+    left: 20,
   },
   title: {
-    marginTop: 65,
-    marginLeft: 20,
     color: 'rgba(255, 255, 255, 1)',
     fontSize: 25,
     textAlign: 'left',
-    height: 30,
+    width: windowSize.width - 25,
     shadowColor: '#000000',
     shadowOpacity: 0.25,
     shadowRadius: 5,
@@ -187,10 +188,8 @@ export default class OwnerPostDetail extends React.Component {
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{itemTitle}</Text>
-        </View>
-        <View style={{flex: 0.3}}>
+        <View style={{ flex: 0.2 }} />
+        <View style={{ flex: 0.3 }}>
           <LightBox>
             <Image
               resizeMode="contain"
@@ -198,6 +197,9 @@ export default class OwnerPostDetail extends React.Component {
               style={itemImg}
             />
           </LightBox>
+        </View>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>{itemTitle}</Text>
         </View>
         <ScrollView style={styles.itemDescriptionContainer}>
           <Text style={styles.description}>{description}</Text>
