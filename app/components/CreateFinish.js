@@ -10,11 +10,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import Dimensions from 'Dimensions';
 import { Actions } from 'react-native-router-flux';
 import { ShareDialog } from 'react-native-fbsdk';
+import { BlurView } from 'react-native-blur';
+import LightBox from 'react-native-lightbox';
+
 const windowSize = Dimensions.get('window');
 
 const styles = React.StyleSheet.create({
   titleContainer: {
-    flex: 0.69,
+    flex: 0.1,
+    marginBottom: 60,
   },
   title: {
     marginTop: 65,
@@ -83,15 +87,25 @@ const styles = React.StyleSheet.create({
     position: 'absolute',
     bottom: 0,
   },
+  mainItemImg: {
+    flex: 1,
+    width: windowSize.width,
+    height: parseInt(windowSize.width / 16.0 * 9.0),
+    marginBottom: 40,
+  },
 });
 
 
 export default function CreateFinish(props) {
   const { pic, itemTitle, description, id } = props;
   function finishBtn() {
-    Actions.postList({
-      type: 'reset',
-    });
+    if (props.from === 'myItems') {
+      Actions.myItems();
+    } else {
+      Actions.postList({
+        type: 'reset',
+      });
+    }
   }
   function selectCategoryBtn() {
     Actions.createCategory({ id });
@@ -121,10 +135,12 @@ export default function CreateFinish(props) {
       }
     );
   }
-
+  console.log('=-----pic', pic);
   return (
     <View style={styles.imageContainer}>
-      <Image key="img" source={{ uri: pic }} style={styles.itemImg} />
+      <Image key="img" source={{ uri: pic }} style={styles.itemImg} >
+        <BlurView blurType="light" style={styles.itemImg} />
+      </Image>
       <LinearGradient
         key="backGround"
         colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
@@ -133,6 +149,13 @@ export default function CreateFinish(props) {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{itemTitle}</Text>
       </View>
+      <LightBox>
+        <Image
+          resizeMode="contain"
+          source={{ uri: pic }}
+          style={styles.mainItemImg}
+        />
+      </LightBox>
       <View style={styles.itemDescriptionContainer}>
         <Text style={styles.description}>{description}</Text>
       </View>
@@ -167,6 +190,7 @@ CreateFinish.propTypes = {
   itemTitle: React.PropTypes.string,
   description: React.PropTypes.string,
   pic: React.PropTypes.string,
+  from: React.PropTypes.string,
 };
 
 CreateFinish.defaultProps = {

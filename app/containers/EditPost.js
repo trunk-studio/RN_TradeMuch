@@ -20,21 +20,22 @@ import { ImagePickerManager } from 'NativeModules';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { requestTakePhoto } from '../actions/TakePhotoActions';
 import { requestSetLocation } from '../actions/GeoActions';
-import { BlurView, VibrancyView } from 'react-native-blur';
-import LightBox from 'react-native-lightbox';
-
+import { BlurView } from 'react-native-blur';
 import {
-  requestShowCreateLoad,
-  requestCreate,
+  requestGetItemDataFromAPI,
+} from '../actions/PostDetailActions';
+import * as color from '../style/color';
+import {
+  requestEdit,
   requestUploadImg,
   requestInputTitle,
   requestInputDescription,
   requestCleanCreatePostData,
+  requestClearUpdatedStatus,
  } from '../actions/PostActions';
 import { Actions } from 'react-native-router-flux';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import MaskView from './MaskView';
-import { errorHandle } from '../utils/errorHandle';
 
 const windowSize = Dimensions.get('window');
 
@@ -76,7 +77,7 @@ const styles = React.StyleSheet.create({
   },
   title: {
     backgroundColor: 'rgba(0,0,0,0)',
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     marginLeft: 10,
     fontSize: 25,
     textAlign: 'left',
@@ -114,7 +115,7 @@ const styles = React.StyleSheet.create({
   noneImg: {
     width: 100,
     height: 100,
-    borderColor: 'rgba(255, 255, 255, 1)',
+    borderColor: color.WHITE_COLOR,
   },
   itemDescriptionContainer: {
     marginLeft: 20,
@@ -123,7 +124,7 @@ const styles = React.StyleSheet.create({
   },
   description: {
     backgroundColor: 'rgba(0,0,0,0)',
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     fontSize: 25,
     marginTop: -8,
     marginLeft: 10,
@@ -141,7 +142,7 @@ const styles = React.StyleSheet.create({
     height: 90,
   },
   price: {
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     fontSize: 25,
     textAlign: 'right',
     marginRight: 10,
@@ -165,7 +166,7 @@ const styles = React.StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    color: 'rgba(255, 255, 255, 1)',
+    color: color.WHITE_COLOR,
     fontSize: 18,
   },
   footContainer: {
@@ -193,7 +194,7 @@ const styles = React.StyleSheet.create({
 });
 
 
-export default class PostDetail extends Component {
+export default class EditPost extends Component {
   constructor(props) {
     super(props);
     this.selectPhotoButtonHandle = this.selectPhotoButtonHandle.bind(this);
@@ -204,7 +205,18 @@ export default class PostDetail extends Component {
       description: '',
       showLoadingIndicator: false,
       showNonImage: true,
+      postItem: null,
     };
+  }
+
+  componentWillMount() {
+    const postItem = this.findPostItemById();
+    console.log(this.props);
+    this.setState({
+      postItem,
+      title: postItem.title,
+      description: postItem.description,
+    });
   }
 
   componentDidMount() {
@@ -215,16 +227,19 @@ export default class PostDetail extends Component {
       (error) => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-    this.props.requestShowCreateLoad(true);
   }
+
   componentWillReceiveProps(nextProps) {
     const { postFinishData } = nextProps;
-    if (postFinishData !== this.props.postFinishData) {
+    if (nextProps.updatedSuccess) {
+      // Actions.postDetail({id: this.props.postItem.id});
+      this.props.requestClearUpdatedStatus();
       Actions.createFinish({
-        id: postFinishData.id,
-        itemTitle: postFinishData.title,
-        description: postFinishData.description,
-        pic: `${config.serverDomain}/${postFinishData.pic}`,
+        id: this.state.postItem.id,
+        itemTitle: this.state.postItem.title,
+        description: this.state.postItem.description,
+        pic: config.serverDomain + '/' + (this.props.imgSrc[0].src.length > 0 ? this.props.imgSrc[0].src : this.state.postItem.pic),
+        from: 'myItems',
       });
       this.setState({
         showLoadingIndicator: false,
@@ -234,6 +249,7 @@ export default class PostDetail extends Component {
 
   componentWillUnmount() {
     this.props.requestCleanCreatePostData();
+    this.props.requestClearUpdatedStatus();
   }
 
 
@@ -262,25 +278,32 @@ export default class PostDetail extends Component {
   }
 
   postCreateButtonHandle() {
-    if (this.props.isLogin) {
-      this.props.requestShowCreateLoad(false);
-      if (this.props.title && this.props.imgSrc[0].src) {
+    if (!this.state.showLoadingIndicator) {
+      let closeLoading;
+      // closeLoading = setTimeout(() => {
+      //   this.setState({
+      //     showLoadingIndicator: true,
+      //   });
+      // }, 5000);
+      if (this.state.title && (this.props.imgSrc[0].src || this.state.postItem.pic)) {
         this.props.requestInputTitle(this.state.title);
         this.props.requestInputDescription(this.state.description);
-        this.props.requestCreate({
+        this.props.requestEdit(this.props.id, {
           detail: {
             title: this.state.title,
             description: this.state.description,
             startDate: new Date(),
           },
           location: this.props.location,
-          images: this.props.imgSrc[0].src,
+          images: this.props.imgSrc[0].src.length > 0 ? this.props.imgSrc[0].src : this.state.postItem.pic,
+        });
+        // clearTimeout(closeLoading);
+        this.setState({
+          showLoadingIndicator: true,
         });
       } else {
         Alert.alert('注意', '照片跟標題是必填喔');
       }
-    } else {
-      errorHandle('{ "requestStatus": 403 }');
     }
   }
 
@@ -309,17 +332,35 @@ export default class PostDetail extends Component {
     });
   }
 
+  findPostItemById = () => {
+    const postList = this.props.myItems;
+    let postItem = {};
+    for (let i = 0; i < postList.length; i++) {
+      if (postList[i].id === this.props.id) {
+        postItem = postList[i];
+      }
+    }
+    if (!postItem.id) {
+      this.props.requestGetItemDataFromAPI({
+        id: this.props.id,
+      });
+    }
+    return postItem;
+  }
+
   render() {
-    const { photo, title, description, postFinishData } = this.props;
+    // console.log('state', this.state.postItem);
+    const { pic, title, description } = this.state.postItem;
+    const imgSrc = (this.props.photo && this.props.photo.uri) ? this.props.photo : { uri: `${config.serverDomain}/${pic}` };
     let backImg;
     let noneImg = null;
-    if (photo.uri) {
+    if (pic) {
       backImg = [
-        <LoadSpinner
-          key="loadSpinner"
-          visible={this.props.imgSrc[0].src === '' && postFinishData.id === null }
-        />,
-        <Image key="img" source={this.props.photo} style={styles.itemImg} >
+        // <LoadSpinner
+        //   key="loadSpinner"
+        //   visible={this.props.imgSrc[0].src === '' && postFinishData.id === null }
+        // />,
+        <Image key="img" source={imgSrc} style={styles.itemImg} >
           <BlurView blurType="light" style={styles.itemImg} />
         </Image>,
         <LinearGradient
@@ -335,7 +376,7 @@ export default class PostDetail extends Component {
           >
             <Image
               resizeMode="contain"
-              source={this.props.photo}
+              source={imgSrc}
               style={styles.mainItemImg}
             />
           </TouchableOpacity>
@@ -372,7 +413,7 @@ export default class PostDetail extends Component {
       <View style={ { flex: 1 } }>
         <LoadSpinner
           key="loadSpinner"
-          visible={!this.props.showLoadingIndicator}
+          visible={this.state.showLoadingIndicator}
         />
         <View style={styles.imageContainer}>
           {backImg}
@@ -444,8 +485,6 @@ export default class PostDetail extends Component {
 
 function _injectPropsFromStore(state) {
   return {
-    isLogin: state.auth.isLogin,
-    showLoadingIndicator: state.post.createFinish,
     title: state.post.title,
     description: state.post.description,
     photo: state.takePhoto.photoSource,
@@ -453,12 +492,13 @@ function _injectPropsFromStore(state) {
     imgSrc: state.post.upLoadImg,
     postFinishData: state.post.postFinishData,
     location: state.geo.location,
+    myItems: state.post.myItems,
+    updatedSuccess: state.post.updatedSuccess,
   };
 }
 
-PostDetail.propTypes = {
-  isLogin: React.PropTypes.bool,
-  showLoadingIndicator: React.PropTypes.bool,
+EditPost.propTypes = {
+  id: React.PropTypes.number,
   title: React.PropTypes.string,
   description: React.PropTypes.string,
   photo: React.PropTypes.object,
@@ -467,20 +507,22 @@ PostDetail.propTypes = {
   postFinishData: React.PropTypes.object,
   location: React.PropTypes.object,
   requestTakePhoto: React.PropTypes.func,
-  requestShowCreateLoad: React.PropTypes.func,
-  requestCreate: React.PropTypes.func,
+  requestEdit: React.PropTypes.func,
   requestUploadImg: React.PropTypes.func,
   requestInputTitle: React.PropTypes.func,
   requestInputDescription: React.PropTypes.func,
   requestSetLocation: React.PropTypes.func,
   requestCleanCreatePostData: React.PropTypes.func,
+  requestGetItemDataFromAPI: React.PropTypes.func,
+  requestClearUpdatedStatus: React.PropTypes.func,
+  myItems: React.PropTypes.array,
+  updatedSuccess: React.PropTypes.bool,
 };
 
-PostDetail.defaultProps = {
-  showLoadingIndicator: true,
+EditPost.defaultProps = {
   title: '',
   description: '',
-  photo: {},
+  photo: null,
   photoInfo: {},
   location: {
     latitude: 24.148657699999998,
@@ -492,13 +534,14 @@ PostDetail.defaultProps = {
 
 const _injectPropsFormActions = {
   requestTakePhoto,
-  requestShowCreateLoad,
-  requestCreate,
+  requestEdit,
   requestUploadImg,
   requestInputTitle,
   requestInputDescription,
   requestSetLocation,
   requestCleanCreatePostData,
+  requestGetItemDataFromAPI,
+  requestClearUpdatedStatus,
 };
 
-export default connect(_injectPropsFromStore, _injectPropsFormActions)(PostDetail);
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(EditPost);

@@ -9,6 +9,8 @@ import {
   RECEIVED_UPDATE_TRADERECORD_STATUS_SUCCESS,
   RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED,
   DELETE_POST_ITEM,
+  UPDATED_POST_SUCCESS,
+  BEFORE_UPDATED_POST,
   RECEIVED_CREATE_POST_FINISH,
 } from '../actions/PostActions';
 import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
@@ -143,6 +145,18 @@ export function post(state = {}, action) {
       return {
         ...state,
         myItems: newMyItems,
+      };
+    }
+    case UPDATED_POST_SUCCESS: {
+      return {
+        ...state,
+        updatedSuccess: true,
+      };
+    }
+    case BEFORE_UPDATED_POST: {
+      return {
+        ...state,
+        updatedSuccess: false,
       };
     }
     case RECEIVED_CREATE_POST_FINISH: {

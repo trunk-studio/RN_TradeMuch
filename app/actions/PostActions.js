@@ -23,8 +23,9 @@ export const RECEIVED_UPDATE_TRADERECORD_STATUS_FAIL =
 export const RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED =
   'RECEIVED_REQUEST_ITEM_STATUS_CHANGED_AND_USER_CONFIRMED';
 export const DELETE_POST_ITEM = 'DELETE_POST_ITEM';
+export const UPDATED_POST_SUCCESS = 'UPDATED_POST_SUCCESS';
+export const BEFORE_UPDATED_POST = 'BEFORE_UPDATED_POST';
 export const RECEIVED_CREATE_POST_FINISH = 'RECEIVED_CREATE_POST_FINISH';
-
 
 function receivedCreate(data = {
   id: null,
@@ -123,6 +124,44 @@ export async function requestCreate(data = {
     };
   } catch (e) {
     // errorHandle(e.message);
+    return () => {};
+  }
+}
+
+function updatedSuccess() {
+  return {
+    type: UPDATED_POST_SUCCESS,
+  };
+}
+
+function clearUpdatedStatus() {
+  return {
+    type: BEFORE_UPDATED_POST,
+  };
+}
+
+export async function requestClearUpdatedStatus() {
+  return (dispatch) => {
+    dispatch(clearUpdatedStatus());
+  };
+}
+
+export async function requestEdit(postId, data) {
+  const postCreateApi = `/rest/post/${postId}`;
+  try {
+    const response = await fetchWithAuth(postCreateApi, 'PUT', data);
+    response.location = {
+      lat: data.location.latitude,
+      lon: data.location.longitude,
+    };
+    response.pic = data.images;
+    response.distance = 0;
+    response.isFav = false;
+    return (dispatch) => {
+      dispatch(updatedSuccess());
+    };
+  } catch (e) {
+    errorHandle(e.message);
     return () => {};
   }
 }

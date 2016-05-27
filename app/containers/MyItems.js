@@ -129,16 +129,22 @@ export default class MyItems extends Component {
     if (rowData.status === 'on') {
       const swipeoutBtns = [
         {
-          backgroundColor: '#F5B750',
-          onPress: this.takeOffPost.bind(this, rowData.id),
+          backgroundColor: color.SWIPE_BUTTON_COLOR_4,
+          onPress: this.editPost.bind(this, rowData.id),
           component: (
-            <SwipeOutButton label={"下架"} imgSource={{ uri: 'http://i.imgur.com/z83iW6N.png' }} />
+            <SwipeOutButton label={"編輯"} iconClass="fa" iconName="pencil-square-o" iconSize={27} />
           ),
         }, {
           backgroundColor: color.SWIPE_BUTTON_COLOR_1,
           onPress: this.deletePost.bind(this, rowData.id),
           component: (
-            <SwipeOutButton label={"刪除"} imgSource={{ uri: 'http://i.imgur.com/OPPaNUe.png' }} />
+            <SwipeOutButton label={"刪除"} iconClass="material" iconName="delete-forever" />
+          ),
+        }, {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_3,
+          onPress: this.takeOffPost.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"下架"} imgSource={{ uri: 'http://i.imgur.com/z83iW6N.png' }} />
           ),
         },
       ];
@@ -153,6 +159,18 @@ export default class MyItems extends Component {
     } else if (rowData.status === 'off') {
       const swipeoutBtns = [
         {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_4,
+          onPress: this.editPost.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"編輯"} iconClass="fa" iconName="pencil-square-o" iconSize={27} />
+          ),
+        }, {
+          backgroundColor: color.SWIPE_BUTTON_COLOR_1,
+          onPress: this.deletePost.bind(this, rowData.id),
+          component: (
+            <SwipeOutButton label={"刪除"} iconClass="material" iconName="delete-forever" />
+          ),
+        }, {
           backgroundColor: color.SWIPE_BUTTON_COLOR_2,
           onPress: this.putOnPost.bind(this, rowData.id),
           component: (
@@ -172,6 +190,10 @@ export default class MyItems extends Component {
       listItem = item;
     }
     return listItem;
+  }
+
+  editPost = (postId) => {
+    Actions.editPost({id: postId});
   }
 
   takeOffPost = (postId) => {
