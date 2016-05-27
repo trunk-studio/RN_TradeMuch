@@ -11,6 +11,7 @@ import {
   DELETE_POST_ITEM,
   UPDATED_POST_SUCCESS,
   BEFORE_UPDATED_POST,
+  RECEIVED_CREATE_POST_FINISH,
 } from '../actions/PostActions';
 import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
 
@@ -156,6 +157,12 @@ export function post(state = {}, action) {
       return {
         ...state,
         updatedSuccess: false,
+      };
+    }
+    case RECEIVED_CREATE_POST_FINISH: {
+      return {
+        ...state,
+        createFinish: action.data,
       };
     }
     default:

@@ -23,3 +23,4 @@ export const SWIPE_BUTTON_COLOR_3 = 'rgb(245, 183, 80)';
 export const SIDE_DRAWER_CONTENT_BACKGROUND_COLOR = '#500505';
 export const TEXT_PRIMARY_COLOR = 'rgb(95,162,146)';
 export const ACTION_BUTTON = 'rgb(95,162,146)';
+export const VERSION ='rgba(100, 100, 100, 0.5)';

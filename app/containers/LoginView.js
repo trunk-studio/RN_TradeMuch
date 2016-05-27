@@ -14,6 +14,8 @@ import MaskView from './MaskView';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import * as color from '../style/color';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
+import { requestLoginByBuildinAccouunt } from '../actions/AuthActions';
 
 const windowSize = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -79,7 +81,51 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Registered extends Component {
+export default class LoginView extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleLoginButtonClick = this.handleLoginButtonClick.bind(this);
+    this.inputUsernameHandle = this.inputUsernameHandle.bind(this);
+    this.inputPwdHandle = this.inputPwdHandle.bind(this);
+    this.state = {
+      username: '',
+      pwd: '',
+    };
+  }
+
+  handleLoginButtonClick() {
+    const username = this.state.username;
+    const pwd = this.state.pwd;
+    // const fUsr = 'office@trunk-studio.com';
+    const fUsr = 'office@trunk-studio.com';
+    const fPwd = 'test-account';
+    if (username && pwd) {
+      const checkUsr = username === fUsr;
+      const checkPwd = pwd === fPwd;
+      if (checkUsr && checkPwd) {
+        setTimeout(() => {
+          this.props.requestLoginByBuildinAccouunt();
+        }, 776);
+      } else {
+        setTimeout(() => {
+          Alert.alert('登入失敗！帳號或密碼錯誤！');
+        }, 776);
+      }
+    }
+  }
+
+  inputUsernameHandle(username) {
+    this.setState({
+      username,
+    });
+  }
+
+  inputPwdHandle(pwd) {
+    this.setState({
+      pwd,
+    });
+  }
 
   render() {
     return (
@@ -96,6 +142,7 @@ export default class Registered extends Component {
             <TextInput
               style={styles.textInput}
               autoCapitalize={'none'}
+              onChangeText= {this.inputUsernameHandle}
             />
           </View>
           <View style={styles.inputBox}>
@@ -104,22 +151,14 @@ export default class Registered extends Component {
               style={styles.textInput}
               secureTextEntry={true}
               autoCapitalize={'none'}
-            />
-          </View>
-          <View style={styles.inputBox}>
-            <Text style={styles.text}>邀請碼：</Text>
-            <TextInput
-              style={styles.textInput}
-              autoCapitalize={'none'}
+              onChangeText= {this.inputPwdHandle}
             />
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              Alert.alert('警告', '邀請碼錯誤，請再次確認!!');
-            }}
+            onPress={this.handleLoginButtonClick}
           >
-            <Text style={styles.buttonText}>註冊</Text>
+            <Text style={styles.buttonText}>登入</Text>
           </TouchableOpacity>
         </View>
         <MaskView />
@@ -128,3 +167,17 @@ export default class Registered extends Component {
     );
   }
 }
+
+LoginView.propTypes = {
+  requestLoginByBuildinAccouunt: React.PropTypes.func,
+};
+
+function _injectPropsFromStore({ auth }) {
+  return {};
+}
+
+const _injectPropsFormActions = {
+  requestLoginByBuildinAccouunt,
+};
+
+export default connect(_injectPropsFromStore, _injectPropsFormActions)(LoginView);

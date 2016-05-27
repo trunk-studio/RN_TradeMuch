@@ -45,6 +45,8 @@ import MyItems from './containers/MyItems';
 import Category from './containers/Category';
 import GivePage from './containers/GivePage';
 import EditPost from './containers/EditPost';
+import LoginView from './containers/LoginView';
+import Registered from './containers/Registered';
 // colors
 import {
   NAVBAR_BACKGROUND_COLOR,
@@ -341,6 +343,8 @@ export default class AppRoutes extends Component {
               <Route name="messenger" component={Messenger} schema="interior" title="留言版" />
               <Route name="givePage" component={GivePage} schema="interior" title="物品名稱" />
               <Route name="editPost" component={EditPost} schema="interior" title="編輯物品" />
+              <Route name="loginView" component={LoginView} schema="interior" title="以帳號密碼登入" />
+              <Route name="registered" component={Registered} schema="interior" title="註冊" />
             </Router>
           </SideDrawer>
         </Route>

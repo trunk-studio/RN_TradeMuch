@@ -57,9 +57,9 @@ const styles = React.StyleSheet.create({
   },
   titleContainer: {
     justifyContent: 'flex-start',
-    flex: 0.5,
-    paddingTop: 60,
-    paddingLeft: 20,
+    position: 'absolute',
+    top: 30,
+    left: 40,
     flexDirection: 'row',
   },
   title: {
@@ -108,7 +108,7 @@ const styles = React.StyleSheet.create({
   button: {
     flex: 1,
     margin: 10,
-    height: 50,
+    height: 40,
     // width: 100 * PIXEL_RATIO,
     borderRadius: 3 * PIXEL_RATIO,
     borderWidth: 0.5 * PIXEL_RATIO,
@@ -119,7 +119,7 @@ const styles = React.StyleSheet.create({
   },
   buttonText: {
     color: 'rgba(255, 255, 255, 1)',
-    fontSize: 14,
+    fontSize: 12,
   },
   footContainer: {
     flex: 1,
@@ -345,11 +345,19 @@ export default class PostDetail extends Component {
           colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 1)']}
           style={styles.footBackColor}
         />
+        <View style={{ flex: 0.5, paddingTop: 60 }} />
+        <LightBox>
+          <Image
+            resizeMode="contain"
+            source={{ uri: `${config.serverDomain}/${pic}` }}
+            style={itemImg}
+          />
+        </LightBox>
         <View style={styles.titleContainer}>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <Text style={styles.title}>{title}</Text>
           </View>
-          <View style={{ flex: 1, paddingLeft: 150, paddingTop: 5, }}>
+          <View style={{ flex: 0.5 }}>
             <TouchableOpacity
               style={styles.buttonChatContainer}
               onPress={ this.openChatRoomButtonHandle }
@@ -358,13 +366,6 @@ export default class PostDetail extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <LightBox>
-          <Image
-            resizeMode="contain"
-            source={{ uri: `${config.serverDomain}/${pic}` }}
-            style={itemImg}
-          />
-        </LightBox>
         <ScrollView style={styles.descriptionContainer}>
           <Text style={styles.description}>{description}</Text>
         </ScrollView>
