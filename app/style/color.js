@@ -20,6 +20,7 @@ export const LIST_BORDER = 'rgb(173, 189, 185)';
 export const SWIPE_BUTTON_COLOR_1 = 'rgb(248, 151, 151)';
 export const SWIPE_BUTTON_COLOR_2 = 'rgb(121, 183, 255)';
 export const SWIPE_BUTTON_COLOR_3 = 'rgb(245, 183, 80)';
+export const SWIPE_BUTTON_COLOR_4 = '#84D194';
 export const SIDE_DRAWER_CONTENT_BACKGROUND_COLOR = '#500505';
 export const TEXT_PRIMARY_COLOR = 'rgb(95,162,146)';
 export const ACTION_BUTTON = 'rgb(95,162,146)';

@@ -12,6 +12,7 @@ import {
   UPDATED_POST_SUCCESS,
   BEFORE_UPDATED_POST,
   RECEIVED_CREATE_POST_FINISH,
+  UPDATE_EDITED_POST,
 } from '../actions/PostActions';
 import { RECEIVED_READ_MESSAGE } from '../actions/MessengerActions';
 
@@ -163,6 +164,16 @@ export function post(state = {}, action) {
       return {
         ...state,
         createFinish: action.data,
+      };
+    }
+    case UPDATE_EDITED_POST: {
+      const newMyItems = findObjById(state.myItems, 'id', action.data.id, (post) => {
+        action.data.pic = action.data.coverImage;
+        return action.data;
+      });
+      return {
+        ...state,
+        myItems: newMyItems,
       };
     }
     default:

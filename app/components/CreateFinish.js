@@ -100,7 +100,9 @@ export default function CreateFinish(props) {
   const { pic, itemTitle, description, id } = props;
   function finishBtn() {
     if (props.from === 'myItems') {
-      Actions.myItems();
+      Actions.myItems({
+        type: 'reset',
+      });
     } else {
       Actions.postList({
         type: 'reset',
@@ -135,7 +137,6 @@ export default function CreateFinish(props) {
       }
     );
   }
-  console.log('=-----pic', pic);
   return (
     <View style={styles.imageContainer}>
       <Image key="img" source={{ uri: pic }} style={styles.itemImg} >
