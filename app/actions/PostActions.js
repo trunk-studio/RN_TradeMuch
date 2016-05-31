@@ -26,6 +26,7 @@ export const DELETE_POST_ITEM = 'DELETE_POST_ITEM';
 export const UPDATED_POST_SUCCESS = 'UPDATED_POST_SUCCESS';
 export const BEFORE_UPDATED_POST = 'BEFORE_UPDATED_POST';
 export const RECEIVED_CREATE_POST_FINISH = 'RECEIVED_CREATE_POST_FINISH';
+export const UPDATE_EDITED_POST = 'UPDATE_EDITED_POST';
 
 function receivedCreate(data = {
   id: null,
@@ -140,6 +141,13 @@ function clearUpdatedStatus() {
   };
 }
 
+function updateEditedPost(data) {
+  return {
+    type: UPDATE_EDITED_POST,
+    data,
+  };
+}
+
 export async function requestClearUpdatedStatus() {
   return (dispatch) => {
     dispatch(clearUpdatedStatus());
@@ -154,12 +162,13 @@ export async function requestEdit(postId, data) {
       lat: data.location.latitude,
       lon: data.location.longitude,
     };
-    response.pic = data.images;
-    response.distance = 0;
-    response.isFav = false;
-    return (dispatch) => {
-      dispatch(updatedSuccess());
-    };
+    if (response.success) {
+      return (dispatch) => {
+        dispatch(updatedSuccess());
+        dispatch(updateEditedPost(response.data));
+      };
+    }
+    return () => {};
   } catch (e) {
     errorHandle(e.message);
     return () => {};

@@ -211,7 +211,6 @@ export default class EditPost extends Component {
 
   componentWillMount() {
     const postItem = this.findPostItemById();
-    console.log(this.props);
     this.setState({
       postItem,
       title: postItem.title,
@@ -231,13 +230,13 @@ export default class EditPost extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { postFinishData } = nextProps;
-    if (nextProps.updatedSuccess) {
+    if (nextProps.updatedSuccess && !this.props.updatedSuccess) {
       // Actions.postDetail({id: this.props.postItem.id});
       this.props.requestClearUpdatedStatus();
       Actions.createFinish({
         id: this.state.postItem.id,
-        itemTitle: this.state.postItem.title,
-        description: this.state.postItem.description,
+        itemTitle: this.state.title,
+        description: this.state.description,
         pic: config.serverDomain + '/' + (this.props.imgSrc[0].src.length > 0 ? this.props.imgSrc[0].src : this.state.postItem.pic),
         from: 'myItems',
       });
